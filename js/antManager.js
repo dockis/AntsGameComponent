@@ -39,6 +39,16 @@ export class AntManager {
     return ant;
   }
 
+  reset() {
+    for (const ant of this.pool) {
+      ant.hide();
+      ant.removing = false;
+      ant.visual.classList.remove('squish');
+    }
+    this.activeCount = 0;
+    this._scheduleNextSpawn();
+  }
+
   despawn(ant) {
     ant.hide();
     ant.removing = false;

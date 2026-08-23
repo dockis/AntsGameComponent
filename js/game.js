@@ -13,6 +13,15 @@ const STATES = Object.freeze({
   PAUSED: 'PAUSED',
 });
 
+// Viz 00-koncept-a-design-dokument.md, sekce 17 — kompletní tabulka povolených přechodů.
+const STATE_TRANSITIONS = Object.freeze({
+  [STATES.MENU]: [STATES.PLAYING],
+  [STATES.PLAYING]: [STATES.LEVEL_COMPLETE, STATES.GAME_OVER, STATES.PAUSED],
+  [STATES.LEVEL_COMPLETE]: [STATES.PLAYING, STATES.MENU],
+  [STATES.GAME_OVER]: [STATES.PLAYING, STATES.MENU],
+  [STATES.PAUSED]: [STATES.PLAYING],
+});
+
 // Natvrdo pro feature 06, dokud feature 08 nenapojí LevelManager na LEVELS z config.js.
 const LEVEL_CONFIG = {
   level: 1,
@@ -28,6 +37,7 @@ export class Game {
     this.lastTimestamp = null;
     this._rafId = null;
     this.killedCount = 0;
+    this._onboardingSeen = false;
 
     this._onVisibilityChange = this._onVisibilityChange.bind(this);
     this._onBlur = this._onBlur.bind(this);
@@ -40,8 +50,14 @@ export class Game {
       onKill: () => this._onAntKilled(),
     });
     this.inputManager = new InputManager(document.getElementById('scene'), this.antManager);
-    this.uiManager = new UIManager();
+    this.uiManager = new UIManager({
+      onStart: () => this.startGame(),
+      onRetry: () => this.retryLevel(),
+      onContinue: () => this.continueLevel(),
+      onResume: () => this.resumeGame(),
+    });
     this.uiManager.setLevel(LEVEL_CONFIG.level);
+    this.uiManager.setState(this.state);
     this._updateHud();
 
     this._bindDebugControls();
@@ -53,9 +69,6 @@ export class Game {
   }
 
   start() {
-    // Stub: menu/onboarding zatím neexistuje, rovnou přejdeme do PLAYING.
-    this.state = STATES.PLAYING;
-
     document.addEventListener('visibilitychange', this._onVisibilityChange);
     window.addEventListener('blur', this._onBlur);
 
@@ -68,22 +81,59 @@ export class Game {
     this._updateHud();
   }
 
+  startGame() {
+    this._transitionTo(STATES.PLAYING);
+    if (!this._onboardingSeen) {
+      this._onboardingSeen = true;
+      this.uiManager.showOnboarding();
+    }
+  }
+
+  retryLevel() {
+    this._resetScene();
+    this._transitionTo(STATES.PLAYING);
+  }
+
+  continueLevel() {
+    this._resetScene();
+    this._transitionTo(STATES.PLAYING);
+  }
+
+  resumeGame() {
+    this._transitionTo(STATES.PLAYING);
+  }
+
   pause() {
     if (this.state !== STATES.PLAYING) return;
-    this.state = STATES.PAUSED;
-    console.log('[Game] -> PAUSED');
+    this._transitionTo(STATES.PAUSED);
   }
 
   gameOver() {
     if (this.state !== STATES.PLAYING) return;
-    this.state = STATES.GAME_OVER;
-    console.log('[Game] -> GAME_OVER');
+    this._transitionTo(STATES.GAME_OVER);
   }
 
   levelComplete() {
     if (this.state !== STATES.PLAYING) return;
-    this.state = STATES.LEVEL_COMPLETE;
-    console.log('[Game] -> LEVEL_COMPLETE');
+    this._transitionTo(STATES.LEVEL_COMPLETE);
+  }
+
+  _transitionTo(nextState) {
+    const allowed = STATE_TRANSITIONS[this.state] || [];
+    if (!allowed.includes(nextState)) {
+      console.warn(`[Game] neplatný přechod ${this.state} -> ${nextState}, ignoruji`);
+      return;
+    }
+    this.state = nextState;
+    this.uiManager.setState(nextState);
+    console.log(`[Game] -> ${nextState}`);
+  }
+
+  _resetScene() {
+    this.antManager.reset();
+    this.target.reset();
+    this.killedCount = 0;
+    this._updateHud();
   }
 
   _onAntKilled() {
