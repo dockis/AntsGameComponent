@@ -4,9 +4,9 @@ import { Ant } from './ant.js';
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 export class AntManager {
-  constructor(layerElement, targetPos) {
+  constructor(layerElement, target) {
     this.layerElement = layerElement;
-    this.targetPos = targetPos;
+    this.target = target;
     this.pool = Array.from({ length: GAME_CONFIG.antPoolSize }, () => {
       const el = document.createElementNS(SVG_NS, 'g');
       el.setAttribute('class', 'ant');
@@ -32,21 +32,28 @@ export class AntManager {
     ant.hide();
   }
 
+  kill(ant) {
+    if (!ant.active) return;
+
+    ant.active = false;
+    ant.playSquish();
+    setTimeout(() => this.despawn(ant), GAME_CONFIG.squishDurationMs);
+  }
+
   update(dt) {
     for (const ant of this.pool) {
       if (!ant.active) continue;
 
-      ant.update(dt, this.targetPos);
+      ant.update(dt, this.target.pos);
 
-      if (ant.distanceTo(this.targetPos) <= GAME_CONFIG.eatingRadius) {
-        this.despawn(ant);
-        this.spawn(ant.type);
+      if (ant.eating) {
+        this.target.applyDamage(ant.damagePerSecond * dt);
       }
     }
   }
 
   _randomEdgeSpawn() {
-    const targetPos = this.targetPos;
+    const targetPos = this.target.pos;
     const { sceneWidth, sceneHeight, antSpawnMargin } = GAME_CONFIG;
     const side = Math.floor(Math.random() * 4);
     let pos;

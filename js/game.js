@@ -1,5 +1,6 @@
 import { Target } from './target.js';
 import { AntManager } from './antManager.js';
+import { InputManager } from './input.js';
 
 const MAX_DT = 0.1;
 
@@ -22,10 +23,11 @@ export class Game {
     this._tick = this._tick.bind(this);
 
     this.target = new Target(document.getElementById('target'), {
-      onDestroyed: () => console.log('[Game] cíl zničen'),
+      onDestroyed: () => this.gameOver(),
     });
-    this.antManager = new AntManager(document.getElementById('ants-layer'), this.target.pos);
+    this.antManager = new AntManager(document.getElementById('ants-layer'), this.target);
     this.antManager.spawn('normal');
+    this.inputManager = new InputManager(document.getElementById('scene'), this.antManager);
 
     this._bindDebugControls();
   }
@@ -54,6 +56,12 @@ export class Game {
     if (this.state !== STATES.PLAYING) return;
     this.state = STATES.PAUSED;
     console.log('[Game] -> PAUSED');
+  }
+
+  gameOver() {
+    if (this.state !== STATES.PLAYING) return;
+    this.state = STATES.GAME_OVER;
+    console.log('[Game] -> GAME_OVER');
   }
 
   _onVisibilityChange() {
