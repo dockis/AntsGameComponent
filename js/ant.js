@@ -42,11 +42,13 @@ export class Ant {
     hitbox.setAttribute('fill', 'transparent');
 
     const body = document.createElementNS(SVG_NS, 'ellipse');
+    body.setAttribute('class', 'ant-body');
     body.setAttribute('rx', '7');
     body.setAttribute('ry', '4');
     body.setAttribute('fill', '#3b2a1a');
 
     const head = document.createElementNS(SVG_NS, 'ellipse');
+    head.setAttribute('class', 'ant-head');
     head.setAttribute('cx', '8');
     head.setAttribute('rx', '3.5');
     head.setAttribute('ry', '3');
@@ -72,10 +74,12 @@ export class Ant {
     this.wanderJitter = randomVariance(GAME_CONFIG.wanderJitter, GAME_CONFIG.antVariance);
     this.turnSpeed = randomVariance(GAME_CONFIG.turnSpeed, GAME_CONFIG.antVariance);
     this.damagePerSecond = GAME_CONFIG.baseDamagePerSecond * typeConfig.damageMultiplier;
+    this.hitsToKill = typeConfig.hitsToKill;
     this.eating = false;
     this.active = true;
 
-    this.visual.classList.remove('squish');
+    this.visual.classList.remove('squish', 'type-aggressive', 'type-armored');
+    if (type !== 'normal') this.visual.classList.add(`type-${type}`);
     this.el.style.display = 'block';
     this._applyTransform();
   }

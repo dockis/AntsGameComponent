@@ -3,6 +3,17 @@ import { Ant } from './ant.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
+// Vážený náhodný výběr mezi normal/aggressive dle sekce 6 dokumentu 00.
+// armored (Typ 3) je zatím mimo rozsah (feature 10) a jeho procenta se ignorují.
+function pickWeightedType(ants) {
+  const normalWeight = ants.normal ?? 0;
+  const aggressiveWeight = ants.aggressive ?? 0;
+  const total = normalWeight + aggressiveWeight;
+  if (total <= 0) return 'normal';
+
+  return Math.random() * total < normalWeight ? 'normal' : 'aggressive';
+}
+
 export class AntManager {
   constructor(layerElement, target, levelConfig, { onKill = null } = {}) {
     this.layerElement = layerElement;
@@ -73,7 +84,7 @@ export class AntManager {
     this._spawnTimer -= dt * 1000;
     if (this._spawnTimer <= 0) {
       if (this.activeCount < this.levelConfig.maxAnts) {
-        this.spawn('normal');
+        this.spawn(pickWeightedType(this.levelConfig.ants));
         this._scheduleNextSpawn();
       } else {
         this._spawnTimer = 0; // maxAnts dosaženo, zkusit znovu příští tik
