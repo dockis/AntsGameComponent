@@ -17,6 +17,7 @@ export const GAME_CONFIG = {
   antSpawnMargin: 20, // vzdálenost mimo viewBox, kde se mravenec spawne
   antHitboxRadius: 16, // neviditelný dotykový hitbox, ~1,5-2x vizuální velikosti mravence, sekce 9
   squishDurationMs: 150, // délka vizuální "squish" animace při zabití, sekce 9
+  criticalHealthThreshold: 0.25, // hranice pro jednorázový zvuk criticalHealth, sekce 11
 };
 
 export const ANT_TYPES = {

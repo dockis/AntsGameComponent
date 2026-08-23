@@ -1,7 +1,15 @@
 const ONBOARDING_DURATION_MS = 4000;
 
 export class UIManager {
-  constructor({ onStart = null, onRetry = null, onContinue = null, onResume = null } = {}) {
+  constructor({
+    audioManager,
+    onStartNewGame = null,
+    onContinueFromMenu = null,
+    onRetry = null,
+    onContinue = null,
+    onResume = null,
+  } = {}) {
+    this.audioManager = audioManager;
     this.hudEl = document.getElementById('hud');
     this.levelEl = document.getElementById('hud-level');
     this.killsEl = document.getElementById('hud-kills');
@@ -23,14 +31,47 @@ export class UIManager {
     this.gameOverInfoEl = document.getElementById('game-over-info');
     this.retryBtn = document.getElementById('game-over-retry-btn');
 
-    document.getElementById('menu-start-btn').addEventListener('click', () => onStart?.());
-    this.retryBtn.addEventListener('click', () => onRetry?.());
-    this.continueBtn.addEventListener('click', () => onContinue?.());
-    document.getElementById('paused-resume-btn').addEventListener('click', () => onResume?.());
+    this.menuStartBtn = document.getElementById('menu-start-btn');
+    this.menuContinueBtn = document.getElementById('menu-continue-btn');
+    this.muteBtn = document.getElementById('menu-mute-btn');
+
+    this._bindTap(this.menuStartBtn, onStartNewGame);
+    this._bindTap(this.menuContinueBtn, onContinueFromMenu);
+    this._bindTap(this.retryBtn, onRetry);
+    this._bindTap(this.continueBtn, onContinue);
+    this._bindTap(document.getElementById('paused-resume-btn'), onResume);
+
+    this.muteBtn.addEventListener('click', () => this._toggleMute());
+    this._updateMuteButton();
+  }
+
+  _bindTap(element, callback) {
+    element.addEventListener('click', () => {
+      this.audioManager.play('uiTap');
+      callback?.();
+    });
+  }
+
+  _toggleMute() {
+    this.audioManager.setMuted(!this.audioManager.isMuted());
+    this._updateMuteButton();
+    this.audioManager.play('uiTap');
+  }
+
+  _updateMuteButton() {
+    const muted = this.audioManager.isMuted();
+    this.muteBtn.textContent = muted ? 'Zvuk: vypnutý' : 'Zvuk: zapnutý';
+    this.muteBtn.setAttribute('aria-pressed', String(muted));
   }
 
   setLevel(level) {
     this.levelEl.textContent = String(level);
+  }
+
+  setMenuProgress(hasProgress, level) {
+    this.menuContinueBtn.classList.toggle('hidden', !hasProgress);
+    this.menuContinueBtn.textContent = `Pokračovat (level ${level})`;
+    this.menuStartBtn.textContent = hasProgress ? 'Nová hra' : 'Start';
   }
 
   setLevelCompleteInfo({ message, buttonLabel }) {
