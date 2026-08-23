@@ -26,3 +26,31 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.target-state {
+  pointer-events: none;
+}
+
+#ants-layer {
+  will-change: transform;
+}
+
+.ant {
+  pointer-events: none;
+}
+
+#debug-controls {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+}
+
+#debug-damage-btn {
+  padding: 10px 14px;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+}

@@ -1,3 +1,6 @@
+import { Target } from './target.js';
+import { AntManager } from './antManager.js';
+
 const MAX_DT = 0.1;
 
 const STATES = Object.freeze({
@@ -17,6 +20,19 @@ export class Game {
     this._onVisibilityChange = this._onVisibilityChange.bind(this);
     this._onBlur = this._onBlur.bind(this);
     this._tick = this._tick.bind(this);
+
+    this.target = new Target(document.getElementById('target'), {
+      onDestroyed: () => console.log('[Game] cíl zničen'),
+    });
+    this.antManager = new AntManager(document.getElementById('ants-layer'), this.target.pos);
+    this.antManager.spawn('normal');
+
+    this._bindDebugControls();
+  }
+
+  _bindDebugControls() {
+    const debugDamageBtn = document.getElementById('debug-damage-btn');
+    debugDamageBtn.addEventListener('click', () => this.target.applyDamage(10));
   }
 
   start() {
@@ -31,8 +47,7 @@ export class Game {
   }
 
   update(dt) {
-    const fps = dt > 0 ? Math.round(1 / dt) : 0;
-    console.log(`[Game] update dt=${(dt * 1000).toFixed(1)}ms fps=${fps}`);
+    this.antManager.update(dt);
   }
 
   pause() {
