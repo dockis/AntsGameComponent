@@ -26,6 +26,12 @@ export class Target {
     return { x: parseFloat(match[1]), y: parseFloat(match[2]) };
   }
 
+  reset() {
+    this.health = this.maxHealth;
+    this._currentStateIndex = -1;
+    this._applyVisualState();
+  }
+
   applyDamage(amount) {
     if (this.health <= 0) return;
 
