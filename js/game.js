@@ -76,13 +76,6 @@ export class Game {
     this._updateHud();
 
     this.orientationManager = new OrientationManager(document.getElementById('game-container'));
-
-    this._bindDebugControls();
-  }
-
-  _bindDebugControls() {
-    const debugDamageBtn = document.getElementById('debug-damage-btn');
-    debugDamageBtn.addEventListener('click', () => this.target.applyDamage(10));
   }
 
   start() {
