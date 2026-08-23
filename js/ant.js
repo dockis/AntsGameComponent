@@ -67,6 +67,7 @@ export class Ant {
     this.pos.y = pos.y;
     this.heading = heading;
     this.wanderAngle = (Math.random() - 0.5) * Math.PI;
+    this.levelSpeedMultiplier = speedMultiplier;
     this.speed = randomVariance(
       GAME_CONFIG.baseAntSpeed * typeConfig.speedMultiplier * speedMultiplier,
       GAME_CONFIG.antVariance
@@ -74,11 +75,11 @@ export class Ant {
     this.wanderJitter = randomVariance(GAME_CONFIG.wanderJitter, GAME_CONFIG.antVariance);
     this.turnSpeed = randomVariance(GAME_CONFIG.turnSpeed, GAME_CONFIG.antVariance);
     this.damagePerSecond = GAME_CONFIG.baseDamagePerSecond * typeConfig.damageMultiplier;
-    this.hitsToKill = typeConfig.hitsToKill;
+    this.hitsRemaining = typeConfig.hitsToKill;
     this.eating = false;
     this.active = true;
 
-    this.visual.classList.remove('squish', 'type-aggressive', 'type-armored');
+    this.visual.classList.remove('squish', 'hit-flash', 'type-aggressive', 'type-armored');
     if (type !== 'normal') this.visual.classList.add(`type-${type}`);
     this.el.style.display = 'block';
     this._applyTransform();
@@ -91,6 +92,40 @@ export class Ant {
 
   playSquish() {
     this.visual.classList.add('squish');
+  }
+
+  // Zaznamená zásah. Vrací true, pokud mravenec má být odstraněn (despawn),
+  // false pokud jen "odzbrojen" na afterFirstHit typ a zůstává aktivní.
+  applyHit() {
+    this.hitsRemaining -= 1;
+    const typeConfig = ANT_TYPES[this.type];
+
+    if (this.hitsRemaining > 0 && typeConfig.afterFirstHit) {
+      this._downgradeTo(typeConfig.afterFirstHit);
+      return false;
+    }
+
+    return true;
+  }
+
+  _downgradeTo(type) {
+    const typeConfig = ANT_TYPES[type];
+    this.type = type;
+    this.speed = randomVariance(
+      GAME_CONFIG.baseAntSpeed * typeConfig.speedMultiplier * this.levelSpeedMultiplier,
+      GAME_CONFIG.antVariance
+    );
+    this.damagePerSecond = GAME_CONFIG.baseDamagePerSecond * typeConfig.damageMultiplier;
+
+    this.visual.classList.remove('type-aggressive', 'type-armored');
+    if (type !== 'normal') this.visual.classList.add(`type-${type}`);
+    this._playHitFlash();
+  }
+
+  _playHitFlash() {
+    this.visual.classList.remove('hit-flash');
+    this.visual.addEventListener('animationend', () => this.visual.classList.remove('hit-flash'), { once: true });
+    this.visual.classList.add('hit-flash');
   }
 
   update(dt, targetPos) {

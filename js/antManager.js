@@ -3,15 +3,19 @@ import { Ant } from './ant.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
-// Vážený náhodný výběr mezi normal/aggressive dle sekce 6 dokumentu 00.
-// armored (Typ 3) je zatím mimo rozsah (feature 10) a jeho procenta se ignorují.
+// Vážený náhodný výběr mezi normal/aggressive/armored dle sekce 6 dokumentu 00.
 function pickWeightedType(ants) {
   const normalWeight = ants.normal ?? 0;
   const aggressiveWeight = ants.aggressive ?? 0;
-  const total = normalWeight + aggressiveWeight;
+  const armoredWeight = ants.armored ?? 0;
+  const total = normalWeight + aggressiveWeight + armoredWeight;
   if (total <= 0) return 'normal';
 
-  return Math.random() * total < normalWeight ? 'normal' : 'aggressive';
+  let roll = Math.random() * total;
+  if (roll < normalWeight) return 'normal';
+  roll -= normalWeight;
+  if (roll < aggressiveWeight) return 'aggressive';
+  return 'armored';
 }
 
 export class AntManager {
@@ -70,8 +74,14 @@ export class AntManager {
     this.activeCount--;
   }
 
-  kill(ant) {
+  // Zásah mravence dotykem. Odolný typ (armored) po prvním zásahu jen přejde
+  // na vlastnosti afterFirstHit typu a zůstává aktivní — despawn proběhne
+  // teprve při dosažení hitsRemaining === 0 (viz Ant.applyHit).
+  registerHit(ant) {
     if (!ant.active) return;
+
+    const eliminated = ant.applyHit();
+    if (!eliminated) return;
 
     ant.active = false;
     ant.removing = true;
