@@ -3,6 +3,7 @@ import { AntManager } from './antManager.js';
 import { InputManager } from './input.js';
 import { UIManager } from './ui.js';
 import { LevelManager } from './levelManager.js';
+import { AudioManager } from './audio.js';
 
 const MAX_DT = 0.1;
 
@@ -38,22 +39,37 @@ export class Game {
     this._tick = this._tick.bind(this);
 
     this.levelManager = new LevelManager();
+    this.audioManager = new AudioManager();
+    document.addEventListener('pointerdown', () => this.audioManager.unlock(), { once: true });
 
     this.target = new Target(document.getElementById('target'), {
       onDestroyed: () => this.gameOver(),
+      onCriticalHealth: () => this.audioManager.play('criticalHealth'),
     });
     this.antManager = new AntManager(document.getElementById('ants-layer'), this.target, this.levelManager.config, {
-      onKill: () => this._onAntKilled(),
+      onKill: () => {
+        this._onAntKilled();
+        this.audioManager.play('kill');
+      },
+      onHit: () => this.audioManager.play('hit'),
+      onArmoredFirstHit: () => this.audioManager.play('armoredFirstHit'),
+      onConsumeTick: () => this.audioManager.play('consumeTick'),
     });
     this.inputManager = new InputManager(document.getElementById('scene'), this.antManager);
     this.uiManager = new UIManager({
-      onStart: () => this.startGame(),
+      audioManager: this.audioManager,
+      onStartNewGame: () => this.startNewGame(),
+      onContinueFromMenu: () => this.startGame(),
       onRetry: () => this.retryLevel(),
       onContinue: () => this.continueLevel(),
       onResume: () => this.resumeGame(),
     });
     this.uiManager.setLevel(this.levelManager.currentLevel);
     this.uiManager.setState(this.state);
+    this.uiManager.setMenuProgress(
+      this.levelManager.currentLevel > 1 || this.levelManager.highestUnlocked > 1,
+      this.levelManager.currentLevel
+    );
     this._updateHud();
 
     this._bindDebugControls();
@@ -84,6 +100,11 @@ export class Game {
       this._onboardingSeen = true;
       this.uiManager.showOnboarding();
     }
+  }
+
+  startNewGame() {
+    this.levelManager.resetToLevel1();
+    this.startGame();
   }
 
   retryLevel() {
@@ -120,6 +141,7 @@ export class Game {
     const result = this.levelManager.registerFailure();
     this._lastFailureAction = result.action;
     this._transitionTo(STATES.GAME_OVER);
+    this.audioManager.play('gameOver');
 
     if (result.action === 'reset') {
       this.uiManager.setGameOverInfo({
@@ -142,6 +164,7 @@ export class Game {
     const result = this.levelManager.registerSuccess();
     this._lastLevelResult = result;
     this._transitionTo(STATES.LEVEL_COMPLETE);
+    this.audioManager.play('levelComplete');
 
     this.uiManager.setLevelCompleteInfo({
       message: result.gameComplete

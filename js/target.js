@@ -1,11 +1,13 @@
 import { GAME_CONFIG } from './config.js';
 
 export class Target {
-  constructor(groupElement, { maxHealth = GAME_CONFIG.targetMaxHealth, onDestroyed = null } = {}) {
+  constructor(groupElement, { maxHealth = GAME_CONFIG.targetMaxHealth, onDestroyed = null, onCriticalHealth = null } = {}) {
     this.el = groupElement;
     this.maxHealth = maxHealth;
     this.health = maxHealth;
     this.onDestroyed = onDestroyed;
+    this.onCriticalHealth = onCriticalHealth;
+    this._criticalHealthTriggered = false;
     this.pos = this._parsePos(groupElement.getAttribute('transform'));
 
     this.stateElements = Array.from(
@@ -29,6 +31,7 @@ export class Target {
   reset() {
     this.health = this.maxHealth;
     this._currentStateIndex = -1;
+    this._criticalHealthTriggered = false;
     this._applyVisualState();
   }
 
@@ -37,6 +40,11 @@ export class Target {
 
     this.health = Math.max(0, this.health - amount);
     this._applyVisualState();
+
+    if (!this._criticalHealthTriggered && this.health / this.maxHealth <= GAME_CONFIG.criticalHealthThreshold) {
+      this._criticalHealthTriggered = true;
+      if (this.onCriticalHealth) this.onCriticalHealth();
+    }
 
     if (this.health === 0) {
       console.log('[Target] zničen (health dosáhlo 0)');

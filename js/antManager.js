@@ -19,11 +19,14 @@ function pickWeightedType(ants) {
 }
 
 export class AntManager {
-  constructor(layerElement, target, levelConfig, { onKill = null } = {}) {
+  constructor(layerElement, target, levelConfig, { onKill = null, onHit = null, onArmoredFirstHit = null, onConsumeTick = null } = {}) {
     this.layerElement = layerElement;
     this.target = target;
     this.levelConfig = levelConfig;
     this.onKill = onKill;
+    this.onHit = onHit;
+    this.onArmoredFirstHit = onArmoredFirstHit;
+    this.onConsumeTick = onConsumeTick;
     this.activeCount = 0;
     this.pool = Array.from({ length: GAME_CONFIG.antPoolSize }, () => {
       const el = document.createElementNS(SVG_NS, 'g');
@@ -80,8 +83,13 @@ export class AntManager {
   registerHit(ant) {
     if (!ant.active) return;
 
+    if (this.onHit) this.onHit();
+
     const eliminated = ant.applyHit();
-    if (!eliminated) return;
+    if (!eliminated) {
+      if (this.onArmoredFirstHit) this.onArmoredFirstHit();
+      return;
+    }
 
     ant.active = false;
     ant.removing = true;
@@ -101,6 +109,8 @@ export class AntManager {
       }
     }
 
+    let anyEating = false;
+
     for (const ant of this.pool) {
       if (ant.removing) {
         ant.squishTimer -= dt * 1000;
@@ -116,8 +126,11 @@ export class AntManager {
 
       if (ant.eating) {
         this.target.applyDamage(ant.damagePerSecond * dt);
+        anyEating = true;
       }
     }
+
+    if (anyEating && this.onConsumeTick) this.onConsumeTick();
   }
 
   _randomEdgeSpawn() {

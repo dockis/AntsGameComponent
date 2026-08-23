@@ -179,12 +179,29 @@ body {
 }
 
 .screen-content button {
+  display: block;
+  margin: 0 auto;
   padding: 14px 28px;
   font-size: 16px;
   background: #4caf7d;
   color: #fff;
   border: none;
   border-radius: 8px;
+}
+
+.screen-content button + button {
+  margin-top: 12px;
+}
+
+.screen-content button.hidden {
+  display: none;
+}
+
+.screen-content .menu-mute-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  padding: 10px 20px;
 }
 
 #debug-controls {
