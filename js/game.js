@@ -49,6 +49,7 @@ export class Game {
       onCriticalHealth: () => this.audioManager.play('criticalHealth'),
     });
     this.antManager = new AntManager(document.getElementById('ants-layer'), this.target, this.levelManager.config, {
+      stainsLayerElement: document.getElementById('stains-layer'),
       onKill: () => {
         this._onAntKilled();
         this.audioManager.play('kill');
