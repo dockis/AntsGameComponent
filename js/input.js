@@ -9,6 +9,6 @@ export class InputManager {
     const antEl = event.target.closest('.ant');
     if (!antEl || !antEl.ant || !antEl.ant.active) return;
 
-    this.antManager.kill(antEl.ant);
+    this.antManager.registerHit(antEl.ant);
   }
 }
