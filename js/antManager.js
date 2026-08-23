@@ -1,5 +1,6 @@
 import { GAME_CONFIG } from './config.js';
 import { Ant } from './ant.js';
+import { StainManager } from './stainManager.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -19,7 +20,7 @@ function pickWeightedType(ants) {
 }
 
 export class AntManager {
-  constructor(layerElement, target, levelConfig, { onKill = null, onHit = null, onArmoredFirstHit = null, onConsumeTick = null } = {}) {
+  constructor(layerElement, target, levelConfig, { onKill = null, onHit = null, onArmoredFirstHit = null, onConsumeTick = null, stainsLayerElement } = {}) {
     this.layerElement = layerElement;
     this.target = target;
     this.levelConfig = levelConfig;
@@ -27,6 +28,7 @@ export class AntManager {
     this.onHit = onHit;
     this.onArmoredFirstHit = onArmoredFirstHit;
     this.onConsumeTick = onConsumeTick;
+    this.stainManager = new StainManager(stainsLayerElement);
     this.activeCount = 0;
     this.pool = Array.from({ length: GAME_CONFIG.antPoolSize }, () => {
       const el = document.createElementNS(SVG_NS, 'g');
@@ -69,6 +71,7 @@ export class AntManager {
     }
     this.activeCount = 0;
     this._scheduleNextSpawn();
+    this.stainManager.reset();
   }
 
   despawn(ant) {
@@ -91,6 +94,7 @@ export class AntManager {
       return;
     }
 
+    this.stainManager.spawn(ant.pos, ant.heading);
     ant.active = false;
     ant.removing = true;
     ant.squishTimer = GAME_CONFIG.squishDurationMs;
@@ -99,6 +103,7 @@ export class AntManager {
   }
 
   update(dt) {
+    this.stainManager.update(dt);
     this._spawnTimer -= dt * 1000;
     if (this._spawnTimer <= 0) {
       if (this.activeCount < this.levelConfig.maxAnts) {

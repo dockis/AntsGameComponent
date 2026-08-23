@@ -18,6 +18,9 @@ export const GAME_CONFIG = {
   antHitboxRadius: 16, // neviditelný dotykový hitbox, ~1,5-2x vizuální velikosti mravence, sekce 9
   squishDurationMs: 150, // délka vizuální "squish" animace při zabití, sekce 9
   criticalHealthThreshold: 0.25, // hranice pro jednorázový zvuk criticalHealth, sekce 11
+  stainPoolSize: 12,
+  stainDurationMs: 2500, // celková viditelnost skvrny včetně závěrečného fade-out
+  stainFadeMs: 350, // délka závěrečného fade-out z stainDurationMs
 };
 
 export const ANT_TYPES = {
