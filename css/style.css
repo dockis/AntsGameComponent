@@ -136,6 +136,11 @@ body {
   margin-bottom: 20px;
 }
 
+.screen-content p {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
 .screen-content button {
   padding: 14px 28px;
   font-size: 16px;
