@@ -1,4 +1,5 @@
 import { GAME_CONFIG } from './config.js';
+import * as svgAssets from './svgAssets.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -20,26 +21,7 @@ export class StainManager {
   }
 
   _buildVisual(el) {
-    const splat = document.createElementNS(SVG_NS, 'ellipse');
-    splat.setAttribute('class', 'ant-stain-splat');
-    splat.setAttribute('rx', '9');
-    splat.setAttribute('ry', '4.5');
-
-    const drop1 = document.createElementNS(SVG_NS, 'circle');
-    drop1.setAttribute('class', 'ant-stain-drop');
-    drop1.setAttribute('cx', '-11');
-    drop1.setAttribute('cy', '-2');
-    drop1.setAttribute('r', '1.6');
-
-    const drop2 = document.createElementNS(SVG_NS, 'circle');
-    drop2.setAttribute('class', 'ant-stain-drop');
-    drop2.setAttribute('cx', '12');
-    drop2.setAttribute('cy', '3');
-    drop2.setAttribute('r', '1.2');
-
-    el.appendChild(splat);
-    el.appendChild(drop1);
-    el.appendChild(drop2);
+    el.appendChild(svgAssets.getFragment('antStain'));
   }
 
   spawn(pos, heading) {

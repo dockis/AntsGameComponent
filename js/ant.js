@@ -1,6 +1,15 @@
 import { GAME_CONFIG, ANT_TYPES } from './config.js';
+import * as svgAssets from './svgAssets.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
+
+// Dnešní CSS scale typové varianty se přesunul do obsahu SVG assetů (viz feature 16),
+// ale hitbox zůstává funkční prvek v JS — dopadová plocha agresivních/odolných
+// mravenců se škáluje stejně jako dřív, jen přímo na circle.ant-hitbox.
+const ANT_HITBOX_SCALE = {
+  aggressive: [1.15, 1.3],
+  armored: [1.15, 1.3],
+};
 
 function lerpAngle(from, to, t) {
   let diff = ((to - from + Math.PI) % (Math.PI * 2)) - Math.PI;
@@ -36,28 +45,28 @@ export class Ant {
     this.visual = document.createElementNS(SVG_NS, 'g');
     this.visual.setAttribute('class', 'ant-visual');
 
-    const hitbox = document.createElementNS(SVG_NS, 'circle');
-    hitbox.setAttribute('class', 'ant-hitbox');
-    hitbox.setAttribute('r', String(GAME_CONFIG.antHitboxRadius));
-    hitbox.setAttribute('fill', 'transparent');
+    this.hitbox = document.createElementNS(SVG_NS, 'circle');
+    this.hitbox.setAttribute('class', 'ant-hitbox');
+    this.hitbox.setAttribute('r', String(GAME_CONFIG.antHitboxRadius));
+    this.hitbox.setAttribute('fill', 'transparent');
 
-    const body = document.createElementNS(SVG_NS, 'ellipse');
-    body.setAttribute('class', 'ant-body');
-    body.setAttribute('rx', '7');
-    body.setAttribute('ry', '4');
-    body.setAttribute('fill', '#3b2a1a');
-
-    const head = document.createElementNS(SVG_NS, 'ellipse');
-    head.setAttribute('class', 'ant-head');
-    head.setAttribute('cx', '8');
-    head.setAttribute('rx', '3.5');
-    head.setAttribute('ry', '3');
-    head.setAttribute('fill', '#241a10');
-
-    this.visual.appendChild(hitbox);
-    this.visual.appendChild(body);
-    this.visual.appendChild(head);
+    this.visual.appendChild(this.hitbox);
     this.el.appendChild(this.visual);
+  }
+
+  _setTypeVisual(type) {
+    for (const node of Array.from(this.visual.children)) {
+      if (node !== this.hitbox) this.visual.removeChild(node);
+    }
+    const assetName = 'ant' + type[0].toUpperCase() + type.slice(1);
+    this.visual.appendChild(svgAssets.getFragment(assetName));
+
+    const scale = ANT_HITBOX_SCALE[type];
+    if (scale) {
+      this.hitbox.setAttribute('transform', `scale(${scale[0]},${scale[1]})`);
+    } else {
+      this.hitbox.removeAttribute('transform');
+    }
   }
 
   reset({ pos, heading, type = 'normal', speedMultiplier = 1 }) {
@@ -79,8 +88,8 @@ export class Ant {
     this.eating = false;
     this.active = true;
 
-    this.visual.classList.remove('squish', 'hit-flash', 'type-aggressive', 'type-armored');
-    if (type !== 'normal') this.visual.classList.add(`type-${type}`);
+    this.visual.classList.remove('squish', 'hit-flash');
+    this._setTypeVisual(type);
     this.el.style.display = 'block';
     this._applyTransform();
   }
@@ -117,8 +126,7 @@ export class Ant {
     );
     this.damagePerSecond = GAME_CONFIG.baseDamagePerSecond * typeConfig.damageMultiplier;
 
-    this.visual.classList.remove('type-aggressive', 'type-armored');
-    if (type !== 'normal') this.visual.classList.add(`type-${type}`);
+    this._setTypeVisual(type);
     this._playHitFlash();
   }
 
