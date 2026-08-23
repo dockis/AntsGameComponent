@@ -15,6 +15,7 @@ export class UIManager {
     this.killsEl = document.getElementById('hud-kills');
     this.healthBarEl = document.getElementById('hud-health-bar');
 
+    this.orientationEl = document.getElementById('screen-orientation');
     this.onboardingEl = document.getElementById('screen-onboarding');
     this._onboardingTimer = null;
     this._onboardingDismiss = () => this.hideOnboarding();
@@ -87,6 +88,10 @@ export class UIManager {
   update({ killedCount, killTarget, healthRatio }) {
     this.killsEl.textContent = `${killedCount} / ${killTarget}`;
     this.healthBarEl.style.width = `${Math.max(0, healthRatio) * 100}%`;
+  }
+
+  setOrientationBlocked(isLandscape) {
+    this.orientationEl.classList.toggle('visible', isLandscape);
   }
 
   setState(state) {

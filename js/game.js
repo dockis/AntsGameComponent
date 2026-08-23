@@ -4,6 +4,7 @@ import { InputManager } from './input.js';
 import { UIManager } from './ui.js';
 import { LevelManager } from './levelManager.js';
 import { AudioManager } from './audio.js';
+import { OrientationManager } from './orientation.js';
 
 const MAX_DT = 0.1;
 
@@ -36,6 +37,7 @@ export class Game {
 
     this._onVisibilityChange = this._onVisibilityChange.bind(this);
     this._onBlur = this._onBlur.bind(this);
+    this._onOrientationChange = this._onOrientationChange.bind(this);
     this._tick = this._tick.bind(this);
 
     this.levelManager = new LevelManager();
@@ -71,6 +73,8 @@ export class Game {
       this.levelManager.currentLevel
     );
     this._updateHud();
+
+    this.orientationManager = new OrientationManager({ onChange: this._onOrientationChange });
 
     this._bindDebugControls();
   }
@@ -226,6 +230,13 @@ export class Game {
 
   _onBlur() {
     this.pause();
+  }
+
+  // Overlay se zobrazuje nezávisle na stavu hry (blokuje i menu/game-over apod.).
+  // Návrat do portraitu overlay jen skryje — hra čeká na explicitní "Pokračovat" (sekce 17/19 dokumentu 00).
+  _onOrientationChange(isLandscape) {
+    this.uiManager.setOrientationBlocked(isLandscape);
+    if (isLandscape) this.pause();
   }
 
   _tick(timestamp) {

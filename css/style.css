@@ -168,6 +168,10 @@ body {
   display: flex;
 }
 
+.screen-orientation {
+  z-index: 30;
+}
+
 .screen-content h1,
 .screen-content h2 {
   margin-bottom: 20px;
