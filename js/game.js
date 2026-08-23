@@ -45,6 +45,7 @@ export class Game {
     document.addEventListener('pointerdown', () => this.audioManager.unlock(), { once: true });
 
     this.target = new Target(document.getElementById('target'), {
+      typeKey: `level${this.levelManager.config.level}`,
       onDestroyed: () => this.gameOver(),
       onCriticalHealth: () => this.audioManager.play('criticalHealth'),
     });
@@ -173,6 +174,7 @@ export class Game {
   }
 
   _startLevel() {
+    this.target.setType(`level${this.levelManager.config.level}`);
     this._resetScene();
     this.antManager.setLevelConfig(this.levelManager.config);
     this.uiManager.setLevel(this.levelManager.currentLevel);

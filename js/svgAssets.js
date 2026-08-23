@@ -1,15 +1,12 @@
+import { LEVELS } from './config.js';
+
 const SVG_BASE_PATH = 'js/assets/svg/';
 const SVG_NAMES = [
   'antNormal',
   'antAggressive',
   'antArmored',
   'antStain',
-  'targetState0',
-  'targetState1',
-  'targetState2',
-  'targetState3',
-  'targetState4',
-  'targetState5',
+  ...LEVELS.flatMap((l) => Array.from({ length: 6 }, (_, i) => `level${l.level}State${i}`)),
 ];
 
 const _templates = {};

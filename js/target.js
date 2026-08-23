@@ -2,7 +2,7 @@ import { GAME_CONFIG } from './config.js';
 import * as svgAssets from './svgAssets.js';
 
 export class Target {
-  constructor(groupElement, { maxHealth = GAME_CONFIG.targetMaxHealth, onDestroyed = null, onCriticalHealth = null } = {}) {
+  constructor(groupElement, { typeKey, maxHealth = GAME_CONFIG.targetMaxHealth, onDestroyed = null, onCriticalHealth = null } = {}) {
     this.el = groupElement;
     this.maxHealth = maxHealth;
     this.health = maxHealth;
@@ -15,10 +15,18 @@ export class Target {
       { length: 6 },
       (_, i) => this.el.querySelector(`#target-state-${i}`)
     );
-    this.stateElements.forEach((el, i) => el.appendChild(svgAssets.getFragment(`targetState${i}`)));
+
+    this.setType(typeKey);
 
     this._currentStateIndex = -1;
     this._applyVisualState();
+  }
+
+  setType(typeKey) {
+    this.stateElements.forEach((el, i) => {
+      el.replaceChildren();
+      el.appendChild(svgAssets.getFragment(`${typeKey}State${i}`));
+    });
   }
 
   _parsePos(transform) {
