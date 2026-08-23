@@ -5,6 +5,7 @@ import { UIManager } from './ui.js';
 import { LevelManager } from './levelManager.js';
 import { AudioManager } from './audio.js';
 import { OrientationManager } from './orientation.js';
+import * as svgAssets from './svgAssets.js';
 
 const MAX_DT = 0.1;
 
@@ -244,5 +245,12 @@ export class Game {
   }
 }
 
-const game = new Game();
-game.start();
+// Grafika musí být natažená a naklonovatelná ještě před vytvořením Target/AntManager
+// (na rozdíl od zvuků, které se mohou donačíst na pozadí bez viditelného dopadu).
+async function main() {
+  await svgAssets.preloadAll();
+  const game = new Game();
+  game.start();
+}
+
+main();
