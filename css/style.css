@@ -39,6 +39,21 @@ body {
   pointer-events: none;
 }
 
+.ant-hitbox {
+  pointer-events: auto;
+}
+
+.ant-visual {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 150ms ease-out, opacity 150ms ease-out; /* musí odpovídat GAME_CONFIG.squishDurationMs */
+}
+
+.ant-visual.squish {
+  transform: scale(0);
+  opacity: 0;
+}
+
 #debug-controls {
   position: absolute;
   top: 12px;

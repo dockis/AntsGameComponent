@@ -10,10 +10,13 @@ export const GAME_CONFIG = {
   sceneWidth: 400, // musí odpovídat viewBoxu v index.html
   sceneHeight: 800,
   baseAntSpeed: 60, // jednotky viewBoxu/s, viz sekce 8 dokumentu 00
+  baseDamagePerSecond: 3, // viz sekce 8 dokumentu 00
   wanderJitter: 2.0, // sekce 5
   turnSpeed: 4.0, // sekce 5
   antVariance: 0.15, // ±15 % per-instance odchylka speed/wanderJitter/turnSpeed, viz sekce 5
   antSpawnMargin: 20, // vzdálenost mimo viewBox, kde se mravenec spawne
+  antHitboxRadius: 16, // neviditelný dotykový hitbox, ~1,5-2x vizuální velikosti mravence, sekce 9
+  squishDurationMs: 150, // délka vizuální "squish" animace při zabití, sekce 9
 };
 
 export const ANT_TYPES = {

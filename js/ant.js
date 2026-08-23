@@ -22,12 +22,23 @@ export class Ant {
     this.speed = GAME_CONFIG.baseAntSpeed;
     this.wanderJitter = GAME_CONFIG.wanderJitter;
     this.turnSpeed = GAME_CONFIG.turnSpeed;
+    this.damagePerSecond = 0;
+    this.eating = false;
     this.active = false;
 
+    this.el.ant = this;
     this._buildVisual();
   }
 
   _buildVisual() {
+    this.visual = document.createElementNS(SVG_NS, 'g');
+    this.visual.setAttribute('class', 'ant-visual');
+
+    const hitbox = document.createElementNS(SVG_NS, 'circle');
+    hitbox.setAttribute('class', 'ant-hitbox');
+    hitbox.setAttribute('r', String(GAME_CONFIG.antHitboxRadius));
+    hitbox.setAttribute('fill', 'transparent');
+
     const body = document.createElementNS(SVG_NS, 'ellipse');
     body.setAttribute('rx', '7');
     body.setAttribute('ry', '4');
@@ -39,8 +50,10 @@ export class Ant {
     head.setAttribute('ry', '3');
     head.setAttribute('fill', '#241a10');
 
-    this.el.appendChild(body);
-    this.el.appendChild(head);
+    this.visual.appendChild(hitbox);
+    this.visual.appendChild(body);
+    this.visual.appendChild(head);
+    this.el.appendChild(this.visual);
   }
 
   reset({ pos, heading, type = 'normal' }) {
@@ -53,8 +66,11 @@ export class Ant {
     this.speed = randomVariance(GAME_CONFIG.baseAntSpeed * typeConfig.speedMultiplier, GAME_CONFIG.antVariance);
     this.wanderJitter = randomVariance(GAME_CONFIG.wanderJitter, GAME_CONFIG.antVariance);
     this.turnSpeed = randomVariance(GAME_CONFIG.turnSpeed, GAME_CONFIG.antVariance);
+    this.damagePerSecond = GAME_CONFIG.baseDamagePerSecond * typeConfig.damageMultiplier;
+    this.eating = false;
     this.active = true;
 
+    this.visual.classList.remove('squish');
     this.el.style.display = 'block';
     this._applyTransform();
   }
@@ -64,7 +80,13 @@ export class Ant {
     this.el.style.display = 'none';
   }
 
+  playSquish() {
+    this.visual.classList.add('squish');
+  }
+
   update(dt, targetPos) {
+    if (this.eating) return;
+
     const toTargetX = targetPos.x - this.pos.x;
     const toTargetY = targetPos.y - this.pos.y;
     const desiredAngle = Math.atan2(toTargetY, toTargetX);
@@ -78,6 +100,10 @@ export class Ant {
     this.pos.y += Math.sin(this.heading) * this.speed * dt;
 
     this._applyTransform();
+
+    if (this.distanceTo(targetPos) <= GAME_CONFIG.eatingRadius) {
+      this.eating = true;
+    }
   }
 
   distanceTo(pos) {
