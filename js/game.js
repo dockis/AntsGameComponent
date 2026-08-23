@@ -37,7 +37,6 @@ export class Game {
 
     this._onVisibilityChange = this._onVisibilityChange.bind(this);
     this._onBlur = this._onBlur.bind(this);
-    this._onOrientationChange = this._onOrientationChange.bind(this);
     this._tick = this._tick.bind(this);
 
     this.levelManager = new LevelManager();
@@ -75,7 +74,7 @@ export class Game {
     );
     this._updateHud();
 
-    this.orientationManager = new OrientationManager({ onChange: this._onOrientationChange });
+    this.orientationManager = new OrientationManager(document.getElementById('game-container'));
 
     this._bindDebugControls();
   }
@@ -231,13 +230,6 @@ export class Game {
 
   _onBlur() {
     this.pause();
-  }
-
-  // Overlay se zobrazuje nezávisle na stavu hry (blokuje i menu/game-over apod.).
-  // Návrat do portraitu overlay jen skryje — hra čeká na explicitní "Pokračovat" (sekce 17/19 dokumentu 00).
-  _onOrientationChange(isLandscape) {
-    this.uiManager.setOrientationBlocked(isLandscape);
-    if (isLandscape) this.pause();
   }
 
   _tick(timestamp) {

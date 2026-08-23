@@ -21,6 +21,30 @@ body {
   overflow: hidden;
 }
 
+/* Vynucená portrait orientace: telefon fyzicky v landscape, obsah zůstává vizuálně
+   i funkčně v portraitu. Vnitřní prvky (#hud, #scene, .screen) jsou vůči
+   #game-container sizované přes 100%/inset:0, takže prohozené rozměry převezmou
+   automaticky. Směr (rotate-cw/rotate-ccw) řídí js/orientation.js. */
+@media (orientation: landscape) {
+  #game-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100dvh;
+    width: 100svh;
+    height: 100vw;
+    transform-origin: center;
+  }
+
+  #game-container.rotate-cw {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  #game-container.rotate-ccw {
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
+}
+
 #scene {
   display: block;
   width: 100%;
@@ -181,10 +205,6 @@ body {
 
 .screen.visible {
   display: flex;
-}
-
-.screen-orientation {
-  z-index: 30;
 }
 
 .screen-content h1,
