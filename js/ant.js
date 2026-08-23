@@ -25,6 +25,8 @@ export class Ant {
     this.damagePerSecond = 0;
     this.eating = false;
     this.active = false;
+    this.removing = false;
+    this.squishTimer = 0;
 
     this.el.ant = this;
     this._buildVisual();
@@ -56,14 +58,17 @@ export class Ant {
     this.el.appendChild(this.visual);
   }
 
-  reset({ pos, heading, type = 'normal' }) {
+  reset({ pos, heading, type = 'normal', speedMultiplier = 1 }) {
     const typeConfig = ANT_TYPES[type];
     this.type = type;
     this.pos.x = pos.x;
     this.pos.y = pos.y;
     this.heading = heading;
     this.wanderAngle = (Math.random() - 0.5) * Math.PI;
-    this.speed = randomVariance(GAME_CONFIG.baseAntSpeed * typeConfig.speedMultiplier, GAME_CONFIG.antVariance);
+    this.speed = randomVariance(
+      GAME_CONFIG.baseAntSpeed * typeConfig.speedMultiplier * speedMultiplier,
+      GAME_CONFIG.antVariance
+    );
     this.wanderJitter = randomVariance(GAME_CONFIG.wanderJitter, GAME_CONFIG.antVariance);
     this.turnSpeed = randomVariance(GAME_CONFIG.turnSpeed, GAME_CONFIG.antVariance);
     this.damagePerSecond = GAME_CONFIG.baseDamagePerSecond * typeConfig.damageMultiplier;
