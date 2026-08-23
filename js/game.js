@@ -1,0 +1,70 @@
+const MAX_DT = 0.1;
+
+const STATES = Object.freeze({
+  MENU: 'MENU',
+  PLAYING: 'PLAYING',
+  LEVEL_COMPLETE: 'LEVEL_COMPLETE',
+  GAME_OVER: 'GAME_OVER',
+  PAUSED: 'PAUSED',
+});
+
+export class Game {
+  constructor() {
+    this.state = STATES.MENU;
+    this.lastTimestamp = null;
+    this._rafId = null;
+
+    this._onVisibilityChange = this._onVisibilityChange.bind(this);
+    this._onBlur = this._onBlur.bind(this);
+    this._tick = this._tick.bind(this);
+  }
+
+  start() {
+    // Stub: menu/onboarding zatím neexistuje, rovnou přejdeme do PLAYING.
+    this.state = STATES.PLAYING;
+
+    document.addEventListener('visibilitychange', this._onVisibilityChange);
+    window.addEventListener('blur', this._onBlur);
+
+    this.lastTimestamp = performance.now();
+    this._rafId = requestAnimationFrame(this._tick);
+  }
+
+  update(dt) {
+    const fps = dt > 0 ? Math.round(1 / dt) : 0;
+    console.log(`[Game] update dt=${(dt * 1000).toFixed(1)}ms fps=${fps}`);
+  }
+
+  pause() {
+    if (this.state !== STATES.PLAYING) return;
+    this.state = STATES.PAUSED;
+    console.log('[Game] -> PAUSED');
+  }
+
+  _onVisibilityChange() {
+    if (document.hidden) {
+      this.pause();
+    } else {
+      this.lastTimestamp = performance.now();
+      console.log('[Game] visible again, lastTimestamp reset');
+    }
+  }
+
+  _onBlur() {
+    this.pause();
+  }
+
+  _tick(timestamp) {
+    const dt = Math.min((timestamp - this.lastTimestamp) / 1000, MAX_DT);
+    this.lastTimestamp = timestamp;
+
+    if (this.state === STATES.PLAYING) {
+      this.update(dt);
+    }
+
+    this._rafId = requestAnimationFrame(this._tick);
+  }
+}
+
+const game = new Game();
+game.start();
