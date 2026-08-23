@@ -11,9 +11,32 @@ export const GAME_CONFIG = {
   sceneHeight: 800,
   baseAntSpeed: 60, // jednotky viewBoxu/s, viz sekce 8 dokumentu 00
   baseDamagePerSecond: 3, // viz sekce 8 dokumentu 00
-  wanderJitter: 2.0, // sekce 5
   turnSpeed: 4.0, // sekce 5
-  antVariance: 0.15, // ±15 % per-instance odchylka speed/wanderJitter/turnSpeed, viz sekce 5
+  antVariance: 0.15, // ±15 % per-instance odchylka speed/wanderNoise frekvencí/turnSpeed/burst timingu, viz sekce 5, feature 17
+  seekRadius: 90, // feature 17: od této vzdálenosti k cíli se wander/burst plynule tlumí až k 0 na eatingRadius
+  wanderNoise: {
+    // feature 17: vrstvy plynulého šumu (amplituda v rad, frequency = úhlová frekvence v rad/s),
+    // vzájemně neslučitelné frekvence, aby se vzor nezacykloval viditelně krátce
+    layers: [
+      { frequency: 0.9, amplitude: 0.35 },
+      { frequency: 1.7, amplitude: 0.18 },
+      { frequency: 3.1, amplitude: 0.09 },
+    ],
+  },
+  wanderBurst: {
+    // feature 17: příležitostná výraznější "odbočka" navrch základního šumu
+    intervalMinMs: 1800,
+    intervalMaxMs: 4000,
+    amplitudeMin: 0.6, // rad, spodní hranice špičkové odchylky běžné odbočky
+    amplitudeMax: 1.0, // rad, horní hranice běžné odbočky
+    sharpChance: 0.15, // pravděpodobnost výrazně ostřejší odbočky (cca 1 z 8)
+    sharpAmplitudeMin: 1.3, // rad
+    sharpAmplitudeMax: 2.2, // rad
+    holdMsMin: 150, // jak dlouho mravenec setrvá blízko špičkové odchylky před dozníváním
+    holdMsMax: 1500,
+    decayDurationMs: 700, // délka doznívací fáze po hold fázi
+    decayRate: 6.0, // 1/s, rychlost exponenciálního doznívání zpět k základnímu šumu
+  },
   antSpawnMargin: 20, // vzdálenost mimo viewBox, kde se mravenec spawne
   antHitboxRadius: 16, // neviditelný dotykový hitbox, ~1,5-2x vizuální velikosti mravence, sekce 9
   squishDurationMs: 150, // délka vizuální "squish" animace při zabití, sekce 9
