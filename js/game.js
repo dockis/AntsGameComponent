@@ -2,6 +2,7 @@ import { Target } from './target.js';
 import { AntManager } from './antManager.js';
 import { InputManager } from './input.js';
 import { UIManager } from './ui.js';
+import { LevelManager } from './levelManager.js';
 
 const MAX_DT = 0.1;
 
@@ -22,15 +23,6 @@ const STATE_TRANSITIONS = Object.freeze({
   [STATES.PAUSED]: [STATES.PLAYING],
 });
 
-// Natvrdo pro feature 06, dokud feature 08 nenapojí LevelManager na LEVELS z config.js.
-const LEVEL_CONFIG = {
-  level: 1,
-  killTarget: 20,
-  maxAnts: 8,
-  spawnInterval: [800, 1300],
-  speedMultiplier: 1.1,
-};
-
 export class Game {
   constructor() {
     this.state = STATES.MENU;
@@ -38,15 +30,19 @@ export class Game {
     this._rafId = null;
     this.killedCount = 0;
     this._onboardingSeen = false;
+    this._lastFailureAction = null;
+    this._lastLevelResult = null;
 
     this._onVisibilityChange = this._onVisibilityChange.bind(this);
     this._onBlur = this._onBlur.bind(this);
     this._tick = this._tick.bind(this);
 
+    this.levelManager = new LevelManager();
+
     this.target = new Target(document.getElementById('target'), {
       onDestroyed: () => this.gameOver(),
     });
-    this.antManager = new AntManager(document.getElementById('ants-layer'), this.target, LEVEL_CONFIG, {
+    this.antManager = new AntManager(document.getElementById('ants-layer'), this.target, this.levelManager.config, {
       onKill: () => this._onAntKilled(),
     });
     this.inputManager = new InputManager(document.getElementById('scene'), this.antManager);
@@ -56,7 +52,7 @@ export class Game {
       onContinue: () => this.continueLevel(),
       onResume: () => this.resumeGame(),
     });
-    this.uiManager.setLevel(LEVEL_CONFIG.level);
+    this.uiManager.setLevel(this.levelManager.currentLevel);
     this.uiManager.setState(this.state);
     this._updateHud();
 
@@ -82,6 +78,7 @@ export class Game {
   }
 
   startGame() {
+    this._startLevel();
     this._transitionTo(STATES.PLAYING);
     if (!this._onboardingSeen) {
       this._onboardingSeen = true;
@@ -90,12 +87,20 @@ export class Game {
   }
 
   retryLevel() {
-    this._resetScene();
+    if (this._lastFailureAction === 'reset') {
+      this._transitionTo(STATES.MENU);
+      return;
+    }
+    this._startLevel();
     this._transitionTo(STATES.PLAYING);
   }
 
   continueLevel() {
-    this._resetScene();
+    if (this._lastLevelResult?.gameComplete) {
+      this._transitionTo(STATES.MENU);
+      return;
+    }
+    this._startLevel();
     this._transitionTo(STATES.PLAYING);
   }
 
@@ -110,12 +115,46 @@ export class Game {
 
   gameOver() {
     if (this.state !== STATES.PLAYING) return;
+
+    const level = this.levelManager.currentLevel;
+    const result = this.levelManager.registerFailure();
+    this._lastFailureAction = result.action;
     this._transitionTo(STATES.GAME_OVER);
+
+    if (result.action === 'reset') {
+      this.uiManager.setGameOverInfo({
+        message: `Vráceno na level 1 (level ${level} se nepodařilo dokončit).`,
+        buttonLabel: 'Zpět na start',
+      });
+    } else {
+      const totalText = result.maxAttempts != null ? ` z ${result.maxAttempts}` : '';
+      this.uiManager.setGameOverInfo({
+        message: `Level ${level} — pokus ${result.attemptNumber}${totalText}`,
+        buttonLabel: 'Zkusit znovu',
+      });
+    }
   }
 
   levelComplete() {
     if (this.state !== STATES.PLAYING) return;
+
+    const completedLevel = this.levelManager.currentLevel;
+    const result = this.levelManager.registerSuccess();
+    this._lastLevelResult = result;
     this._transitionTo(STATES.LEVEL_COMPLETE);
+
+    this.uiManager.setLevelCompleteInfo({
+      message: result.gameComplete
+        ? 'Hra dokončena! Zvládl jsi všech 12 levelů.'
+        : `Level ${completedLevel} splněn!`,
+      buttonLabel: result.gameComplete ? 'Zpět do menu' : 'Pokračovat',
+    });
+  }
+
+  _startLevel() {
+    this._resetScene();
+    this.antManager.setLevelConfig(this.levelManager.config);
+    this.uiManager.setLevel(this.levelManager.currentLevel);
   }
 
   _transitionTo(nextState) {
@@ -140,7 +179,7 @@ export class Game {
     if (this.state !== STATES.PLAYING) return;
 
     this.killedCount++;
-    if (this.killedCount >= LEVEL_CONFIG.killTarget) {
+    if (this.killedCount >= this.levelManager.config.killTarget) {
       this.levelComplete();
     }
   }
@@ -148,7 +187,7 @@ export class Game {
   _updateHud() {
     this.uiManager.update({
       killedCount: this.killedCount,
-      killTarget: LEVEL_CONFIG.killTarget,
+      killTarget: this.levelManager.config.killTarget,
       healthRatio: this.target.health / this.target.maxHealth,
     });
   }

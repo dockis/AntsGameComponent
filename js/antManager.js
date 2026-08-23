@@ -21,6 +21,10 @@ export class AntManager {
     this._scheduleNextSpawn();
   }
 
+  setLevelConfig(levelConfig) {
+    this.levelConfig = levelConfig;
+  }
+
   _scheduleNextSpawn() {
     const [min, max] = this.levelConfig.spawnInterval;
     this._spawnTimer = min + Math.random() * (max - min);

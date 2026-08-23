@@ -18,14 +18,29 @@ export class UIManager {
       PAUSED: document.getElementById('screen-paused'),
     };
 
+    this.levelCompleteTitleEl = document.getElementById('level-complete-title');
+    this.continueBtn = document.getElementById('level-complete-continue-btn');
+    this.gameOverInfoEl = document.getElementById('game-over-info');
+    this.retryBtn = document.getElementById('game-over-retry-btn');
+
     document.getElementById('menu-start-btn').addEventListener('click', () => onStart?.());
-    document.getElementById('game-over-retry-btn').addEventListener('click', () => onRetry?.());
-    document.getElementById('level-complete-continue-btn').addEventListener('click', () => onContinue?.());
+    this.retryBtn.addEventListener('click', () => onRetry?.());
+    this.continueBtn.addEventListener('click', () => onContinue?.());
     document.getElementById('paused-resume-btn').addEventListener('click', () => onResume?.());
   }
 
   setLevel(level) {
     this.levelEl.textContent = String(level);
+  }
+
+  setLevelCompleteInfo({ message, buttonLabel }) {
+    this.levelCompleteTitleEl.textContent = message;
+    this.continueBtn.textContent = buttonLabel;
+  }
+
+  setGameOverInfo({ message, buttonLabel }) {
+    this.gameOverInfoEl.textContent = message;
+    this.retryBtn.textContent = buttonLabel;
   }
 
   update({ killedCount, killTarget, healthRatio }) {
