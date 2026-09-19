@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <rect x="-30" y="-70" width="60" height="140" fill="none" stroke="#5a5248" stroke-width="1" stroke-dasharray="6 6" opacity="0.3" />
+  <polygon points="-10,20 5,15 10,30" fill="#d9a066" opacity="0.7" />
+  <ellipse cx="5" cy="-5" rx="6" ry="4" fill="#f7c6d9" opacity="0.6" />
+</svg>
