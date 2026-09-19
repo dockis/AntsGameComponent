@@ -3,5 +3,6 @@ export type {
   AntsGameComponentProps,
   AntsGameComponentHandle,
   AntsGameConfig,
+  DeepPartial,
   GameState,
 } from './types';
