@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <ellipse class="ant-body" rx="7" ry="4" fill="#3b2a1a" />
+  <ellipse class="ant-head" cx="8" rx="3.5" ry="3" fill="#241a10" />
+</svg>

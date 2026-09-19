@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <polygon points="-60,0 -20,-45 20,-10 -20,45" fill="#c0392b" stroke="#7a1f1a" stroke-width="4" />
+  <polygon points="-40,0 -12,-28 5,-8 -12,28" fill="#f7ecd0" />
+  <ellipse cx="-2" cy="-6" rx="4" ry="6" fill="#3b2a1a" transform="rotate(20 -2 -6)" />
+  <rect x="-24" y="-52" width="5" height="12" fill="#5a3a1a" transform="rotate(15 -22 -46)" />
+</svg>
