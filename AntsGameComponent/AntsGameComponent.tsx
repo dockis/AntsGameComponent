@@ -60,11 +60,16 @@ export const AntsGameComponent = forwardRef<AntsGameComponentHandle, AntsGameCom
           <g ref={targetRef} transform={`translate(${sceneWidth / 2},${sceneHeight / 2})`}>
             {/* data-target-state místo id (viz Target.ts) — bezpečné i s víc instancemi na stránce. */}
             {Array.from({ length: TARGET_DAMAGE_STATE_COUNT }, (_, i) => (
-              <g key={i} data-target-state={i} style={i === 0 ? undefined : { display: 'none' }} />
+              <g
+                key={i}
+                data-target-state={i}
+                className={styles.targetState}
+                style={i === 0 ? undefined : { display: 'none' }}
+              />
             ))}
           </g>
           <g ref={stainsLayerRef} />
-          <g ref={antsLayerRef} />
+          <g ref={antsLayerRef} className={styles.antsLayer} />
         </svg>
 
         <Hud

@@ -6,6 +6,8 @@
 // tohoto druhého listeneru zůstal obsah otočený špatným směrem. Viz sekce 17, 19
 // dokumentu 00, feature 15. Instancuje se jen když je AntsGameComponent v `fullscreen`
 // módu (viz plán migrace, sekce "Rizika").
+import { CSS_CLASS } from './cssClassNames';
+
 const LANDSCAPE_QUERY = '(orientation: landscape)';
 
 type Direction = 'cw' | 'ccw';
@@ -65,8 +67,8 @@ export class OrientationManager {
 
   private _applyDirection(): void {
     this._lastDirection = this._detectDirection();
-    this.container.classList.toggle('rotate-cw', this._lastDirection === 'cw');
-    this.container.classList.toggle('rotate-ccw', this._lastDirection === 'ccw');
+    this.container.classList.toggle(CSS_CLASS.rotateCw, this._lastDirection === 'cw');
+    this.container.classList.toggle(CSS_CLASS.rotateCcw, this._lastDirection === 'ccw');
   }
 
   destroy(): void {

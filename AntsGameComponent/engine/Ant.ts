@@ -1,4 +1,5 @@
 import type { AntTypeKey, AntTypesConfig, GameConfig } from '../config/schema';
+import { CSS_CLASS } from './cssClassNames';
 import type { SvgAssetLoader } from './svgAssets';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -88,10 +89,10 @@ export class Ant {
 
   private _buildVisual(): void {
     this.visual = document.createElementNS(SVG_NS, 'g') as SVGGElement;
-    this.visual.setAttribute('class', 'ant-visual');
+    this.visual.setAttribute('class', CSS_CLASS.antVisual);
 
     this.hitbox = document.createElementNS(SVG_NS, 'circle') as SVGCircleElement;
-    this.hitbox.setAttribute('class', 'ant-hitbox');
+    this.hitbox.setAttribute('class', CSS_CLASS.antHitbox);
     this.hitbox.setAttribute('r', String(this.deps.config.antHitboxRadius));
     this.hitbox.setAttribute('fill', 'transparent');
 
@@ -147,7 +148,7 @@ export class Ant {
     this.eating = false;
     this.active = true;
 
-    this.visual.classList.remove('squish', 'hit-flash');
+    this.visual.classList.remove(CSS_CLASS.squish, CSS_CLASS.hitFlash);
     this._setTypeVisual(type);
     this.el.style.display = 'block';
     this._applyTransform();
@@ -159,7 +160,7 @@ export class Ant {
   }
 
   playSquish(): void {
-    this.visual.classList.add('squish');
+    this.visual.classList.add(CSS_CLASS.squish);
   }
 
   // Zaznamená zásah. Vrací true, pokud mravenec má být odstraněn (despawn),
@@ -191,9 +192,11 @@ export class Ant {
   }
 
   private _playHitFlash(): void {
-    this.visual.classList.remove('hit-flash');
-    this.visual.addEventListener('animationend', () => this.visual.classList.remove('hit-flash'), { once: true });
-    this.visual.classList.add('hit-flash');
+    this.visual.classList.remove(CSS_CLASS.hitFlash);
+    this.visual.addEventListener('animationend', () => this.visual.classList.remove(CSS_CLASS.hitFlash), {
+      once: true,
+    });
+    this.visual.classList.add(CSS_CLASS.hitFlash);
   }
 
   update(dt: number, targetPos: Point): void {

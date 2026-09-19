@@ -1,5 +1,6 @@
 import type { AntTypeKey, AntTypesConfig, GameConfig, LevelAntWeights, LevelConfig } from '../config/schema';
 import { Ant, type AntElement, type Point } from './Ant';
+import { CSS_CLASS } from './cssClassNames';
 import { StainManager } from './StainManager';
 import type { SvgAssetLoader } from './svgAssets';
 import type { Target } from './Target';
@@ -55,7 +56,7 @@ export class AntManager {
 
     this.pool = Array.from({ length: deps.config.antPoolSize }, () => {
       const el = document.createElementNS(SVG_NS, 'g') as AntElement;
-      el.setAttribute('class', 'ant');
+      el.setAttribute('class', CSS_CLASS.ant);
       el.style.display = 'none';
       layerElement.appendChild(el);
       return new Ant(el, { config: deps.config, antTypes: deps.antTypes, svgAssets: deps.svgAssets });
@@ -90,7 +91,7 @@ export class AntManager {
     for (const ant of this.pool) {
       ant.hide();
       ant.removing = false;
-      ant.visual.classList.remove('squish');
+      ant.visual.classList.remove(CSS_CLASS.squish);
     }
     this.activeCount = 0;
     this._scheduleNextSpawn();
