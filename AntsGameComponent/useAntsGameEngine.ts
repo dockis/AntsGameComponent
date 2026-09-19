@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { RefObject } from 'react';
 import { mergeConfig } from './config/schema';
 import type { SoundName } from './engine/AudioManager';
-import { Game, type GameRefs, type HudState } from './engine/Game';
+import { Game, type GameOverInfo, type GameRefs, type HudState, type LevelCompleteInfo } from './engine/Game';
 import { Storage } from './engine/Storage';
 import { buildAntSvgAssetNames, SvgAssetLoader } from './engine/svgAssets';
 import type { AntsGameComponentProps, GameState } from './types';
@@ -21,7 +21,7 @@ interface UseAntsGameEngineArgs {
   props: AntsGameComponentProps;
 }
 
-export interface AntsGameEngineHandle {
+export interface AntsGameEngineActions {
   pause(): void;
   resume(): void;
   reset(): void;
@@ -35,6 +35,22 @@ export interface AntsGameEngineHandle {
    * sám zapisovat přímo do DOM (ref), stejně jako to dělá engine pro mravence.
    */
   subscribeHud(listener: (hud: HudState) => void): () => void;
+  /** Interní akce pro Overlay (krok 7), mimo veřejné AntsGameComponentHandle. */
+  startNewGame(): void;
+  continueFromMenu(): void;
+  retryLevel(): void;
+  continueLevel(): void;
+  dismissOnboarding(): void;
+  playUiTap(): void;
+}
+
+export interface AntsGameEngineResult extends AntsGameEngineActions {
+  /** Nízkofrekvenční reaktivní stav (přechody stavu, výsledkové obrazovky) — bezpečné pro React state. */
+  gameState: GameState;
+  levelCompleteInfo: LevelCompleteInfo | null;
+  gameOverInfo: GameOverInfo | null;
+  onboardingVisible: boolean;
+  muted: boolean;
 }
 
 function normalizeBaseUrl(url: string): string {
@@ -48,7 +64,7 @@ export function useAntsGameEngine({
   stainsLayerRef,
   antsLayerRef,
   props,
-}: UseAntsGameEngineArgs): AntsGameEngineHandle {
+}: UseAntsGameEngineArgs): AntsGameEngineResult {
   const gameRef = useRef<Game | null>(null);
   const hudRef = useRef<HudState | null>(null);
   const hudListenersRef = useRef(new Set<(hud: HudState) => void>());
@@ -60,6 +76,12 @@ export function useAntsGameEngine({
   // na <AntsGameComponent key={...} /> pro vynucený remount.
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const [gameState, setGameState] = useState<GameState>('MENU');
+  const [levelCompleteInfo, setLevelCompleteInfo] = useState<LevelCompleteInfo | null>(null);
+  const [gameOverInfo, setGameOverInfo] = useState<GameOverInfo | null>(null);
+  const [onboardingVisible, setOnboardingVisible] = useState(false);
+  const [muted, setMuted] = useState(false);
 
   useEffect(() => {
     const rootEl = rootRef.current;
@@ -110,18 +132,28 @@ export function useAntsGameEngine({
           audioBaseUrl: `${assetsBaseUrl}sounds/`,
           audioOverrides: overrides as unknown as Partial<Record<SoundName, string>> | undefined,
           fullscreen: propsRef.current.fullscreen ?? false,
-          onStateChange: (state) => propsRef.current.onStateChange?.(state),
+          onStateChange: (state) => {
+            setGameState(state);
+            propsRef.current.onStateChange?.(state);
+          },
           onHudUpdate: (hud) => {
             hudRef.current = hud;
             hudListenersRef.current.forEach((listener) => listener(hud));
           },
-          onLevelComplete: (info) => propsRef.current.onLevelComplete?.(info),
-          onGameOver: (info) =>
-            propsRef.current.onGameOver?.({ level: info.level, attempt: info.attemptNumber ?? 0 }),
+          onLevelComplete: (info) => {
+            setLevelCompleteInfo(info);
+            propsRef.current.onLevelComplete?.({ level: info.level, gameComplete: info.gameComplete });
+          },
+          onGameOver: (info) => {
+            setGameOverInfo(info);
+            propsRef.current.onGameOver?.({ level: info.level, attempt: info.attemptNumber ?? 0 });
+          },
           onAntKilled: (info) => propsRef.current.onAntKilled?.(info),
+          onShowOnboarding: () => setOnboardingVisible(true),
         });
 
         if (propsRef.current.muted) game.setMuted(true);
+        setMuted(game.isMuted());
 
         gameRef.current = game;
         game.start();
@@ -138,16 +170,39 @@ export function useAntsGameEngine({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- viz komentář u propsRef výše
   }, []);
 
+  // Stabilní identita metod napříč rendery (lazy init přes ref) — Hud/Overlay na ně
+  // mohou bezpečně navěsit useEffect s dependency polem bez zbytečného re-subscribe churn.
+  const actionsRef = useRef<AntsGameEngineActions | null>(null);
+  if (!actionsRef.current) {
+    actionsRef.current = {
+      pause: () => gameRef.current?.pause(),
+      resume: () => gameRef.current?.resumeGame(),
+      reset: () => gameRef.current?.startNewGame(),
+      mute: (nextMuted: boolean) => {
+        gameRef.current?.setMuted(nextMuted);
+        setMuted(nextMuted);
+      },
+      getState: () => gameRef.current?.state ?? 'MENU',
+      subscribeHud: (listener) => {
+        hudListenersRef.current.add(listener);
+        if (hudRef.current) listener(hudRef.current);
+        return () => hudListenersRef.current.delete(listener);
+      },
+      startNewGame: () => gameRef.current?.startNewGame(),
+      continueFromMenu: () => gameRef.current?.startGame(),
+      retryLevel: () => gameRef.current?.retryLevel(),
+      continueLevel: () => gameRef.current?.continueLevel(),
+      dismissOnboarding: () => setOnboardingVisible(false),
+      playUiTap: () => gameRef.current?.audioManager.play('uiTap'),
+    };
+  }
+
   return {
-    pause: () => gameRef.current?.pause(),
-    resume: () => gameRef.current?.resumeGame(),
-    reset: () => gameRef.current?.startNewGame(),
-    mute: (muted: boolean) => gameRef.current?.setMuted(muted),
-    getState: () => gameRef.current?.state ?? 'MENU',
-    subscribeHud: (listener) => {
-      hudListenersRef.current.add(listener);
-      if (hudRef.current) listener(hudRef.current);
-      return () => hudListenersRef.current.delete(listener);
-    },
+    ...actionsRef.current,
+    gameState,
+    levelCompleteInfo,
+    gameOverInfo,
+    onboardingVisible,
+    muted,
   };
 }
