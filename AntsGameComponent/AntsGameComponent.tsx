@@ -20,6 +20,9 @@ export const AntsGameComponent = forwardRef<AntsGameComponentHandle, AntsGameCom
 
     const engine = useAntsGameEngine({ rootRef, sceneRef, targetRef, stainsLayerRef, antsLayerRef, props });
 
+    // Prázdné dependency pole je záměrné a bezpečné: pause/resume/reset/mute/getState mají
+    // stabilní identitu napříč rendery (viz actionsRef lazy init v useAntsGameEngine), takže
+    // není třeba imperative handle přegenerovávat při každé změně engine.gameState apod.
     useImperativeHandle(
       ref,
       () => ({
@@ -29,7 +32,8 @@ export const AntsGameComponent = forwardRef<AntsGameComponentHandle, AntsGameCom
         mute: (muted: boolean) => engine.mute(muted),
         getState: () => engine.getState(),
       }),
-      [engine]
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      []
     );
 
     // Jen pro první JSX render (viewBox/transform cíle) — engine si config sloučí

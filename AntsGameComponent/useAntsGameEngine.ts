@@ -152,7 +152,12 @@ export function useAntsGameEngine({
           onShowOnboarding: () => setOnboardingVisible(true),
         });
 
-        if (propsRef.current.muted) game.setMuted(true);
+        // Respektovat i explicitní `muted={false}` (přepíše persistovanou hodnotu ze
+        // storage), ne jen truthy `muted={true}` — jinak by explicitní "false" tiše
+        // nechalo platit ztlumení z předchozí session (viz AntsGameComponentProps.muted).
+        if (typeof propsRef.current.muted === 'boolean') {
+          game.setMuted(propsRef.current.muted);
+        }
         setMuted(game.isMuted());
 
         gameRef.current = game;
