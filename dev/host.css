@@ -1,0 +1,58 @@
+/* Simuluje CSS "cizí" hostitelské aplikace kolem AntsGameComponent (viz plán, krok 10 —
+   ověření, že komponenta nekoliduje s okolním CSS). Záměrně generické/kolizní selektory
+   (button, h1, h2), aby šlo poznat, kdyby Overlay tlačítka nebyla skutečně scoped. */
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  background: #f0ece2;
+  color: #222;
+}
+
+button {
+  border-radius: 0;
+  text-transform: uppercase;
+  font-family: Georgia, serif;
+  cursor: pointer;
+}
+
+h1,
+h2 {
+  font-family: Georgia, serif;
+}
+
+.hostApp {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hostPanel {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.hostPanel button {
+  margin: 4px 8px 4px 0;
+  padding: 8px 12px;
+}
+
+.gameFrame {
+  width: 400px;
+  height: 800px;
+  margin: 24px auto;
+  border: 2px dashed #999;
+}
+
+.eventLog {
+  max-height: 160px;
+  overflow-y: auto;
+  background: #111;
+  color: #0f0;
+  font-family: monospace;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 4px;
+}
