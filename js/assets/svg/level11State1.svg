@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-  <polygon points="-65,-50 40,-10 -65,50" fill="#f5d59e" stroke="#c9a35d" stroke-width="4" />
-  <polygon points="-65,-50 40,-10 -65,-20" fill="#fff5e6" />
-  <line x1="-65" y1="-20" x2="40" y2="-10" stroke="#b8203a" stroke-width="3" />
-</svg>

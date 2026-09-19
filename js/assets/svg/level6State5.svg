@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-  <rect x="-40" y="-70" width="80" height="125" fill="none" stroke="#5a5248" stroke-width="1" stroke-dasharray="6 6" opacity="0.3" />
-  <ellipse cx="-10" cy="20" rx="8" ry="5" fill="#f2a900" opacity="0.7" transform="rotate(15 -10 20)" />
-  <ellipse cx="15" cy="0" rx="6" ry="4" fill="#f2a900" opacity="0.7" transform="rotate(-10 15 0)" />
-  <ellipse cx="0" cy="40" rx="7" ry="4" fill="#f2a900" opacity="0.7" transform="rotate(5 0 40)" />
-</svg>
