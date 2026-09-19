@@ -234,11 +234,15 @@ export class Game {
     this._transitionTo(STATES.GAME_OVER);
     this.audioManager.play('gameOver');
 
+    // Pro action 'reset' LevelManager nevrací attemptNumber (attemptsUsed je už vynulovaný) —
+    // dopočítá se jako "vyčerpaný" počet pokusů (maxRestarts + 1), aby onGameOver vždy nesl
+    // smysluplné číslo (viz mapování na veřejné onGameOver({level, attempt}) v useAntsGameEngine).
+    const exhaustedAttempts = this.deps.config.game.retry.maxRestarts + 1;
     this.deps.onGameOver?.({
       level,
       action: result.action,
-      attemptNumber: result.action === 'retry' ? result.attemptNumber : null,
-      maxAttempts: result.action === 'retry' ? result.maxAttempts : null,
+      attemptNumber: result.action === 'retry' ? result.attemptNumber : exhaustedAttempts,
+      maxAttempts: result.action === 'retry' ? result.maxAttempts : exhaustedAttempts,
     });
   }
 

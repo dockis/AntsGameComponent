@@ -36,8 +36,10 @@ export class Target {
     this.onCriticalHealth = options.onCriticalHealth;
     this.pos = this._parsePos(groupElement.getAttribute('transform'));
 
+    // data-target-state místo id="target-state-N" (index.html) — s víc instancemi
+    // AntsGameComponent na jedné stránce by duplicitní id bylo neplatné HTML.
     this.stateElements = Array.from({ length: 6 }, (_, i) =>
-      this.el.querySelector<SVGGElement>(`#target-state-${i}`)
+      this.el.querySelector<SVGGElement>(`[data-target-state="${i}"]`)
     ).filter((el): el is SVGGElement => el !== null);
 
     this.setType(options.typeKey);
