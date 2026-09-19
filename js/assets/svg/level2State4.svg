@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-  <polygon points="-70,-40 -38,-40 -38,40 -70,40" fill="#6b4226" stroke="#40270f" stroke-width="4" />
-  <rect x="-10" y="-4" width="9" height="7" fill="#40270f" transform="rotate(-10 -6 0)" />
-  <rect x="10" y="10" width="8" height="6" fill="#40270f" transform="rotate(18 14 13)" />
-</svg>

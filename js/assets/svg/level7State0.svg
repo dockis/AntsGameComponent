@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-  <polygon points="-65,-40 65,-40 0,60" fill="#2e7d32" stroke="#1b4d1e" stroke-width="4" />
-  <polygon points="-55,-32 55,-32 0,50" fill="#f5f5e6" />
-  <polygon points="-45,-24 45,-24 0,40" fill="#d1372f" />
-  <ellipse cx="-15" cy="0" rx="3" ry="5" fill="#1a1a1a" transform="rotate(20 -15 0)" />
-  <ellipse cx="15" cy="0" rx="3" ry="5" fill="#1a1a1a" transform="rotate(-20 15 0)" />
-  <ellipse cx="0" cy="18" rx="3" ry="5" fill="#1a1a1a" />
-</svg>

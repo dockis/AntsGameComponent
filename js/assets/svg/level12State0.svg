@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-  <polygon points="-30,0 30,0 0,70" fill="#d9a066" stroke="#a06a2e" stroke-width="4" />
-  <line x1="-20" y1="10" x2="5" y2="55" stroke="#a06a2e" stroke-width="2" />
-  <line x1="20" y1="10" x2="-5" y2="55" stroke="#a06a2e" stroke-width="2" />
-  <circle cx="0" cy="-25" r="45" fill="#f7c6d9" stroke="#c98aa8" stroke-width="3" />
-  <ellipse cx="-15" cy="-40" rx="10" ry="6" fill="#fff" opacity="0.5" />
-</svg>

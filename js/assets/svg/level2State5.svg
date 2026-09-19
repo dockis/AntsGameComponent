@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-  <rect x="-70" y="-40" width="140" height="80" fill="none" stroke="#5a5248" stroke-width="1" stroke-dasharray="6 6" opacity="0.3" />
-  <rect x="-40" y="5" width="12" height="9" fill="#40270f" transform="rotate(14 -34 9)" />
-  <rect x="2" y="-12" width="9" height="7" fill="#40270f" transform="rotate(-18 6 -8)" />
-  <rect x="-15" y="20" width="8" height="7" fill="#40270f" transform="rotate(9 -11 23)" />
-  <rect x="25" y="8" width="10" height="6" fill="#40270f" transform="rotate(25 30 11)" />
-</svg>
