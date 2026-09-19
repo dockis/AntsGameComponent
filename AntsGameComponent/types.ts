@@ -1,9 +1,7 @@
 import type { CSSProperties } from 'react';
+import type { AntsGameConfig, DeepPartial } from './config/schema';
 
-// TODO (krok 2): nahradit `unknown` skutečným AntsGameConfig typem z config/schema.ts
-export type AntsGameConfig = Record<string, unknown>;
-
-export type DeepPartial<T> = T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } : T;
+export type { AntsGameConfig, DeepPartial };
 
 export type GameState = 'MENU' | 'PLAYING' | 'LEVEL_COMPLETE' | 'GAME_OVER' | 'PAUSED';
 
