@@ -1,5 +1,6 @@
 import type { AntManager } from './AntManager';
 import type { AntElement } from './Ant';
+import { CSS_CLASS } from './cssClassNames';
 
 export class InputManager {
   private readonly sceneElement: SVGSVGElement;
@@ -15,7 +16,7 @@ export class InputManager {
 
   private _onPointerDown(event: PointerEvent): void {
     const target = event.target as Element | null;
-    const antEl = target?.closest('.ant') as AntElement | null;
+    const antEl = target?.closest(`.${CSS_CLASS.ant}`) as AntElement | null;
     if (!antEl?.ant?.active) return;
 
     this.antManager.registerHit(antEl.ant);

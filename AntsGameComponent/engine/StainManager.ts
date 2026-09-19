@@ -1,4 +1,5 @@
 import type { GameConfig } from '../config/schema';
+import { CSS_CLASS } from './cssClassNames';
 import type { SvgAssetLoader } from './svgAssets';
 import type { Point } from './Ant';
 
@@ -23,7 +24,7 @@ export class StainManager {
     this.config = config;
     this.pool = Array.from({ length: config.stainPoolSize }, () => {
       const el = document.createElementNS(SVG_NS, 'g') as SVGGElement;
-      el.setAttribute('class', 'ant-stain');
+      el.setAttribute('class', CSS_CLASS.antStain);
       el.style.display = 'none';
       el.appendChild(svgAssets.getFragment('antStain'));
       layerElement.appendChild(el);
@@ -37,7 +38,7 @@ export class StainManager {
 
     const degrees = (heading * 180) / Math.PI;
     stain.el.setAttribute('transform', `translate(${pos.x},${pos.y}) rotate(${degrees})`);
-    stain.el.classList.remove('fading');
+    stain.el.classList.remove(CSS_CLASS.fading);
     stain.el.style.display = 'block';
     stain.active = true;
     stain.remainingMs = this.config.stainDurationMs;
@@ -50,7 +51,7 @@ export class StainManager {
 
       stain.remainingMs -= dtMs;
       if (stain.remainingMs <= this.config.stainFadeMs) {
-        stain.el.classList.add('fading');
+        stain.el.classList.add(CSS_CLASS.fading);
       }
       if (stain.remainingMs <= 0) {
         stain.el.style.display = 'none';
@@ -62,7 +63,7 @@ export class StainManager {
   reset(): void {
     for (const stain of this.pool) {
       stain.el.style.display = 'none';
-      stain.el.classList.remove('fading');
+      stain.el.classList.remove(CSS_CLASS.fading);
       stain.active = false;
     }
     this._cursor = 0;

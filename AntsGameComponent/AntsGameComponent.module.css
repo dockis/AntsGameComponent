@@ -1,3 +1,15 @@
+/* Nahrazuje globální `* { margin:0; padding:0; box-sizing:border-box }` z původního
+   css/style.css — scoped na root wrapper místo celé stránky (viz plán, sekce "Styly"):
+   komponenta nesmí ovlivnit elementy hostitelské aplikace mimo sebe sama. Původní
+   globální `html, body { ... }` (page-level scroll lock) se záměrně NEpřevádí — to už
+   je rozhodnutí hostitelské stránky, ne téhle komponenty (viz komentář k fullscreen níže). */
+.root,
+.root * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .root {
   position: relative;
   width: 100%;
@@ -7,13 +19,107 @@
   background: #000;
 }
 
+/* Výchozí (fullscreen=false) chování — "vložitelný widget": rozměry přebírá od
+   rodičovského kontejneru přes width/height:100% výše, žádné viewport jednotky. */
 .fullscreen {
   width: 100vw;
   height: 100dvh;
+  height: 100svh;
+}
+
+/* Vynucená portrait orientace — jen když fullscreen=true (viz OrientationManager,
+   ten se jinak vůbec neinstancuje). Telefon fyzicky v landscape, obsah zůstává
+   vizuálně i funkčně v portraitu. Směr (agc-rotate-cw/-ccw) řídí OrientationManager. */
+@media (orientation: landscape) {
+  .fullscreen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100dvh;
+    width: 100svh;
+    height: 100vw;
+    transform-origin: center;
+  }
+
+  .fullscreen:global(.agc-rotate-cw) {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .fullscreen:global(.agc-rotate-ccw) {
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
 }
 
 .scene {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.targetState {
+  pointer-events: none;
+}
+
+.antsLayer {
+  will-change: transform;
+}
+
+/* Od tohoto místa dál: třídy nastavované IMPERATIVNĚ z engine/*.ts (Ant/AntManager/
+   StainManager/InputManager — viz engine/cssClassNames.ts), ne přes JSX. CSS Modules
+   hashing by je nikdy nenamatchoval, protože engine o hashovaných jménech neví (engine
+   zůstává mimo React, viz plán sekce "Rendering") — :global() je tu proto záměrně.
+   Prefix "agc-" brání kolizi s třídami hostitelské aplikace. */
+:global(.agc-ant) {
+  pointer-events: none;
+}
+
+:global(.agc-ant-hitbox) {
+  pointer-events: auto;
+}
+
+:global(.agc-ant-visual) {
+  transform-box: fill-box;
+  transform-origin: center;
+  /* musí odpovídat GAME_CONFIG.squishDurationMs */
+  transition:
+    transform 150ms ease-out,
+    opacity 150ms ease-out;
+}
+
+:global(.agc-ant-visual.agc-squish) {
+  transform: scale(0);
+  opacity: 0;
+}
+
+:global(.agc-ant-visual.agc-hit-flash) {
+  animation: agc-ant-hit-flash 200ms ease-out;
+}
+
+@keyframes agc-ant-hit-flash {
+  0% {
+    filter: brightness(2.5);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+:global(.agc-ant-stain) {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+:global(.agc-ant-stain.agc-fading) {
+  opacity: 0;
+  /* musí odpovídat GAME_CONFIG.stainFadeMs */
+  transition: opacity 350ms ease-out;
+}
+
+/* Třídy zapečené přímo v SVG asset souborech (assets/svg/antStain.svg) — součást
+   "grafické výměnné" smlouvy mezi enginem a assety, proto NEJSOU prefixované agc-.
+   Náhradní grafika je může, ale nemusí použít (jinak zůstává barva jen na inline
+   fill atributech v samotném SVG). */
+:global(.ant-stain-splat),
+:global(.ant-stain-drop) {
+  fill: #4b5a34;
 }
