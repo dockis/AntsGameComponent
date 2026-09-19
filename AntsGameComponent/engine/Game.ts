@@ -51,6 +51,8 @@ export interface HudState {
 export interface LevelCompleteInfo {
   level: number;
   gameComplete: boolean;
+  /** Počet levelů v aktuálním configu — Overlay (krok 7) z toho skládá "Hra dokončena!" text bez natvrdo zapsané "12". */
+  totalLevels: number;
 }
 
 export interface GameOverInfo {
@@ -255,7 +257,11 @@ export class Game {
     this._transitionTo(STATES.LEVEL_COMPLETE);
     this.audioManager.play('levelComplete');
 
-    this.deps.onLevelComplete?.({ level: completedLevel, gameComplete: result.gameComplete });
+    this.deps.onLevelComplete?.({
+      level: completedLevel,
+      gameComplete: result.gameComplete,
+      totalLevels: this.deps.config.levels.length,
+    });
   }
 
   setMuted(muted: boolean): void {

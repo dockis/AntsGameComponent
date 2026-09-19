@@ -1,4 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { Hud } from './components/Hud';
+import { Overlay } from './components/Overlay';
 import { mergeConfig } from './config/schema';
 import type { AntsGameComponentProps, AntsGameComponentHandle } from './types';
 import { useAntsGameEngine } from './useAntsGameEngine';
@@ -40,6 +42,13 @@ export const AntsGameComponent = forwardRef<AntsGameComponentHandle, AntsGameCom
       .filter(Boolean)
       .join(' ');
 
+    // Zvuková odezva na tap (viz js/ui.js _bindTap) — zachováno jako tenký wrapper
+    // kolem interních akcí z hooku, aby Overlay sám nemusel znát AudioManager.
+    const withTap = (action: () => void) => () => {
+      engine.playUiTap();
+      action();
+    };
+
     return (
       <div ref={rootRef} className={rootClassName} style={style}>
         <svg
@@ -57,7 +66,27 @@ export const AntsGameComponent = forwardRef<AntsGameComponentHandle, AntsGameCom
           <g ref={stainsLayerRef} />
           <g ref={antsLayerRef} />
         </svg>
-        {/* TODO (krok 7 plánu): Hud/Overlay komponenty napojené na engine.subscribeHud/onStateChange */}
+
+        <Hud
+          visible={engine.gameState === 'PLAYING' || engine.gameState === 'PAUSED'}
+          subscribeHud={engine.subscribeHud}
+        />
+
+        <Overlay
+          gameState={engine.gameState}
+          levelCompleteInfo={engine.levelCompleteInfo}
+          gameOverInfo={engine.gameOverInfo}
+          onboardingVisible={engine.onboardingVisible}
+          muted={engine.muted}
+          subscribeHud={engine.subscribeHud}
+          onStartNewGame={withTap(engine.startNewGame)}
+          onContinueFromMenu={withTap(engine.continueFromMenu)}
+          onRetry={withTap(engine.retryLevel)}
+          onContinueLevel={withTap(engine.continueLevel)}
+          onResume={withTap(engine.resume)}
+          onToggleMute={withTap(() => engine.mute(!engine.muted))}
+          onDismissOnboarding={engine.dismissOnboarding}
+        />
       </div>
     );
   }
