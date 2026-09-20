@@ -11,6 +11,13 @@
 }
 
 .root {
+  /* Jediné místo pravdy pro font stack komponenty — Hud.module.css a Overlay.module.css
+     na něj odkazují přes var(). Nutné i tak nastavit přímo na h2/p/button (ne jen tady
+     a spolehnout se na dědění), protože přímé pravidlo hostitelské stránky na elementu
+     vždy porazí zděděnou hodnotu bez ohledu na specificitu (viz feature 24). gameIntro.svg
+     je samostatný dokument (načtený přes <img src>), mimo tuhle cascade, proto tam
+     zůstává font stack jako nezávislý literál. */
+  --agc-font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   position: relative;
   width: 100%;
   height: 100%;

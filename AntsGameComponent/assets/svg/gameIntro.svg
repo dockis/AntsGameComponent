@@ -7,7 +7,10 @@
   <g transform="translate(280,100)">
     <polygon points="-40,-40 40,-40 40,40 -40,40" fill="#fdf6ea" stroke="#e3d3ab" stroke-width="6" />
   </g>
-  <text x="200" y="210" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="bold" fill="#ffffff">
+  <!-- Vykreslováno jako <img src>, tedy samostatný dokument mimo CSS cascade komponenty —
+       font-family nejde napojit na --agc-font-family (viz AntsGameComponent.module.css)
+       a musí se v případě změny fontu upravit ručně i tady. -->
+  <text x="200" y="210" text-anchor="middle" font-family="Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="bold" fill="#ffffff">
     Mravenci vs. kostka cukru
   </text>
 </svg>
