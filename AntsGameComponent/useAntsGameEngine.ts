@@ -51,6 +51,8 @@ export interface AntsGameEngineResult extends AntsGameEngineActions {
   introVisible: boolean;
   /** URL úvodní grafiky pro Overlay (feature 22) — odvozeno stejně jako AudioManager._resolveUrl. */
   introImageUrl: string;
+  /** URL pozadí MENU obrazovky pro Overlay (feature 23) — odvozeno stejným způsobem jako introImageUrl. */
+  menuBackgroundImageUrl: string;
   muted: boolean;
 }
 
@@ -86,10 +88,13 @@ export function useAntsGameEngine({
 
   // Lazy initializer = čte se jen při prvním renderu (stejná konvence jako assetsBaseUrl
   // uvnitř mount efektu níže), stejný resolve pattern jako AudioManager._resolveUrl.
-  const [introImageUrl] = useState(() => {
-    const assetsBaseUrl = normalizeBaseUrl(props.assetsBaseUrl ?? DEFAULT_ASSETS_BASE_URL);
-    return props.assetOverrides?.gameIntro ?? `${assetsBaseUrl}svg/gameIntro.svg`;
-  });
+  const [assetsBaseUrl] = useState(() => normalizeBaseUrl(props.assetsBaseUrl ?? DEFAULT_ASSETS_BASE_URL));
+  const [introImageUrl] = useState(
+    () => props.assetOverrides?.gameIntro ?? `${assetsBaseUrl}svg/gameIntro.svg`
+  );
+  const [menuBackgroundImageUrl] = useState(
+    () => props.assetOverrides?.menuBackground ?? `${assetsBaseUrl}svg/menuBackground.svg`
+  );
 
   useEffect(() => {
     const rootEl = rootRef.current;
@@ -217,6 +222,7 @@ export function useAntsGameEngine({
     gameOverInfo,
     introVisible,
     introImageUrl,
+    menuBackgroundImageUrl,
     muted,
   };
 }

@@ -9,6 +9,7 @@ export interface OverlayProps {
   gameOverInfo: GameOverInfo | null;
   introVisible: boolean;
   introImageUrl: string;
+  menuBackgroundImageUrl: string;
   muted: boolean;
   subscribeHud: (listener: (hud: HudState) => void) => () => void;
   onStartNewGame: () => void;
@@ -45,6 +46,7 @@ export function Overlay({
   gameOverInfo,
   introVisible,
   introImageUrl,
+  menuBackgroundImageUrl,
   muted,
   subscribeHud,
   onStartNewGame,
@@ -95,16 +97,23 @@ export function Overlay({
         />
       </div>
 
-      <div className={screenClassName('MENU')}>
+      <div className={`${screenClassName('MENU')} ${styles.menuScreen}`}>
+        <img
+          className={styles.menuBackground}
+          src={menuBackgroundImageUrl}
+          alt=""
+          onError={() =>
+            console.error(`[Overlay] nepodařilo se načíst pozadí MENU obrazovky: ${menuBackgroundImageUrl}`)
+          }
+        />
         <div className={styles.screenContent}>
-          <h1>Mravenci vs. kostka cukru</h1>
           <button ref={menuContinueBtnRef} type="button" onClick={onContinueFromMenu}>
             Pokračovat
           </button>
           <button ref={menuStartBtnRef} type="button" onClick={onStartNewGame}>
             Start
           </button>
-          <button type="button" className={styles.muteButton} onClick={onToggleMute} aria-pressed={muted}>
+          <button type="button" onClick={onToggleMute} aria-pressed={muted}>
             {muted ? 'Zvuk: vypnutý' : 'Zvuk: zapnutý'}
           </button>
         </div>

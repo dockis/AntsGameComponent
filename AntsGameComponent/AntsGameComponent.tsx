@@ -87,6 +87,7 @@ export const AntsGameComponent = forwardRef<AntsGameComponentHandle, AntsGameCom
           gameOverInfo={engine.gameOverInfo}
           introVisible={engine.introVisible}
           introImageUrl={engine.introImageUrl}
+          menuBackgroundImageUrl={engine.menuBackgroundImageUrl}
           muted={engine.muted}
           subscribeHud={engine.subscribeHud}
           onStartNewGame={withTap(engine.startNewGame)}
