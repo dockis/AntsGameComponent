@@ -55,6 +55,8 @@ export interface AntsGameEngineResult extends AntsGameEngineActions {
   menuBackgroundImageUrl: string;
   /** URL grafiky obrazovky GAME_OVER pro Overlay (feature 25) — odvozeno stejným způsobem jako introImageUrl. */
   gameOverImageUrl: string;
+  /** URL grafiky dokončení celé hry pro Overlay (feature 26) — odvozeno stejným způsobem jako introImageUrl. */
+  gameCompleteImageUrl: string;
   muted: boolean;
 }
 
@@ -99,6 +101,9 @@ export function useAntsGameEngine({
   );
   const [gameOverImageUrl] = useState(
     () => props.assetOverrides?.gameOver ?? `${assetsBaseUrl}svg/gameOver.svg`
+  );
+  const [gameCompleteImageUrl] = useState(
+    () => props.assetOverrides?.gameComplete ?? `${assetsBaseUrl}svg/gameComplete.svg`
   );
 
   useEffect(() => {
@@ -229,6 +234,7 @@ export function useAntsGameEngine({
     introImageUrl,
     menuBackgroundImageUrl,
     gameOverImageUrl,
+    gameCompleteImageUrl,
     muted,
   };
 }

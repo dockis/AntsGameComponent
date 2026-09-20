@@ -11,6 +11,7 @@ export interface OverlayProps {
   introImageUrl: string;
   menuBackgroundImageUrl: string;
   gameOverImageUrl: string;
+  gameCompleteImageUrl: string;
   muted: boolean;
   subscribeHud: (listener: (hud: HudState) => void) => () => void;
   onStartNewGame: () => void;
@@ -49,6 +50,7 @@ export function Overlay({
   introImageUrl,
   menuBackgroundImageUrl,
   gameOverImageUrl,
+  gameCompleteImageUrl,
   muted,
   subscribeHud,
   onStartNewGame,
@@ -123,7 +125,21 @@ export function Overlay({
 
       <div className={screenClassName('LEVEL_COMPLETE')}>
         <div className={styles.screenContent}>
-          <h2>{levelComplete?.message ?? 'Level splněn!'}</h2>
+          {levelCompleteInfo?.gameComplete ? (
+            <>
+              <img
+                className={styles.gameCompleteImage}
+                src={gameCompleteImageUrl}
+                alt=""
+                onError={() =>
+                  console.error(`[Overlay] nepodařilo se načíst grafiku "Hra dokončena": ${gameCompleteImageUrl}`)
+                }
+              />
+              <p>{levelComplete?.message}</p>
+            </>
+          ) : (
+            <h2>{levelComplete?.message ?? 'Level splněn!'}</h2>
+          )}
           <button type="button" onClick={onContinueLevel}>
             {levelComplete?.buttonLabel ?? 'Pokračovat'}
           </button>

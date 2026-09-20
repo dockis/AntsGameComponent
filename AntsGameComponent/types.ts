@@ -25,7 +25,9 @@ export interface AntsGameComponentProps {
    * (`SoundName`). Klíč `gameIntro` přepíše úvodní grafiku zobrazenou po stisku "Nová hra"
    * (`assets/svg/gameIntro.svg`). Klíč `menuBackground` přepíše grafiku na pozadí
    * MENU obrazovky (`assets/svg/menuBackground.svg`). Klíč `gameOver` přepíše grafiku
-   * zobrazenou na obrazovce po nezdařeném levelu (`assets/svg/gameOver.svg`).
+   * zobrazenou na obrazovce po nezdařeném levelu (`assets/svg/gameOver.svg`). Klíč
+   * `gameComplete` přepíše grafiku zobrazenou po úspěšném dokončení posledního levelu
+   * (`assets/svg/gameComplete.svg`).
    * Čte se jen při prvním mountu.
    */
   assetOverrides?: Record<string, string>;
