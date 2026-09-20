@@ -76,6 +76,8 @@ export interface GameConfig {
   stainDurationMs: number;
   /** Délka závěrečného fade-out z stainDurationMs. */
   stainFadeMs: number;
+  /** Doba zobrazení úvodní grafiky po stisku "Nová hra", v ms. */
+  introDurationMs: number;
 }
 
 export type AntTypeKey = 'normal' | 'aggressive' | 'armored';

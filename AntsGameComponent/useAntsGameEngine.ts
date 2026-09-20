@@ -40,7 +40,6 @@ export interface AntsGameEngineActions {
   continueFromMenu(): void;
   retryLevel(): void;
   continueLevel(): void;
-  dismissOnboarding(): void;
   playUiTap(): void;
 }
 
@@ -49,7 +48,9 @@ export interface AntsGameEngineResult extends AntsGameEngineActions {
   gameState: GameState;
   levelCompleteInfo: LevelCompleteInfo | null;
   gameOverInfo: GameOverInfo | null;
-  onboardingVisible: boolean;
+  introVisible: boolean;
+  /** URL úvodní grafiky pro Overlay (feature 22) — odvozeno stejně jako AudioManager._resolveUrl. */
+  introImageUrl: string;
   muted: boolean;
 }
 
@@ -80,8 +81,15 @@ export function useAntsGameEngine({
   const [gameState, setGameState] = useState<GameState>('MENU');
   const [levelCompleteInfo, setLevelCompleteInfo] = useState<LevelCompleteInfo | null>(null);
   const [gameOverInfo, setGameOverInfo] = useState<GameOverInfo | null>(null);
-  const [onboardingVisible, setOnboardingVisible] = useState(false);
+  const [introVisible, setIntroVisible] = useState(false);
   const [muted, setMuted] = useState(false);
+
+  // Lazy initializer = čte se jen při prvním renderu (stejná konvence jako assetsBaseUrl
+  // uvnitř mount efektu níže), stejný resolve pattern jako AudioManager._resolveUrl.
+  const [introImageUrl] = useState(() => {
+    const assetsBaseUrl = normalizeBaseUrl(props.assetsBaseUrl ?? DEFAULT_ASSETS_BASE_URL);
+    return props.assetOverrides?.gameIntro ?? `${assetsBaseUrl}svg/gameIntro.svg`;
+  });
 
   useEffect(() => {
     const rootEl = rootRef.current;
@@ -149,7 +157,8 @@ export function useAntsGameEngine({
             propsRef.current.onGameOver?.({ level: info.level, attempt: info.attemptNumber ?? 0 });
           },
           onAntKilled: (info) => propsRef.current.onAntKilled?.(info),
-          onShowOnboarding: () => setOnboardingVisible(true),
+          onShowIntro: () => setIntroVisible(true),
+          onHideIntro: () => setIntroVisible(false),
         });
 
         // Respektovat i explicitní `muted={false}` (přepíše persistovanou hodnotu ze
@@ -197,7 +206,6 @@ export function useAntsGameEngine({
       continueFromMenu: () => gameRef.current?.startGame(),
       retryLevel: () => gameRef.current?.retryLevel(),
       continueLevel: () => gameRef.current?.continueLevel(),
-      dismissOnboarding: () => setOnboardingVisible(false),
       playUiTap: () => gameRef.current?.audioManager.play('uiTap'),
     };
   }
@@ -207,7 +215,8 @@ export function useAntsGameEngine({
     gameState,
     levelCompleteInfo,
     gameOverInfo,
-    onboardingVisible,
+    introVisible,
+    introImageUrl,
     muted,
   };
 }

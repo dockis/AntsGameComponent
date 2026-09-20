@@ -41,7 +41,8 @@
     "criticalHealthThreshold": 0.25,
     "stainPoolSize": 12,
     "stainDurationMs": 2500,
-    "stainFadeMs": 350
+    "stainFadeMs": 350,
+    "introDurationMs": 3000
   },
   "antTypes": {
     "normal": {

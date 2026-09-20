@@ -22,7 +22,8 @@ export interface AntsGameComponentProps {
    * Mapa jméno assetu → URL pro výměnu jednotlivých SVG/zvukových souborů bez rebuildu
    * (např. `{ antNormal: '/brand/ant.svg', hit: '/brand/hit.mp3' }`). SVG jména viz
    * `engine/svgAssets.ts` (`buildAntSvgAssetNames`), zvuková jména viz `engine/AudioManager.ts`
-   * (`SoundName`). Čte se jen při prvním mountu.
+   * (`SoundName`). Klíč `gameIntro` přepíše úvodní grafiku zobrazenou po stisku "Nová hra"
+   * (`assets/svg/gameIntro.svg`). Čte se jen při prvním mountu.
    */
   assetOverrides?: Record<string, string>;
   /** Prefix klíčů v localStorage (výchozí `'mravenci:'`). Čte se jen při prvním mountu. */

@@ -69,7 +69,8 @@ export interface GameCallbacks {
   onLevelComplete?: (info: LevelCompleteInfo) => void;
   onGameOver?: (info: GameOverInfo) => void;
   onAntKilled?: (info: { killedCount: number; killTarget: number }) => void;
-  onShowOnboarding?: () => void;
+  onShowIntro?: () => void;
+  onHideIntro?: () => void;
 }
 
 export interface GameDeps extends GameCallbacks {
@@ -97,9 +98,9 @@ export class Game {
 
   private lastTimestamp: number | null = null;
   private _rafId: number | null = null;
+  private _introTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private _started = false;
   private killedCount = 0;
-  private _onboardingSeen = false;
   private _lastFailureAction: 'retry' | 'reset' | null = null;
   private _lastLevelResult: { gameComplete: boolean } | null = null;
 
@@ -173,6 +174,7 @@ export class Game {
   // V React komponentě se AntsGameComponent běžně unmountuje, viz plán, sekce "Rizika".
   destroy(): void {
     if (this._rafId !== null) cancelAnimationFrame(this._rafId);
+    if (this._introTimeoutId !== null) clearTimeout(this._introTimeoutId);
     document.removeEventListener('visibilitychange', this._onVisibilityChange);
     window.removeEventListener('blur', this._onBlur);
     this.refs.root.removeEventListener('pointerdown', this._unlockAudioOnce);
@@ -189,15 +191,18 @@ export class Game {
   startGame(): void {
     this._startLevel();
     this._transitionTo(STATES.PLAYING);
-    if (!this._onboardingSeen) {
-      this._onboardingSeen = true;
-      this.deps.onShowOnboarding?.();
-    }
   }
 
   startNewGame(): void {
     this.levelManager.resetToLevel1();
-    this.startGame();
+
+    if (this._introTimeoutId !== null) clearTimeout(this._introTimeoutId);
+    this.deps.onShowIntro?.();
+    this._introTimeoutId = setTimeout(() => {
+      this._introTimeoutId = null;
+      this.startGame();
+      this.deps.onHideIntro?.();
+    }, this.deps.config.game.introDurationMs);
   }
 
   retryLevel(): void {

@@ -1,15 +1,14 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import type { GameOverInfo, HudState, LevelCompleteInfo } from '../engine/Game';
 import type { GameState } from '../types';
 import styles from './Overlay.module.css';
-
-const ONBOARDING_DURATION_MS = 4000;
 
 export interface OverlayProps {
   gameState: GameState;
   levelCompleteInfo: LevelCompleteInfo | null;
   gameOverInfo: GameOverInfo | null;
-  onboardingVisible: boolean;
+  introVisible: boolean;
+  introImageUrl: string;
   muted: boolean;
   subscribeHud: (listener: (hud: HudState) => void) => () => void;
   onStartNewGame: () => void;
@@ -18,7 +17,6 @@ export interface OverlayProps {
   onContinueLevel: () => void;
   onResume: () => void;
   onToggleMute: () => void;
-  onDismissOnboarding: () => void;
 }
 
 function formatLevelCompleteMessage(info: LevelCompleteInfo): { message: string; buttonLabel: string } {
@@ -45,7 +43,8 @@ export function Overlay({
   gameState,
   levelCompleteInfo,
   gameOverInfo,
-  onboardingVisible,
+  introVisible,
+  introImageUrl,
   muted,
   subscribeHud,
   onStartNewGame,
@@ -54,7 +53,6 @@ export function Overlay({
   onContinueLevel,
   onResume,
   onToggleMute,
-  onDismissOnboarding,
 }: OverlayProps) {
   const menuContinueBtnRef = useRef<HTMLButtonElement>(null);
   const menuStartBtnRef = useRef<HTMLButtonElement>(null);
@@ -78,16 +76,6 @@ export function Overlay({
     [subscribeHud]
   );
 
-  useEffect(() => {
-    if (!onboardingVisible) return;
-    document.addEventListener('pointerdown', onDismissOnboarding, { once: true });
-    const timer = setTimeout(onDismissOnboarding, ONBOARDING_DURATION_MS);
-    return () => {
-      document.removeEventListener('pointerdown', onDismissOnboarding);
-      clearTimeout(timer);
-    };
-  }, [onboardingVisible, onDismissOnboarding]);
-
   const levelComplete = levelCompleteInfo ? formatLevelCompleteMessage(levelCompleteInfo) : null;
   const gameOver = gameOverInfo ? formatGameOverMessage(gameOverInfo) : null;
 
@@ -96,8 +84,15 @@ export function Overlay({
 
   return (
     <>
-      <div className={`${styles.onboarding} ${onboardingVisible ? styles.onboardingVisible : ''}`}>
-        Klepni na mravence dřív, než snědí cíl!
+      <div
+        className={`${styles.screen} ${styles.intro} ${introVisible ? styles.screenVisible : ''}`}
+      >
+        <img
+          className={styles.introImage}
+          src={introImageUrl}
+          alt=""
+          onError={() => console.error(`[Overlay] nepodařilo se načíst úvodní grafiku: ${introImageUrl}`)}
+        />
       </div>
 
       <div className={screenClassName('MENU')}>

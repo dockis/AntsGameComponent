@@ -85,7 +85,8 @@ export const AntsGameComponent = forwardRef<AntsGameComponentHandle, AntsGameCom
           gameState={engine.gameState}
           levelCompleteInfo={engine.levelCompleteInfo}
           gameOverInfo={engine.gameOverInfo}
-          onboardingVisible={engine.onboardingVisible}
+          introVisible={engine.introVisible}
+          introImageUrl={engine.introImageUrl}
           muted={engine.muted}
           subscribeHud={engine.subscribeHud}
           onStartNewGame={withTap(engine.startNewGame)}
@@ -94,7 +95,6 @@ export const AntsGameComponent = forwardRef<AntsGameComponentHandle, AntsGameCom
           onContinueLevel={withTap(engine.continueLevel)}
           onResume={withTap(engine.resume)}
           onToggleMute={withTap(() => engine.mute(!engine.muted))}
-          onDismissOnboarding={engine.dismissOnboarding}
         />
       </div>
     );
