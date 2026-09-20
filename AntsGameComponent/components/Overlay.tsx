@@ -10,6 +10,7 @@ export interface OverlayProps {
   introVisible: boolean;
   introImageUrl: string;
   menuBackgroundImageUrl: string;
+  gameOverImageUrl: string;
   muted: boolean;
   subscribeHud: (listener: (hud: HudState) => void) => () => void;
   onStartNewGame: () => void;
@@ -47,6 +48,7 @@ export function Overlay({
   introVisible,
   introImageUrl,
   menuBackgroundImageUrl,
+  gameOverImageUrl,
   muted,
   subscribeHud,
   onStartNewGame,
@@ -130,7 +132,12 @@ export function Overlay({
 
       <div className={screenClassName('GAME_OVER')}>
         <div className={styles.screenContent}>
-          <h2>Cíl zničen!</h2>
+          <img
+            className={styles.gameOverImage}
+            src={gameOverImageUrl}
+            alt=""
+            onError={() => console.error(`[Overlay] nepodařilo se načíst grafiku "Cíl zničen": ${gameOverImageUrl}`)}
+          />
           <p>{gameOver?.message ?? ''}</p>
           <button type="button" onClick={onRetry}>
             {gameOver?.buttonLabel ?? 'Zkusit znovu'}

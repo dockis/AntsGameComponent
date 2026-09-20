@@ -24,7 +24,9 @@ export interface AntsGameComponentProps {
    * `engine/svgAssets.ts` (`buildAntSvgAssetNames`), zvuková jména viz `engine/AudioManager.ts`
    * (`SoundName`). Klíč `gameIntro` přepíše úvodní grafiku zobrazenou po stisku "Nová hra"
    * (`assets/svg/gameIntro.svg`). Klíč `menuBackground` přepíše grafiku na pozadí
-   * MENU obrazovky (`assets/svg/menuBackground.svg`). Čte se jen při prvním mountu.
+   * MENU obrazovky (`assets/svg/menuBackground.svg`). Klíč `gameOver` přepíše grafiku
+   * zobrazenou na obrazovce po nezdařeném levelu (`assets/svg/gameOver.svg`).
+   * Čte se jen při prvním mountu.
    */
   assetOverrides?: Record<string, string>;
   /** Prefix klíčů v localStorage (výchozí `'mravenci:'`). Čte se jen při prvním mountu. */
