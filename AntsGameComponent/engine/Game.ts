@@ -279,6 +279,7 @@ export class Game {
 
   private _startLevel(): void {
     this.target.setType(`level${this.levelManager.config.level}`);
+    this.refs.root.style.background = this.levelManager.config.backgroundColor;
     this._resetScene();
     this.antManager.setLevelConfig(this.levelManager.config);
     this._emitHud();

@@ -107,6 +107,8 @@ export interface LevelConfig {
   spawnInterval: [number, number];
   speedMultiplier: number;
   ants: LevelAntWeights;
+  /** 6místný hex kód vč. `#`, např. `"#1a2b3c"`, barva pozadí scény pro tento level. */
+  backgroundColor: string;
 }
 
 export interface AntsGameConfig {

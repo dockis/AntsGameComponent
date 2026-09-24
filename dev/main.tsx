@@ -28,12 +28,12 @@ interface VariantSetup {
 }
 
 const QUICK_LEVEL_COMPLETE_LEVELS: AntsGameConfig['levels'] = [
-  { level: 1, killTarget: 1, maxAnts: 3, spawnInterval: [400, 700], speedMultiplier: 1.0, ants: { normal: 100, aggressive: 0, armored: 0 } },
-  { level: 2, killTarget: 8, maxAnts: 3, spawnInterval: [1500, 2200], speedMultiplier: 0.8, ants: { normal: 100, aggressive: 0, armored: 0 } },
+  { level: 1, killTarget: 1, maxAnts: 3, spawnInterval: [400, 700], speedMultiplier: 1.0, ants: { normal: 100, aggressive: 0, armored: 0 }, backgroundColor: '#000000' },
+  { level: 2, killTarget: 8, maxAnts: 3, spawnInterval: [1500, 2200], speedMultiplier: 0.8, ants: { normal: 100, aggressive: 0, armored: 0 }, backgroundColor: '#000000' },
 ];
 
 const QUICK_GAME_COMPLETE_LEVELS: AntsGameConfig['levels'] = [
-  { level: 1, killTarget: 1, maxAnts: 3, spawnInterval: [400, 700], speedMultiplier: 1.0, ants: { normal: 100, aggressive: 0, armored: 0 } },
+  { level: 1, killTarget: 1, maxAnts: 3, spawnInterval: [400, 700], speedMultiplier: 1.0, ants: { normal: 100, aggressive: 0, armored: 0 }, backgroundColor: '#000000' },
 ];
 
 // Feature 26: rychlé vyvolání a opakované vyzkoušení koncových obrazovek bez ručního

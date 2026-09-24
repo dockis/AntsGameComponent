@@ -35,7 +35,7 @@ export function Hud({ visible, subscribeHud }: HudProps) {
         Level <span ref={levelRef}>1</span>
       </div>
       <div className={styles.killsRow}>
-        Zabito: <span ref={killsRef}>0 / 0</span>
+        Zneškodněno: <span ref={killsRef}>0 / 0</span>
       </div>
       <div className={styles.healthTrack}>
         <div ref={healthBarRef} className={styles.healthBar} />
