@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <ellipse class="ant-stain-splat" rx="9" ry="4.5" />
+  <circle class="ant-stain-drop" cx="-11" cy="-2" r="1.6" />
+  <circle class="ant-stain-drop" cx="12" cy="3" r="1.2" />
+</svg>
