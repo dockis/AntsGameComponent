@@ -1,6 +1,10 @@
 node_modules/
-dist/
 .DS_Store
 
 # JetBrains IDE
 .idea/
+
+# Lokální dokumentace a release nástroje — nepublikovat na veřejné GitHub repo
+docs/
+scripts/
+RELEASE.md
