@@ -1,8 +1,267 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-  <polygon points="-30,-68 30,-68 68,-30 68,30 30,68 -30,68 -68,30 -68,-30" fill="#d9a86c" stroke="#a97c45" stroke-width="4" />
-  <circle cx="-35" cy="-35" r="6" fill="#4a2f1a" />
-  <circle cx="20" cy="-40" r="5" fill="#4a2f1a" />
-  <circle cx="40" cy="10" r="6" fill="#4a2f1a" />
-  <circle cx="-10" cy="30" r="5" fill="#4a2f1a" />
-  <circle cx="-45" cy="15" r="6" fill="#4a2f1a" />
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 30.5.1, SVG Export Plug-In . SVG Version: 9.03 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" id="Vrstva_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512"
+	 style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FF5148;}
+	.st1{fill:#FF9E34;}
+	.st2{fill:#BF2A23;}
+	.st3{opacity:0.2;}
+	.st4{fill:#FFFFFF;}
+	.st5{fill:#FDFAFF;}
+</style>
+<metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 10.0-c000 1.000000, 0000/00/00-00:00:00        ">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description rdf:about=""
+            xmlns:xmp="http://ns.adobe.com/xap/1.0/"
+            xmlns:xmpGImg="http://ns.adobe.com/xap/1.0/g/img/"
+            xmlns:xmpTPg="http://ns.adobe.com/xap/1.0/t/pg/"
+            xmlns:stDim="http://ns.adobe.com/xap/1.0/sType/Dimensions#"
+            xmlns:xmpG="http://ns.adobe.com/xap/1.0/g/"
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/">
+         <xmp:CreatorTool>Adobe Illustrator 30.5 (Windows)</xmp:CreatorTool>
+         <xmp:CreateDate>2026-09-29T14:45:50+02:00</xmp:CreateDate>
+         <xmp:Thumbnails>
+            <rdf:Alt>
+               <rdf:li rdf:parseType="Resource">
+                  <xmpGImg:width>256</xmpGImg:width>
+                  <xmpGImg:height>216</xmpGImg:height>
+                  <xmpGImg:format>JPEG</xmpGImg:format>
+                  <xmpGImg:image>/9j/4AAQSkZJRgABAgEAAAAAAAD/7QAsUGhvdG9zaG9wIDMuMAA4QklNA+0AAAAAABAAAAAAAAEA&#xA;AQAAAAAAAQAB/+4ADkFkb2JlAGTAAAAAAf/bAIQABgQEBAUEBgUFBgkGBQYJCwgGBggLDAoKCwoK&#xA;DBAMDAwMDAwQDA4PEA8ODBMTFBQTExwbGxscHx8fHx8fHx8fHwEHBwcNDA0YEBAYGhURFRofHx8f&#xA;Hx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8f/8AAEQgA2AEAAwER&#xA;AAIRAQMRAf/EAaIAAAAHAQEBAQEAAAAAAAAAAAQFAwIGAQAHCAkKCwEAAgIDAQEBAQEAAAAAAAAA&#xA;AQACAwQFBgcICQoLEAACAQMDAgQCBgcDBAIGAnMBAgMRBAAFIRIxQVEGE2EicYEUMpGhBxWxQiPB&#xA;UtHhMxZi8CRygvElQzRTkqKyY3PCNUQnk6OzNhdUZHTD0uIIJoMJChgZhJRFRqS0VtNVKBry4/PE&#xA;1OT0ZXWFlaW1xdXl9WZ2hpamtsbW5vY3R1dnd4eXp7fH1+f3OEhYaHiImKi4yNjo+Ck5SVlpeYmZ&#xA;qbnJ2en5KjpKWmp6ipqqusra6voRAAICAQIDBQUEBQYECAMDbQEAAhEDBCESMUEFURNhIgZxgZEy&#xA;obHwFMHR4SNCFVJicvEzJDRDghaSUyWiY7LCB3PSNeJEgxdUkwgJChgZJjZFGidkdFU38qOzwygp&#xA;0+PzhJSktMTU5PRldYWVpbXF1eX1RlZmdoaWprbG1ub2R1dnd4eXp7fH1+f3OEhYaHiImKi4yNjo&#xA;+DlJWWl5iZmpucnZ6fkqOkpaanqKmqq6ytrq+v/aAAwDAQACEQMRAD8A9U4q7FXYq7FXYq7FXYq7&#xA;FXYq7FXYq7FXYq7FXYq7FXYq7FXYq7FWiwGNKtLnthpNNVPjhV2KuxV1T44q2HPfBS0uDA4KQ3ir&#xA;sVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdiqwsT0w0lrCrsVdirsVdirs&#xA;VdirsVbDEdcFKvwIdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVdirsVWE1+WSS1ir&#xA;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</xmpGImg:image>
+               </rdf:li>
+            </rdf:Alt>
+         </xmp:Thumbnails>
+         <xmpTPg:MaxPageSize rdf:parseType="Resource">
+            <stDim:w>512.000000</stDim:w>
+            <stDim:h>512.000000</stDim:h>
+            <stDim:unit>Pixels</stDim:unit>
+         </xmpTPg:MaxPageSize>
+         <xmpTPg:NPages>1</xmpTPg:NPages>
+         <xmpTPg:HasVisibleTransparency>True</xmpTPg:HasVisibleTransparency>
+         <xmpTPg:HasVisibleOverprint>False</xmpTPg:HasVisibleOverprint>
+         <xmpTPg:PlateNames>
+            <rdf:Seq>
+               <rdf:li>Cyan</rdf:li>
+               <rdf:li>Magenta</rdf:li>
+               <rdf:li>Yellow</rdf:li>
+               <rdf:li>Black</rdf:li>
+            </rdf:Seq>
+         </xmpTPg:PlateNames>
+         <xmpTPg:SwatchGroups>
+            <rdf:Seq>
+               <rdf:li rdf:parseType="Resource">
+                  <xmpG:groupName>Výchozí skupina vzorků</xmpG:groupName>
+                  <xmpG:groupType>0</xmpG:groupType>
+               </rdf:li>
+            </rdf:Seq>
+         </xmpTPg:SwatchGroups>
+         <dc:format>image/svg+xml</dc:format>
+         <xmpMM:InstanceID>xmp.iid:a1b35085-cb18-a443-bd76-4936f37607a3</xmpMM:InstanceID>
+      </rdf:Description>
+   </rdf:RDF>
+</x:xmpmeta>
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                           
+<?xpacket end="w"?>
+	</metadata>
+<g>
+	<g>
+		<g>
+			<path class="st0" d="M70.028-46.497C43.984-59.186,3.658-62.535-24.892-59.95c-13.268,1.201-27.305,4.459-39.742,9.375
+				c-12.559,4.964-23.644,13.781-30.962,25.166c-4.319,6.72-7.429,14.569-6.816,22.533c0.115,1.493,0.387,3.042,1.288,4.237
+				c4.242,5.626,12.49,0.456,16.14,7.775c2.94,5.905,3.484,10.017,11.299,10.22c4.31,0.111,8.653-0.839,12.91-0.157
+				c11.976,1.918,21.354,16.194,33.019,12.875c4.505-1.282,7.871-5.022,12.104-7.026c13.246-6.269,28.518,6.092,42.995,3.819
+				c17.417-2.735,28.053-24.63,47.364-15.992c4.652,2.081,10.793,3.913,14.264,0.183c1.131-1.216,2.198-3.079,3.831-2.78
+				c0.932,0.171,1.561,1.031,2.382,1.506c3.161,1.826,6.306-2.572,6.943-6.167C106.025-16.374,87.641-37.915,70.028-46.497z
+				 M39.186-19.252c-5.296,5.519-13.445,6.995-21.04,7.898c-9.989,1.188-20.131,1.892-30.162,0.802
+				c-7.853-0.854-17.192-1.404-24.687-4.568c-0.667-0.282-1.32-0.584-1.955-0.909c-2.377-1.216-4.243-3.872-3.659-6.478
+				c0.482-2.149,2.411-3.638,4.304-4.764c8.91-5.301,19.588-6.669,29.947-7.091c8.827-0.36,17.679-0.117,26.473,0.728
+				C23.664-33.128,47.812-28.242,39.186-19.252z"/>
+		</g>
+	</g>
+	<g>
+		<path class="st1" d="M95.184,11.786c-0.821-0.474-1.449-1.335-2.382-1.506c-1.633-0.299-2.7,1.564-3.831,2.78
+			c-3.471,3.731-9.612,1.898-14.264-0.183C55.397,4.239,44.761,26.134,27.344,28.869C12.867,31.142-2.405,18.781-15.652,25.05
+			c-4.233,2.003-7.6,5.744-12.104,7.026C-39.421,35.394-48.799,21.118-60.775,19.2c-4.257-0.682-8.6,0.268-12.91,0.157
+			c-7.815-0.203-8.359-4.315-11.299-10.22c-3.355-6.73-10.591-2.922-15.034-6.635c0.017,0.947,0.049,1.908,0.116,2.906
+			c0.597,8.905,2.78,19.331,7.135,27.174c8.408,15.142,26.503,21.85,43.466,25.353c18.983,3.92,37.952,4.523,57.239,4.563
+			c18.366,0.038,37.66-0.678,54.884-7.687c16.426-6.684,26.98-18.572,33.173-34.802c1.435-3.761,3.759-7.277,4.891-11.024
+			C99.538,11.342,97.365,13.046,95.184,11.786z"/>
+	</g>
+	<g>
+		<g>
+			<g>
+				<path class="st2" d="M-56.302-39.516c0.531-2.092-1.298-4.935-3.637-4.542c-2.326,0.39-4.667,1.935-3.556,4.697
+					C-62.281-36.34-57.152-36.165-56.302-39.516z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-23.359-52.162c0.531-2.092-1.298-4.935-3.637-4.542c-2.326,0.39-4.667,1.935-3.556,4.697
+					C-29.338-48.986-24.21-48.811-23.359-52.162z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-54.862-4.161c0.531-2.093-1.298-4.935-3.638-4.542c-2.326,0.391-4.667,1.935-3.556,4.697
+					C-60.841-0.985-55.713-0.811-54.862-4.161z"/>
+			</g>
+			<g>
+				<path class="st2" d="M23.786,1.78c0.531-2.092-1.298-4.935-3.637-4.542c-2.326,0.39-4.667,1.935-3.556,4.697
+					C17.807,4.956,22.936,5.131,23.786,1.78z"/>
+			</g>
+			<g>
+				<path class="st2" d="M52.539-17.241c0.531-2.093-1.298-4.935-3.637-4.542c-2.326,0.39-4.667,1.935-3.556,4.697
+					C46.561-14.065,51.689-13.89,52.539-17.241z"/>
+			</g>
+			<g>
+				<path class="st2" d="M46.998-44.017c0.531-2.092-1.298-4.935-3.637-4.542c-2.326,0.39-4.667,1.935-3.556,4.697
+					C41.019-40.84,46.148-40.666,46.998-44.017z"/>
+			</g>
+			<g>
+				<path class="st2" d="M73.714,3.351c0.531-2.093-1.298-4.935-3.638-4.542c-2.326,0.39-4.667,1.935-3.556,4.697
+					C67.735,6.526,72.864,6.701,73.714,3.351z"/>
+			</g>
+			<g>
+				<path class="st2" d="M29.306,22.499c0.531-2.093-1.298-4.935-3.638-4.542c-2.326,0.391-4.667,1.935-3.556,4.697
+					C23.327,25.675,28.456,25.85,29.306,22.499z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-78.065-4.351c0.531-2.092-1.298-4.935-3.637-4.542c-2.326,0.39-4.667,1.935-3.556,4.697
+					C-84.044-1.175-78.916-1-78.065-4.351z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-27.332,23.794c0.531-2.092-1.298-4.935-3.637-4.542c-2.326,0.39-4.667,1.935-3.556,4.697
+					C-33.311,26.97-28.183,27.145-27.332,23.794z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-40.05-34.802c1.332-0.794,1.845-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-44.702-36.222-42.183-33.53-40.05-34.802z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-44.008,9.097c1.332-0.795,1.844-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-48.661,7.678-46.141,10.369-44.008,9.097z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-8.353,11.647c1.332-0.794,1.845-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-13.005,10.227-10.486,12.919-8.353,11.647z"/>
+			</g>
+			<g>
+				<path class="st2" d="M0.041-0.617c1.332-0.794,1.845-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-4.611-2.036-2.092,0.655,0.041-0.617z"/>
+			</g>
+			<g>
+				<path class="st2" d="M17.577-50.052c1.332-0.794,1.845-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C12.925-51.471,15.444-48.779,17.577-50.052z"/>
+			</g>
+			<g>
+				<path class="st2" d="M67.859-35.151c1.332-0.794,1.845-3.168,0.456-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C63.207-36.57,65.726-33.879,67.859-35.151z"/>
+			</g>
+			<g>
+				<path class="st2" d="M21.76-37.252c1.332-0.795,1.845-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C17.108-38.672,19.627-35.98,21.76-37.252z"/>
+			</g>
+			<g>
+				<path class="st2" d="M42.638,2.547c1.332-0.794,1.845-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C37.986,1.128,40.505,3.819,42.638,2.547z"/>
+			</g>
+			<g>
+				<path class="st2" d="M89.743-8.405c1.332-0.794,1.844-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C85.091-9.824,87.61-7.133,89.743-8.405z"/>
+			</g>
+			<g>
+				<path class="st2" d="M69.828-17.558c1.332-0.795,1.845-3.168,0.456-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C65.176-18.977,67.695-16.286,69.828-17.558z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-5.139-45.274c1.332-0.794,1.845-3.168,0.456-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-9.791-46.694-7.271-44.002-5.139-45.274z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-68.612,13.911c1.332-0.795,1.844-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-73.265,12.492-70.745,15.183-68.612,13.911z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-81.325-19.723c1.332-0.795,1.844-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-85.977-21.143-83.458-18.451-81.325-19.723z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-60.125-23.788c1.332-0.794,1.845-3.168,0.456-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-64.777-25.207-62.258-22.516-60.125-23.788z"/>
+			</g>
+			<g>
+				<path class="st2" d="M-26.63-4.563c1.332-0.794,1.844-3.168,0.455-4.156c-1.381-0.982-3.355-1.385-4.192,0.584
+					C-31.283-5.982-28.763-3.29-26.63-4.563z"/>
+			</g>
+		</g>
+	</g>
+	<g class="st3">
+		<g>
+			<path class="st4" d="M-11.033-53.692c-0.074-1.065-4.932-1.589-12.936-1.082c-3.999,0.259-8.78,0.799-14.092,1.816
+				c-5.307,1.011-11.17,2.419-17.211,4.636l-0.008-0.022l-0.004,0.001c-1.22,0.436-2.39,0.954-3.576,1.426
+				c-1.193,0.454-2.362,0.97-3.536,1.546l-0.004,0.002l0.009,0.021c-5.851,2.752-11.081,6.085-15.303,9.745
+				c-2.04,1.917-3.98,3.713-5.506,5.673c-1.629,1.836-2.958,3.774-3.992,5.625c-2.079,3.716-2.925,7.155-2.993,9.519
+				c-0.081,2.378,0.449,3.635,0.969,3.643c1.08,0.04,1.498-4.714,5.975-10.631c1.108-1.476,2.416-3.013,4.043-4.545
+				c1.499-1.627,3.369-3.113,5.276-4.731c3.976-3.076,8.805-5.958,14.256-8.438l0.012,0.026l0.004-0.002
+				c1.081-0.534,2.163-1.02,3.278-1.45c1.111-0.433,2.2-0.909,3.345-1.319l0.004-0.001l-0.01-0.027
+				c5.635-2.151,11.177-3.667,16.217-4.918c5.043-1.258,9.621-2.177,13.459-2.943C-15.681-51.648-10.958-52.659-11.033-53.692z"/>
+		</g>
+		<g>
+			<path class="st4" d="M90.362,2.592c-0.576-0.141-1.136,0.812-2.454,1.701c-1.258,0.892-3.528,1.784-6.423,1.585
+				c-1.372-0.082-2.95-0.537-4.733-1.23c-1.775-0.685-3.72-1.646-6.017-2.595c-2.277-0.953-5.083-1.813-7.973-2.067
+				c-2.902-0.302-5.964-0.102-9.009,0.606l-0.006-0.022l-0.004,0.001c-1.221,0.318-2.412,0.668-3.564,1.141
+				c-1.161,0.443-2.287,0.981-3.397,1.6L46.78,3.313l0.011,0.02c-2.767,1.572-4.959,3.506-6.906,5.251
+				c-1.944,1.761-3.673,3.371-5.37,4.654c-3.298,2.548-6.882,3.746-10.01,4.291c-6.314,1.036-10.384-0.403-10.827,0.726
+				c-0.189,0.438,0.615,1.325,2.5,2.244c1.875,0.894,4.878,1.776,8.744,1.703c3.811-0.061,8.622-1.165,13.003-4.135
+				c4.318-2.842,7.882-6.826,12.035-9.103l0.014,0.024l0.003-0.002c0.839-0.467,1.689-0.885,2.575-1.228
+				c0.88-0.359,1.799-0.614,2.735-0.862l0.003-0.001l-0.007-0.027c2.337-0.576,4.702-0.794,6.948-0.64
+				c2.274,0.127,4.3,0.631,6.415,1.354c4.193,1.452,8.588,3.361,12.929,2.986c4.152-0.34,7.186-2.437,8.397-4.472
+				C91.214,4.03,90.785,2.648,90.362,2.592z"/>
+		</g>
+		<g>
+			<path class="st4" d="M81.2,29.903c-0.749-0.897-4.356,1.282-10.287,4.556c-5.957,3.214-14.383,7.46-24.549,10.459l-0.007-0.022
+				l-0.003,0.001c-1.021,0.309-2.023,0.613-3.027,0.917c-1.019,0.247-2.037,0.493-3.073,0.744l-0.004,0.001l0.005,0.022
+				c-10.283,2.569-19.699,3.183-26.462,3.433c-6.772,0.186-10.985,0.137-11.176,1.29c-0.161,0.919,3.898,2.515,10.979,3.398
+				c7.048,0.816,17.157,0.747,28.156-1.835l0.007,0.028l0.004-0.001c1.104-0.274,2.187-0.542,3.272-0.811
+				c1.072-0.318,2.142-0.636,3.232-0.96l0.004-0.001l-0.008-0.027C59.05,47.743,67.798,42.677,73.46,38.4
+				C79.115,34.048,81.805,30.614,81.2,29.903z"/>
+		</g>
+	</g>
+</g>
+<circle class="st5" cx="-101.565" cy="-37.391" r="41.739"/>
+<ellipse class="st5" cx="-2.957" cy="-40.01" rx="41.739" ry="20.87"/>
+<circle class="st5" cx="-73.652" cy="-8.435" r="55.565"/>
+<ellipse class="st5" cx="43.478" cy="62.72" rx="83.478" ry="58.174"/>
+<circle class="st5" cx="82.087" cy="-55.13" r="75.13"/>
+<circle class="st5" cx="-60.348" cy="-64" r="32.348"/>
+<circle class="st5" cx="-46.783" cy="36.696" r="32.348"/>
 </svg>

@@ -1,4 +1,7 @@
 node_modules/
+
+# Build dev harnessu (vite build) — ne knihovna, ta se verzuje v kořenovém dist/
+dev/dist/
 .DS_Store
 
 # JetBrains IDE

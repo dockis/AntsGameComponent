@@ -113,7 +113,7 @@
 
 :global(.agc-ant-stain) {
   pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.85;
 }
 
 :global(.agc-ant-stain.agc-fading) {
@@ -128,5 +128,5 @@
    fill atributech v samotném SVG). */
 :global(.ant-stain-splat),
 :global(.ant-stain-drop) {
-  fill: #4b5a34;
+  fill: #e20613;
 }

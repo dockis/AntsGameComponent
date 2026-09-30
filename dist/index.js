@@ -242,11 +242,11 @@ const Ue = {
       aggressive: 0,
       armored: 0
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#d8ecf0"
   },
   {
     level: 2,
-    killTarget: 12,
+    killTarget: 10,
     maxAnts: 4,
     spawnInterval: [
       1300,
@@ -258,11 +258,11 @@ const Ue = {
       aggressive: 0,
       armored: 0
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#fffeba"
   },
   {
     level: 3,
-    killTarget: 15,
+    killTarget: 12,
     maxAnts: 5,
     spawnInterval: [
       1100,
@@ -274,7 +274,7 @@ const Ue = {
       aggressive: 0,
       armored: 0
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#f4e7ff"
   },
   {
     level: 4,
@@ -290,7 +290,7 @@ const Ue = {
       aggressive: 0,
       armored: 0
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#fdfaff"
   },
   {
     level: 5,
@@ -306,7 +306,7 @@ const Ue = {
       aggressive: 20,
       armored: 0
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#ddf3f7"
   },
   {
     level: 6,
@@ -322,7 +322,7 @@ const Ue = {
       aggressive: 30,
       armored: 0
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#e2edf0"
   },
   {
     level: 7,
@@ -338,7 +338,7 @@ const Ue = {
       aggressive: 35,
       armored: 0
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#fffbcc"
   },
   {
     level: 8,
@@ -354,7 +354,7 @@ const Ue = {
       aggressive: 30,
       armored: 15
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#ede6d9"
   },
   {
     level: 9,
@@ -370,7 +370,7 @@ const Ue = {
       aggressive: 30,
       armored: 20
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#f6fafe"
   },
   {
     level: 10,
@@ -386,7 +386,7 @@ const Ue = {
       aggressive: 30,
       armored: 25
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#d8ecf0"
   },
   {
     level: 11,
@@ -402,7 +402,7 @@ const Ue = {
       aggressive: 35,
       armored: 25
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#fffeba"
   },
   {
     level: 12,
@@ -418,7 +418,7 @@ const Ue = {
       aggressive: 35,
       armored: 30
     },
-    backgroundColor: "#000000"
+    backgroundColor: "#f0f0e2"
   }
 ], Oe = {
   game: Ue,
@@ -1315,7 +1315,7 @@ function lt({
     muted: f
   };
 }
-const ht = "_root_15e1f_11", ct = "_fullscreen_15e1f_61", ut = "_scene_15e1f_119", dt = "_targetState_15e1f_131", gt = "_antsLayer_15e1f_139", D = {
+const ht = "_root_w84pl_11", ct = "_fullscreen_w84pl_61", ut = "_scene_w84pl_119", dt = "_targetState_w84pl_131", gt = "_antsLayer_w84pl_139", D = {
   root: ht,
   fullscreen: ct,
   scene: ut,
