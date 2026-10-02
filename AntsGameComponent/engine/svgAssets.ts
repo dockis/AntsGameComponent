@@ -5,6 +5,24 @@ export interface SvgAssetLoaderOptions {
   overrides?: Record<string, string>;
 }
 
+// <style> vložený s inline SVG je globální pro celý dokument. Illustrator generuje u každého
+// exportu stejné názvy tříd (st0, st1, ...) s různými barvami, takže by se assety navzájem
+// přebarvovaly (vyhrává pravidlo později v DOM). Proto generované třídy prefixujeme jménem assetu.
+// Třídy z "grafické výměnné" smlouvy (ant-stain-splat apod.) se nemění.
+function scopeGeneratedClasses(doc: Document, assetName: string): void {
+  const generated = /^st\d+$/;
+  for (const style of Array.from(doc.querySelectorAll('style'))) {
+    style.textContent = (style.textContent ?? '').replace(/\.(st\d+)\b/g, `.${assetName}-$1`);
+  }
+  for (const el of Array.from(doc.querySelectorAll('[class]'))) {
+    const classes = (el.getAttribute('class') ?? '')
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((cls) => (generated.test(cls) ? `${assetName}-${cls}` : cls));
+    el.setAttribute('class', classes.join(' '));
+  }
+}
+
 export class SvgAssetLoader {
   private readonly baseUrl: string;
   private readonly overrides: Record<string, string>;
@@ -30,6 +48,7 @@ export class SvgAssetLoader {
       const text = await response.text();
       const doc = new DOMParser().parseFromString(text, 'image/svg+xml');
       if (doc.querySelector('parsererror')) throw new Error('neplatný SVG obsah');
+      scopeGeneratedClasses(doc, name);
       this.templates[name] = Array.from(doc.documentElement.children);
     } catch (err) {
       // Na rozdíl od zvuků se chybějící grafika nesmí tiše polknout — je okamžitě vizuálně patrná.

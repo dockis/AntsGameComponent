@@ -2,8 +2,8 @@ import './index.css';var le = Object.defineProperty;
 var he = (i, e, t) => e in i ? le(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
 var n = (i, e, t) => he(i, typeof e != "symbol" ? e + "" : e, t);
 import { jsxs as A, jsx as c, Fragment as Z } from "react/jsx-runtime";
-import { useRef as M, useLayoutEffect as te, useState as C, useEffect as ce, forwardRef as ue, useImperativeHandle as de } from "react";
-const ge = "_hud_1a0ak_1", me = "_visible_1a0ak_31", pe = "_levelRow_1a0ak_39", ve = "_killsRow_1a0ak_41", fe = "_healthTrack_1a0ak_49", _e = "_healthBar_1a0ak_65", P = {
+import { useRef as y, useLayoutEffect as te, useState as C, useEffect as ce, forwardRef as ue, useImperativeHandle as de } from "react";
+const ge = "_hud_1jdj7_1", me = "_visible_1jdj7_29", pe = "_levelRow_1jdj7_37", ve = "_killsRow_1jdj7_39", fe = "_healthTrack_1jdj7_47", _e = "_healthBar_1jdj7_63", P = {
   hud: ge,
   visible: me,
   levelRow: pe,
@@ -11,8 +11,8 @@ const ge = "_hud_1a0ak_1", me = "_visible_1a0ak_31", pe = "_levelRow_1a0ak_39", 
   healthTrack: fe,
   healthBar: _e
 };
-function Me({ visible: i, subscribeHud: e }) {
-  const t = M(null), s = M(null), a = M(null);
+function ye({ visible: i, subscribeHud: e }) {
+  const t = y(null), s = y(null), a = y(null);
   te(
     () => e((l) => {
       t.current && (t.current.textContent = String(l.level)), s.current && (s.current.textContent = `${l.killedCount} / ${l.killTarget}`), a.current && (a.current.style.width = `${Math.max(0, l.healthRatio) * 100}%`);
@@ -32,8 +32,8 @@ function Me({ visible: i, subscribeHud: e }) {
     /* @__PURE__ */ c("div", { className: P.healthTrack, children: /* @__PURE__ */ c("div", { ref: a, className: P.healthBar }) })
   ] });
 }
-const ye = "_screen_mus0u_1", be = "_screenVisible_mus0u_27", Ae = "_intro_mus0u_37", Te = "_introImage_mus0u_47", we = "_menuScreen_mus0u_61", Ce = "_menuBackground_mus0u_57", Se = "_gameOverImage_mus0u_89", Le = "_gameCompleteImage_mus0u_101", ke = "_screenContent_mus0u_113", Ee = "_hiddenButton_mus0u_219", _ = {
-  screen: ye,
+const Me = "_screen_mus0u_1", be = "_screenVisible_mus0u_27", Ae = "_intro_mus0u_37", Te = "_introImage_mus0u_47", we = "_menuScreen_mus0u_61", Ce = "_menuBackground_mus0u_57", Se = "_gameOverImage_mus0u_89", Le = "_gameCompleteImage_mus0u_101", ke = "_screenContent_mus0u_113", Ee = "_hiddenButton_mus0u_219", _ = {
+  screen: Me,
   screenVisible: be,
   intro: Ae,
   introImage: Te,
@@ -75,12 +75,12 @@ function Ne({
   onRetry: h,
   onContinueLevel: N,
   onResume: U,
-  onToggleMute: H
+  onToggleMute: $
 }) {
-  const y = M(null), T = M(null);
+  const M = y(null), T = y(null);
   te(
     () => v((E) => {
-      y.current && (y.current.classList.toggle(_.hiddenButton, !E.hasProgress), y.current.textContent = `Pokračovat (level ${E.level})`), T.current && (T.current.textContent = E.hasProgress ? "Nová hra" : "Start");
+      M.current && (M.current.classList.toggle(_.hiddenButton, !E.hasProgress), M.current.textContent = `Pokračovat (level ${E.level})`), T.current && (T.current.textContent = E.hasProgress ? "Nová hra" : "Start");
     }),
     [v]
   );
@@ -112,9 +112,9 @@ function Ne({
         }
       ),
       /* @__PURE__ */ A("div", { className: _.screenContent, children: [
-        /* @__PURE__ */ c("button", { ref: y, type: "button", onClick: I, children: "Pokračovat" }),
+        /* @__PURE__ */ c("button", { ref: M, type: "button", onClick: I, children: "Pokračovat" }),
         /* @__PURE__ */ c("button", { ref: T, type: "button", onClick: x, children: "Start" }),
-        /* @__PURE__ */ c("button", { type: "button", onClick: H, "aria-pressed": p, children: p ? "Zvuk: vypnutý" : "Zvuk: zapnutý" })
+        /* @__PURE__ */ c("button", { type: "button", onClick: $, "aria-pressed": p, children: p ? "Zvuk: vypnutý" : "Zvuk: zapnutý" })
       ] })
     ] }),
     /* @__PURE__ */ c("div", { className: L("LEVEL_COMPLETE"), children: /* @__PURE__ */ A("div", { className: _.screenContent, children: [
@@ -227,7 +227,7 @@ const Ue = {
     hitsToKill: 2,
     afterFirstHit: "normal"
   }
-}, He = [
+}, $e = [
   {
     level: 1,
     killTarget: 8,
@@ -238,9 +238,9 @@ const Ue = {
     ],
     speedMultiplier: 0.8,
     ants: {
-      normal: 100,
-      aggressive: 0,
-      armored: 0
+      normal: 35,
+      aggressive: 35,
+      armored: 30
     },
     backgroundColor: "#d8ecf0"
   },
@@ -420,12 +420,12 @@ const Ue = {
     },
     backgroundColor: "#f0f0e2"
   }
-], Oe = {
+], He = {
   game: Ue,
   antTypes: Pe,
-  levels: He
-}, $ = Oe;
-function $e(i) {
+  levels: $e
+}, O = He;
+function Oe(i) {
   return !(!i.game || typeof i.game.sceneWidth != "number" || typeof i.game.sceneHeight != "number" || !i.antTypes || typeof i.antTypes != "object" || !Array.isArray(i.levels) || i.levels.length === 0);
 }
 function Re(i, e) {
@@ -438,13 +438,13 @@ function Re(i, e) {
   return t;
 }
 function se(i) {
-  if (!i) return $;
+  if (!i) return O;
   const e = {
-    game: { ...$.game, ...i.game ?? {} },
-    antTypes: Re($.antTypes, i.antTypes),
-    levels: i.levels ?? $.levels
+    game: { ...O.game, ...i.game ?? {} },
+    antTypes: Re(O.antTypes, i.antTypes),
+    levels: i.levels ?? O.levels
   };
-  return $e(e) ? e : (console.warn("[AntsGameComponent] neplatný config override, používám výchozí hodnoty"), $);
+  return Oe(e) ? e : (console.warn("[AntsGameComponent] neplatný config override, používám výchozí hodnoty"), O);
 }
 const m = {
   ant: "agc-ant",
@@ -631,7 +631,7 @@ function ze(i) {
   let r = Math.random() * a;
   return r < e ? "normal" : (r -= e, r < t ? "aggressive" : "armored");
 }
-class Ye {
+class je {
   constructor(e, t, s, a) {
     n(this, "layerElement");
     n(this, "target");
@@ -714,7 +714,7 @@ class Ye {
     return { pos: l, heading: d };
   }
 }
-const We = [
+const Ye = [
   "hit",
   "kill",
   "armoredFirstHit",
@@ -723,7 +723,7 @@ const We = [
   "levelComplete",
   "gameOver",
   "uiTap"
-], Ke = 400, je = {
+], We = 400, Ke = {
   hit: 15,
   kill: 30
 };
@@ -746,7 +746,7 @@ class Ze {
     this._context && this._preloadAll();
   }
   async _preloadAll() {
-    await Promise.all(We.map((e) => this._loadSound(e)));
+    await Promise.all(Ye.map((e) => this._loadSound(e)));
   }
   _resolveUrl(e) {
     return this.overrides[e] ?? `${this.baseUrl}${e}.mp3`;
@@ -777,7 +777,7 @@ class Ze {
     if (this._muted || (this._maybeVibrate(e), !this._context)) return;
     if (e === "consumeTick") {
       const a = this._context.currentTime * 1e3;
-      if (a - this._lastConsumeTickAt < Ke) return;
+      if (a - this._lastConsumeTickAt < We) return;
       this._lastConsumeTickAt = a;
     }
     const t = this._buffers[e];
@@ -786,7 +786,7 @@ class Ze {
     s.buffer = t, s.connect(this._context.destination), s.start(0);
   }
   _maybeVibrate(e) {
-    const t = je[e];
+    const t = Ke[e];
     !t || !("vibrate" in navigator) || navigator.vibrate(t);
   }
   // Nutné doplnění oproti js/audio.js — v React komponentě se na rozdíl od statické
@@ -976,7 +976,7 @@ class at {
         onDestroyed: () => this.gameOver(),
         onCriticalHealth: () => this.audioManager.play("criticalHealth")
       }
-    ), this.antManager = new Ye(e.antsLayer, this.target, this.levelManager.config, {
+    ), this.antManager = new je(e.antsLayer, this.target, this.levelManager.config, {
       stainsLayerElement: e.stainsLayer,
       config: t.config.game,
       antTypes: t.config.antTypes,
@@ -1125,7 +1125,16 @@ class it {
     }
   }
 }
-class rt {
+function rt(i, e) {
+  const t = /^st\d+$/;
+  for (const s of Array.from(i.querySelectorAll("style")))
+    s.textContent = (s.textContent ?? "").replace(/\.(st\d+)\b/g, `.${e}-$1`);
+  for (const s of Array.from(i.querySelectorAll("[class]"))) {
+    const a = (s.getAttribute("class") ?? "").split(/\s+/).filter(Boolean).map((r) => t.test(r) ? `${e}-${r}` : r);
+    s.setAttribute("class", a.join(" "));
+  }
+}
+class ot {
   constructor(e) {
     n(this, "baseUrl");
     n(this, "overrides");
@@ -1144,7 +1153,7 @@ class rt {
       if (!t.ok) throw new Error(`HTTP ${t.status}`);
       const s = await t.text(), a = new DOMParser().parseFromString(s, "image/svg+xml");
       if (a.querySelector("parsererror")) throw new Error("neplatný SVG obsah");
-      this.templates[e] = Array.from(a.documentElement.children);
+      rt(a, e), this.templates[e] = Array.from(a.documentElement.children);
     } catch (t) {
       throw console.error(`[svgAssets] nepodařilo se načíst SVG asset "${e}":`, t), t;
     }
@@ -1158,7 +1167,7 @@ class rt {
     return s;
   }
 }
-function ot(i) {
+function lt(i) {
   return [
     "antNormal",
     "antAggressive",
@@ -1175,7 +1184,7 @@ const Q = new URL(
 function ee(i) {
   return i.endsWith("/") ? i : `${i}/`;
 }
-function lt({
+function ht({
   rootRef: i,
   sceneRef: e,
   targetRef: t,
@@ -1183,9 +1192,9 @@ function lt({
   antsLayerRef: a,
   props: r
 }) {
-  const l = M(null), d = M(null), p = M(/* @__PURE__ */ new Set()), v = M(r);
+  const l = y(null), d = y(null), p = y(/* @__PURE__ */ new Set()), v = y(r);
   v.current = r;
-  const [x, I] = C("MENU"), [h, N] = C(null), [U, H] = C(null), [y, T] = C(!1), [f, S] = C(!1), [L] = C(() => ee(r.assetsBaseUrl ?? Q)), [E] = C(
+  const [x, I] = C("MENU"), [h, N] = C(null), [U, $] = C(null), [M, T] = C(!1), [f, S] = C(!1), [L] = C(() => ee(r.assetsBaseUrl ?? Q)), [E] = C(
     () => {
       var o;
       return ((o = r.assetOverrides) == null ? void 0 : o.gameIntro) ?? `${L}svg/gameIntro.svg`;
@@ -1207,29 +1216,29 @@ function lt({
     }
   );
   ce(() => {
-    const o = i.current, O = e.current, V = t.current, F = s.current, q = a.current;
-    if (!o || !O || !V || !F || !q) {
+    const o = i.current, H = e.current, V = t.current, F = s.current, q = a.current;
+    if (!o || !H || !V || !F || !q) {
       console.error("[AntsGameComponent] chybí DOM refs při mountu, engine se neinicializuje");
       return;
     }
-    const G = v.current, z = se(G.config), Y = ee(G.assetsBaseUrl ?? Q), W = G.assetOverrides, K = new rt({
-      baseUrl: `${Y}svg/`,
-      overrides: W
+    const G = v.current, z = se(G.config), j = ee(G.assetsBaseUrl ?? Q), Y = G.assetOverrides, W = new ot({
+      baseUrl: `${j}svg/`,
+      overrides: Y
     }), re = new it(G.storageNamespace), oe = {
       root: o,
-      scene: O,
+      scene: H,
       targetGroup: V,
       stainsLayer: F,
       antsLayer: q
     };
-    let j = !1, k = null;
-    return K.preloadAll(ot(z.levels)).then(() => {
-      j || (k = new at(oe, {
+    let K = !1, k = null;
+    return W.preloadAll(lt(z.levels)).then(() => {
+      K || (k = new at(oe, {
         config: z,
-        svgAssets: K,
+        svgAssets: W,
         storage: re,
-        audioBaseUrl: `${Y}sounds/`,
-        audioOverrides: W,
+        audioBaseUrl: `${j}sounds/`,
+        audioOverrides: Y,
         fullscreen: v.current.fullscreen ?? !1,
         onStateChange: (g) => {
           var b, w;
@@ -1244,7 +1253,7 @@ function lt({
         },
         onGameOver: (g) => {
           var b, w;
-          H(g), (w = (b = v.current).onGameOver) == null || w.call(b, { level: g.level, attempt: g.attemptNumber ?? 0 });
+          $(g), (w = (b = v.current).onGameOver) == null || w.call(b, { level: g.level, attempt: g.attemptNumber ?? 0 });
         },
         onAntKilled: (g) => {
           var b, w;
@@ -1256,10 +1265,10 @@ function lt({
     }).catch((g) => {
       console.error("[AntsGameComponent] preload assetů selhal, engine se nespustí:", g);
     }), () => {
-      j = !0, k == null || k.destroy(), l.current = null;
+      K = !0, k == null || k.destroy(), l.current = null;
     };
   }, []);
-  const B = M(null);
+  const B = y(null);
   return B.current || (B.current = {
     pause: () => {
       var o;
@@ -1274,8 +1283,8 @@ function lt({
       return (o = l.current) == null ? void 0 : o.startNewGame();
     },
     mute: (o) => {
-      var O;
-      (O = l.current) == null || O.setMuted(o), S(o);
+      var H;
+      (H = l.current) == null || H.setMuted(o), S(o);
     },
     getState: () => {
       var o;
@@ -1307,7 +1316,7 @@ function lt({
     gameState: x,
     levelCompleteInfo: h,
     gameOverInfo: U,
-    introVisible: y,
+    introVisible: M,
     introImageUrl: E,
     menuBackgroundImageUrl: ne,
     gameOverImageUrl: ae,
@@ -1315,15 +1324,15 @@ function lt({
     muted: f
   };
 }
-const ht = "_root_w84pl_11", ct = "_fullscreen_w84pl_61", ut = "_scene_w84pl_119", dt = "_targetState_w84pl_131", gt = "_antsLayer_w84pl_139", D = {
-  root: ht,
-  fullscreen: ct,
-  scene: ut,
-  targetState: dt,
-  antsLayer: gt
-}, mt = 6, _t = ue(
+const ct = "_root_w84pl_11", ut = "_fullscreen_w84pl_61", dt = "_scene_w84pl_119", gt = "_targetState_w84pl_131", mt = "_antsLayer_w84pl_139", D = {
+  root: ct,
+  fullscreen: ut,
+  scene: dt,
+  targetState: gt,
+  antsLayer: mt
+}, pt = 6, yt = ue(
   function(e, t) {
-    const { className: s, style: a, fullscreen: r = !1, config: l } = e, d = M(null), p = M(null), v = M(null), x = M(null), I = M(null), h = lt({ rootRef: d, sceneRef: p, targetRef: v, stainsLayerRef: x, antsLayerRef: I, props: e });
+    const { className: s, style: a, fullscreen: r = !1, config: l } = e, d = y(null), p = y(null), v = y(null), x = y(null), I = y(null), h = ht({ rootRef: d, sceneRef: p, targetRef: v, stainsLayerRef: x, antsLayerRef: I, props: e });
     de(
       t,
       () => ({
@@ -1336,10 +1345,10 @@ const ht = "_root_w84pl_11", ct = "_fullscreen_w84pl_61", ut = "_scene_w84pl_119
       // eslint-disable-next-line react-hooks/exhaustive-deps
       []
     );
-    const { sceneWidth: N, sceneHeight: U } = se(l).game, H = [D.root, r ? D.fullscreen : "", s].filter(Boolean).join(" "), y = (T) => () => {
+    const { sceneWidth: N, sceneHeight: U } = se(l).game, $ = [D.root, r ? D.fullscreen : "", s].filter(Boolean).join(" "), M = (T) => () => {
       h.playUiTap(), T();
     };
-    return /* @__PURE__ */ A("div", { ref: d, className: H, style: a, children: [
+    return /* @__PURE__ */ A("div", { ref: d, className: $, style: a, children: [
       /* @__PURE__ */ A(
         "svg",
         {
@@ -1348,7 +1357,7 @@ const ht = "_root_w84pl_11", ct = "_fullscreen_w84pl_61", ut = "_scene_w84pl_119
           viewBox: `0 0 ${N} ${U}`,
           preserveAspectRatio: "xMidYMid slice",
           children: [
-            /* @__PURE__ */ c("g", { ref: v, transform: `translate(${N / 2},${U / 2})`, children: Array.from({ length: mt }, (T, f) => /* @__PURE__ */ c(
+            /* @__PURE__ */ c("g", { ref: v, transform: `translate(${N / 2},${U / 2})`, children: Array.from({ length: pt }, (T, f) => /* @__PURE__ */ c(
               "g",
               {
                 "data-target-state": f,
@@ -1363,7 +1372,7 @@ const ht = "_root_w84pl_11", ct = "_fullscreen_w84pl_61", ut = "_scene_w84pl_119
         }
       ),
       /* @__PURE__ */ c(
-        Me,
+        ye,
         {
           visible: h.gameState === "PLAYING" || h.gameState === "PAUSED",
           subscribeHud: h.subscribeHud
@@ -1382,17 +1391,17 @@ const ht = "_root_w84pl_11", ct = "_fullscreen_w84pl_61", ut = "_scene_w84pl_119
           gameCompleteImageUrl: h.gameCompleteImageUrl,
           muted: h.muted,
           subscribeHud: h.subscribeHud,
-          onStartNewGame: y(h.startNewGame),
-          onContinueFromMenu: y(h.continueFromMenu),
-          onRetry: y(h.retryLevel),
-          onContinueLevel: y(h.continueLevel),
-          onResume: y(h.resume),
-          onToggleMute: y(() => h.mute(!h.muted))
+          onStartNewGame: M(h.startNewGame),
+          onContinueFromMenu: M(h.continueFromMenu),
+          onRetry: M(h.retryLevel),
+          onContinueLevel: M(h.continueLevel),
+          onResume: M(h.resume),
+          onToggleMute: M(() => h.mute(!h.muted))
         }
       )
     ] });
   }
 );
 export {
-  _t as AntsGameComponent
+  yt as AntsGameComponent
 };
