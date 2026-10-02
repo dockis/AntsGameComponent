@@ -1,26 +1,26 @@
-import './index.css';var le = Object.defineProperty;
-var he = (i, e, t) => e in i ? le(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
-var n = (i, e, t) => he(i, typeof e != "symbol" ? e + "" : e, t);
+import './index.css';var he = Object.defineProperty;
+var ce = (r, e, t) => e in r ? he(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t;
+var n = (r, e, t) => ce(r, typeof e != "symbol" ? e + "" : e, t);
 import { jsxs as A, jsx as c, Fragment as Z } from "react/jsx-runtime";
-import { useRef as y, useLayoutEffect as te, useState as C, useEffect as ce, forwardRef as ue, useImperativeHandle as de } from "react";
-const ge = "_hud_1jdj7_1", me = "_visible_1jdj7_29", pe = "_levelRow_1jdj7_37", ve = "_killsRow_1jdj7_39", fe = "_healthTrack_1jdj7_47", _e = "_healthBar_1jdj7_63", P = {
-  hud: ge,
-  visible: me,
-  levelRow: pe,
+import { useRef as y, useLayoutEffect as se, useState as C, useEffect as ue, forwardRef as de, useImperativeHandle as ge } from "react";
+const me = "_hud_1jdj7_1", pe = "_visible_1jdj7_29", fe = "_levelRow_1jdj7_37", ve = "_killsRow_1jdj7_39", _e = "_healthTrack_1jdj7_47", ye = "_healthBar_1jdj7_63", P = {
+  hud: me,
+  visible: pe,
+  levelRow: fe,
   killsRow: ve,
-  healthTrack: fe,
-  healthBar: _e
+  healthTrack: _e,
+  healthBar: ye
 };
-function ye({ visible: i, subscribeHud: e }) {
-  const t = y(null), s = y(null), a = y(null);
-  te(
+function Me({ visible: r, subscribeHud: e }) {
+  const t = y(null), s = y(null), i = y(null);
+  se(
     () => e((l) => {
-      t.current && (t.current.textContent = String(l.level)), s.current && (s.current.textContent = `${l.killedCount} / ${l.killTarget}`), a.current && (a.current.style.width = `${Math.max(0, l.healthRatio) * 100}%`);
+      t.current && (t.current.textContent = String(l.level)), s.current && (s.current.textContent = `${l.killedCount} / ${l.killTarget}`), i.current && (i.current.style.width = `${Math.max(0, l.healthRatio) * 100}%`);
     }),
     [e]
   );
-  const r = `${P.hud} ${i ? P.visible : ""}`;
-  return /* @__PURE__ */ A("div", { className: r, children: [
+  const a = `${P.hud} ${r ? P.visible : ""}`;
+  return /* @__PURE__ */ A("div", { className: a, children: [
     /* @__PURE__ */ A("div", { className: P.levelRow, children: [
       "Level ",
       /* @__PURE__ */ c("span", { ref: t, children: "1" })
@@ -29,62 +29,62 @@ function ye({ visible: i, subscribeHud: e }) {
       "Zneškodněno: ",
       /* @__PURE__ */ c("span", { ref: s, children: "0 / 0" })
     ] }),
-    /* @__PURE__ */ c("div", { className: P.healthTrack, children: /* @__PURE__ */ c("div", { ref: a, className: P.healthBar }) })
+    /* @__PURE__ */ c("div", { className: P.healthTrack, children: /* @__PURE__ */ c("div", { ref: i, className: P.healthBar }) })
   ] });
 }
-const Me = "_screen_mus0u_1", be = "_screenVisible_mus0u_27", Ae = "_intro_mus0u_37", Te = "_introImage_mus0u_47", we = "_menuScreen_mus0u_61", Ce = "_menuBackground_mus0u_57", Se = "_gameOverImage_mus0u_89", Le = "_gameCompleteImage_mus0u_101", ke = "_screenContent_mus0u_113", Ee = "_hiddenButton_mus0u_219", _ = {
-  screen: Me,
-  screenVisible: be,
-  intro: Ae,
-  introImage: Te,
-  menuScreen: we,
-  menuBackground: Ce,
-  gameOverImage: Se,
-  gameCompleteImage: Le,
-  screenContent: ke,
+const be = "_screen_mus0u_1", Ae = "_screenVisible_mus0u_27", Te = "_intro_mus0u_37", we = "_introImage_mus0u_47", Ce = "_menuScreen_mus0u_61", Se = "_menuBackground_mus0u_57", Le = "_gameOverImage_mus0u_89", ke = "_gameCompleteImage_mus0u_101", xe = "_screenContent_mus0u_113", Ee = "_hiddenButton_mus0u_219", _ = {
+  screen: be,
+  screenVisible: Ae,
+  intro: Te,
+  introImage: we,
+  menuScreen: Ce,
+  menuBackground: Se,
+  gameOverImage: Le,
+  gameCompleteImage: ke,
+  screenContent: xe,
   hiddenButton: Ee
 };
-function xe(i) {
-  return i.gameComplete ? { message: `Hra dokončena! Zvládl jsi všech ${i.totalLevels} levelů.`, buttonLabel: "Zpět do menu" } : { message: `Level ${i.level} splněn!`, buttonLabel: "Pokračovat" };
+function Ie(r) {
+  return r.gameComplete ? { message: `Hra dokončena! Zvládl jsi všech ${r.totalLevels} levelů.`, buttonLabel: "Zpět do menu" } : { message: `Level ${r.level} splněn!`, buttonLabel: "Pokračovat" };
 }
-function Ie(i) {
-  if (i.action === "reset")
+function Ue(r) {
+  if (r.action === "reset")
     return {
-      message: `Vráceno na level 1 (level ${i.level} se nepodařilo dokončit).`,
+      message: `Vráceno na level 1 (level ${r.level} se nepodařilo dokončit).`,
       buttonLabel: "Zpět na start"
     };
-  const e = i.maxAttempts != null ? ` z ${i.maxAttempts}` : "";
+  const e = r.maxAttempts != null ? ` z ${r.maxAttempts}` : "";
   return {
-    message: `Level ${i.level} — pokus ${i.attemptNumber}${e}`,
+    message: `Level ${r.level} — pokus ${r.attemptNumber}${e}`,
     buttonLabel: "Zkusit znovu"
   };
 }
 function Ne({
-  gameState: i,
+  gameState: r,
   levelCompleteInfo: e,
   gameOverInfo: t,
   introVisible: s,
-  introImageUrl: a,
-  menuBackgroundImageUrl: r,
+  introImageUrl: i,
+  menuBackgroundImageUrl: a,
   gameOverImageUrl: l,
   gameCompleteImageUrl: d,
   muted: p,
-  subscribeHud: v,
-  onStartNewGame: x,
+  subscribeHud: f,
+  onStartNewGame: E,
   onContinueFromMenu: I,
   onRetry: h,
-  onContinueLevel: N,
-  onResume: U,
+  onContinueLevel: U,
+  onResume: N,
   onToggleMute: $
 }) {
   const M = y(null), T = y(null);
-  te(
-    () => v((E) => {
-      M.current && (M.current.classList.toggle(_.hiddenButton, !E.hasProgress), M.current.textContent = `Pokračovat (level ${E.level})`), T.current && (T.current.textContent = E.hasProgress ? "Nová hra" : "Start");
+  se(
+    () => f((x) => {
+      M.current && (M.current.classList.toggle(_.hiddenButton, !x.hasProgress), M.current.textContent = `Pokračovat (level ${x.level})`), T.current && (T.current.textContent = x.hasProgress ? "Nová hra" : "Start");
     }),
-    [v]
+    [f]
   );
-  const f = e ? xe(e) : null, S = t ? Ie(t) : null, L = (E) => `${_.screen} ${i === E ? _.screenVisible : ""}`;
+  const v = e ? Ie(e) : null, S = t ? Ue(t) : null, L = (x) => `${_.screen} ${r === x ? _.screenVisible : ""}`;
   return /* @__PURE__ */ A(Z, { children: [
     /* @__PURE__ */ c(
       "div",
@@ -94,9 +94,9 @@ function Ne({
           "img",
           {
             className: _.introImage,
-            src: a,
+            src: i,
             alt: "",
-            onError: () => console.error(`[Overlay] nepodařilo se načíst úvodní grafiku: ${a}`)
+            onError: () => console.error(`[Overlay] nepodařilo se načíst úvodní grafiku: ${i}`)
           }
         )
       }
@@ -106,14 +106,14 @@ function Ne({
         "img",
         {
           className: _.menuBackground,
-          src: r,
+          src: a,
           alt: "",
-          onError: () => console.error(`[Overlay] nepodařilo se načíst pozadí MENU obrazovky: ${r}`)
+          onError: () => console.error(`[Overlay] nepodařilo se načíst pozadí MENU obrazovky: ${a}`)
         }
       ),
       /* @__PURE__ */ A("div", { className: _.screenContent, children: [
         /* @__PURE__ */ c("button", { ref: M, type: "button", onClick: I, children: "Pokračovat" }),
-        /* @__PURE__ */ c("button", { ref: T, type: "button", onClick: x, children: "Start" }),
+        /* @__PURE__ */ c("button", { ref: T, type: "button", onClick: E, children: "Start" }),
         /* @__PURE__ */ c("button", { type: "button", onClick: $, "aria-pressed": p, children: p ? "Zvuk: vypnutý" : "Zvuk: zapnutý" })
       ] })
     ] }),
@@ -128,9 +128,9 @@ function Ne({
             onError: () => console.error(`[Overlay] nepodařilo se načíst grafiku "Hra dokončena": ${d}`)
           }
         ),
-        /* @__PURE__ */ c("p", { children: f == null ? void 0 : f.message })
-      ] }) : /* @__PURE__ */ c("h2", { children: (f == null ? void 0 : f.message) ?? "Level splněn!" }),
-      /* @__PURE__ */ c("button", { type: "button", onClick: N, children: (f == null ? void 0 : f.buttonLabel) ?? "Pokračovat" })
+        /* @__PURE__ */ c("p", { children: v == null ? void 0 : v.message })
+      ] }) : /* @__PURE__ */ c("h2", { children: (v == null ? void 0 : v.message) ?? "Level splněn!" }),
+      /* @__PURE__ */ c("button", { type: "button", onClick: U, children: (v == null ? void 0 : v.buttonLabel) ?? "Pokračovat" })
     ] }) }),
     /* @__PURE__ */ c("div", { className: L("GAME_OVER"), children: /* @__PURE__ */ A("div", { className: _.screenContent, children: [
       /* @__PURE__ */ c(
@@ -147,11 +147,11 @@ function Ne({
     ] }) }),
     /* @__PURE__ */ c("div", { className: L("PAUSED"), children: /* @__PURE__ */ A("div", { className: _.screenContent, children: [
       /* @__PURE__ */ c("h2", { children: "Pauza" }),
-      /* @__PURE__ */ c("button", { type: "button", onClick: U, children: "Pokračovat" })
+      /* @__PURE__ */ c("button", { type: "button", onClick: N, children: "Pokračovat" })
     ] }) })
   ] });
 }
-const Ue = {
+const Pe = {
   targetMaxHealth: 100,
   eatingRadius: 25,
   antPoolSize: 30,
@@ -210,7 +210,7 @@ const Ue = {
   stainDurationMs: 2500,
   stainFadeMs: 350,
   introDurationMs: 3e3
-}, Pe = {
+}, $e = {
   normal: {
     speedMultiplier: 1,
     damageMultiplier: 1,
@@ -227,7 +227,7 @@ const Ue = {
     hitsToKill: 2,
     afterFirstHit: "normal"
   }
-}, $e = [
+}, He = [
   {
     level: 1,
     killTarget: 8,
@@ -238,9 +238,9 @@ const Ue = {
     ],
     speedMultiplier: 0.8,
     ants: {
-      normal: 35,
-      aggressive: 35,
-      armored: 30
+      normal: 100,
+      aggressive: 0,
+      armored: 0
     },
     backgroundColor: "#d8ecf0"
   },
@@ -420,31 +420,31 @@ const Ue = {
     },
     backgroundColor: "#f0f0e2"
   }
-], He = {
-  game: Ue,
-  antTypes: Pe,
-  levels: $e
-}, O = He;
-function Oe(i) {
-  return !(!i.game || typeof i.game.sceneWidth != "number" || typeof i.game.sceneHeight != "number" || !i.antTypes || typeof i.antTypes != "object" || !Array.isArray(i.levels) || i.levels.length === 0);
+], Oe = {
+  game: Pe,
+  antTypes: $e,
+  levels: He
+}, O = Oe;
+function Re(r) {
+  return !(!r.game || typeof r.game.sceneWidth != "number" || typeof r.game.sceneHeight != "number" || !r.antTypes || typeof r.antTypes != "object" || !Array.isArray(r.levels) || r.levels.length === 0);
 }
-function Re(i, e) {
-  if (!e) return i;
-  const t = { ...i };
+function De(r, e) {
+  if (!e) return r;
+  const t = { ...r };
   for (const s of Object.keys(e)) {
-    const a = e[s];
-    a && (t[s] = { ...i[s], ...a });
+    const i = e[s];
+    i && (t[s] = { ...r[s], ...i });
   }
   return t;
 }
-function se(i) {
-  if (!i) return O;
+function ne(r) {
+  if (!r) return O;
   const e = {
-    game: { ...O.game, ...i.game ?? {} },
-    antTypes: Re(O.antTypes, i.antTypes),
-    levels: i.levels ?? O.levels
+    game: { ...O.game, ...r.game ?? {} },
+    antTypes: De(O.antTypes, r.antTypes),
+    levels: r.levels ?? O.levels
   };
-  return Oe(e) ? e : (console.warn("[AntsGameComponent] neplatný config override, používám výchozí hodnoty"), O);
+  return Re(e) ? e : (console.warn("[AntsGameComponent] neplatný config override, používám výchozí hodnoty"), O);
 }
 const m = {
   ant: "agc-ant",
@@ -456,18 +456,18 @@ const m = {
   fading: "agc-fading",
   rotateCw: "agc-rotate-cw",
   rotateCcw: "agc-rotate-ccw"
-}, J = "http://www.w3.org/2000/svg", De = {
+}, J = "http://www.w3.org/2000/svg", Ge = {
   aggressive: [1.15, 1.3],
   armored: [1.15, 1.3]
 };
-function Ge(i, e, t) {
-  let s = (e - i + Math.PI) % (Math.PI * 2) - Math.PI;
-  return s < -Math.PI && (s += Math.PI * 2), i + s * Math.min(t, 1);
+function Be(r, e, t) {
+  let s = (e - r + Math.PI) % (Math.PI * 2) - Math.PI;
+  return s < -Math.PI && (s += Math.PI * 2), r + s * Math.min(t, 1);
 }
-function R(i, e) {
-  return i * (1 + (Math.random() * 2 - 1) * e);
+function R(r, e) {
+  return r * (1 + (Math.random() * 2 - 1) * e);
 }
-class Be {
+class Ve {
   constructor(e, t) {
     n(this, "el");
     n(this, "visual");
@@ -501,21 +501,21 @@ class Be {
     this.visual = document.createElementNS(J, "g"), this.visual.setAttribute("class", m.antVisual), this.hitbox = document.createElementNS(J, "circle"), this.hitbox.setAttribute("class", m.antHitbox), this.hitbox.setAttribute("r", String(this.deps.config.antHitboxRadius)), this.hitbox.setAttribute("fill", "transparent"), this.visual.appendChild(this.hitbox), this.el.appendChild(this.visual);
   }
   _setTypeVisual(e) {
-    for (const a of Array.from(this.visual.children))
-      a !== this.hitbox && this.visual.removeChild(a);
+    for (const i of Array.from(this.visual.children))
+      i !== this.hitbox && this.visual.removeChild(i);
     const t = "ant" + e[0].toUpperCase() + e.slice(1);
     this.visual.appendChild(this.deps.svgAssets.getFragment(t));
-    const s = De[e];
+    const s = Ge[e];
     s ? this.hitbox.setAttribute("transform", `scale(${s[0]},${s[1]})`) : this.hitbox.removeAttribute("transform");
   }
-  reset({ pos: e, heading: t, type: s = "normal", speedMultiplier: a = 1 }) {
-    const { config: r, antTypes: l } = this.deps, d = l[s];
-    this.type = s, this.pos.x = e.x, this.pos.y = e.y, this.heading = t, this.levelSpeedMultiplier = a, this.speed = R(
-      r.baseAntSpeed * d.speedMultiplier * a,
-      r.antVariance
-    ), this.turnSpeed = R(r.turnSpeed, r.antVariance), this.noiseTime = 0, this.noisePhases = r.wanderNoise.layers.map(() => Math.random() * Math.PI * 2), this.noiseFrequencies = r.wanderNoise.layers.map(
-      (p) => R(p.frequency, r.antVariance)
-    ), this.burstIntervalMultiplier = R(1, r.antVariance), this.burstActive = !1, this.burstElapsed = 0, this.burstAmplitude = 0, this.burstHoldDuration = 0, this.burstSign = 1, this.burstTimer = this._randomBurstInterval(), this.damagePerSecond = r.baseDamagePerSecond * d.damageMultiplier, this.hitsRemaining = d.hitsToKill, this.eating = !1, this.active = !0, this.visual.classList.remove(m.squish, m.hitFlash), this._setTypeVisual(s), this.el.style.display = "block", this._applyTransform();
+  reset({ pos: e, heading: t, type: s = "normal", speedMultiplier: i = 1 }) {
+    const { config: a, antTypes: l } = this.deps, d = l[s];
+    this.type = s, this.pos.x = e.x, this.pos.y = e.y, this.heading = t, this.levelSpeedMultiplier = i, this.speed = R(
+      a.baseAntSpeed * d.speedMultiplier * i,
+      a.antVariance
+    ), this.turnSpeed = R(a.turnSpeed, a.antVariance), this.noiseTime = 0, this.noisePhases = a.wanderNoise.layers.map(() => Math.random() * Math.PI * 2), this.noiseFrequencies = a.wanderNoise.layers.map(
+      (p) => R(p.frequency, a.antVariance)
+    ), this.burstIntervalMultiplier = R(1, a.antVariance), this.burstActive = !1, this.burstElapsed = 0, this.burstAmplitude = 0, this.burstHoldDuration = 0, this.burstSign = 1, this.burstTimer = this._randomBurstInterval(), this.damagePerSecond = a.baseDamagePerSecond * d.damageMultiplier, this.hitsRemaining = d.hitsToKill, this.eating = !1, this.active = !0, this.visual.classList.remove(m.squish, m.hitFlash), this._setTypeVisual(s), this.el.style.display = "block", this._applyTransform();
   }
   hide() {
     this.active = !1, this.el.style.display = "none";
@@ -531,11 +531,11 @@ class Be {
     return this.hitsRemaining > 0 && e.afterFirstHit ? (this._downgradeTo(e.afterFirstHit), !1) : !0;
   }
   _downgradeTo(e) {
-    const { config: t, antTypes: s } = this.deps, a = s[e];
+    const { config: t, antTypes: s } = this.deps, i = s[e];
     this.type = e, this.speed = R(
-      t.baseAntSpeed * a.speedMultiplier * this.levelSpeedMultiplier,
+      t.baseAntSpeed * i.speedMultiplier * this.levelSpeedMultiplier,
       t.antVariance
-    ), this.damagePerSecond = t.baseDamagePerSecond * a.damageMultiplier, this._setTypeVisual(e), this._playHitFlash();
+    ), this.damagePerSecond = t.baseDamagePerSecond * i.damageMultiplier, this._setTypeVisual(e), this._playHitFlash();
   }
   _playHitFlash() {
     this.visual.classList.remove(m.hitFlash), this.visual.addEventListener("animationend", () => this.visual.classList.remove(m.hitFlash), {
@@ -544,10 +544,10 @@ class Be {
   }
   update(e, t) {
     if (this.eating) return;
-    const s = t.x - this.pos.x, a = t.y - this.pos.y, r = Math.atan2(a, s), l = Math.hypot(s, a);
+    const s = t.x - this.pos.x, i = t.y - this.pos.y, a = Math.atan2(i, s), l = Math.hypot(s, i);
     this.noiseTime += e;
-    const d = this._noiseOffset() + this._updateBurst(e), p = r + d * this._seekDamping(l);
-    this.heading = Ge(this.heading, p, this.turnSpeed * e), this.pos.x += Math.cos(this.heading) * this.speed * e, this.pos.y += Math.sin(this.heading) * this.speed * e, this._applyTransform(), this.distanceTo(t) <= this.deps.config.eatingRadius && (this.eating = !0);
+    const d = this._noiseOffset() + this._updateBurst(e), p = a + d * this._seekDamping(l);
+    this.heading = Be(this.heading, p, this.turnSpeed * e), this.pos.x += Math.cos(this.heading) * this.speed * e, this.pos.y += Math.sin(this.heading) * this.speed * e, this._applyTransform(), this.distanceTo(t) <= this.deps.config.eatingRadius && (this.eating = !0);
   }
   // Plynulý základní vzor: součet sinusových vrstev s neslučitelnými frekvencemi
   // a per-instance fází/frekvencí (nastaveno v reset()), viz sekce 5 dokumentu 00 / feature 17.
@@ -562,17 +562,17 @@ class Be {
   // náhodné) amplitudě následuje exponenciální doznění zpět k základnímu šumu během
   // wanderBurst.decayDurationMs, poté nový náhodný interval do příště.
   _updateBurst(e) {
-    const { decayDurationMs: t, decayRate: s } = this.deps.config.wanderBurst, a = t / 1e3;
+    const { decayDurationMs: t, decayRate: s } = this.deps.config.wanderBurst, i = t / 1e3;
     if (this.burstActive) {
       this.burstElapsed += e;
-      const r = this.burstElapsed - this.burstHoldDuration;
-      return r >= a ? (this.burstActive = !1, this.burstTimer = this._randomBurstInterval(), 0) : r <= 0 ? this.burstAmplitude * this.burstSign : this.burstAmplitude * this.burstSign * Math.exp(-s * r);
+      const a = this.burstElapsed - this.burstHoldDuration;
+      return a >= i ? (this.burstActive = !1, this.burstTimer = this._randomBurstInterval(), 0) : a <= 0 ? this.burstAmplitude * this.burstSign : this.burstAmplitude * this.burstSign * Math.exp(-s * a);
     }
     return this.burstTimer -= e, this.burstTimer <= 0 ? (this.burstActive = !0, this.burstElapsed = 0, this.burstSign = Math.random() < 0.5 ? -1 : 1, this.burstAmplitude = this._randomBurstAmplitude(), this.burstHoldDuration = this._randomBurstHoldDuration(), this.burstAmplitude * this.burstSign) : 0;
   }
   _randomBurstAmplitude() {
-    const { amplitudeMin: e, amplitudeMax: t, sharpChance: s, sharpAmplitudeMin: a, sharpAmplitudeMax: r } = this.deps.config.wanderBurst;
-    return Math.random() < s ? a + Math.random() * (r - a) : e + Math.random() * (t - e);
+    const { amplitudeMin: e, amplitudeMax: t, sharpChance: s, sharpAmplitudeMin: i, sharpAmplitudeMax: a } = this.deps.config.wanderBurst;
+    return Math.random() < s ? i + Math.random() * (a - i) : e + Math.random() * (t - e);
   }
   _randomBurstHoldDuration() {
     const { holdMsMin: e, holdMsMax: t } = this.deps.config.wanderBurst;
@@ -596,22 +596,22 @@ class Be {
     this.el.setAttribute("transform", `translate(${this.pos.x},${this.pos.y}) rotate(${e})`);
   }
 }
-const Ve = "http://www.w3.org/2000/svg";
-class Fe {
+const Fe = "http://www.w3.org/2000/svg";
+class qe {
   constructor(e, t, s) {
     n(this, "pool");
     n(this, "config");
     n(this, "_cursor", 0);
     this.config = t, this.pool = Array.from({ length: t.stainPoolSize }, () => {
-      const a = document.createElementNS(Ve, "g");
-      return a.setAttribute("class", m.antStain), a.style.display = "none", a.appendChild(s.getFragment("antStain")), e.appendChild(a), { el: a, active: !1, remainingMs: 0 };
+      const i = document.createElementNS(Fe, "g");
+      return i.setAttribute("class", m.antStain), i.style.display = "none", i.appendChild(s.getFragment("antStain")), e.appendChild(i), { el: i, active: !1, remainingMs: 0 };
     });
   }
   spawn(e, t) {
     const s = this.pool[this._cursor];
     this._cursor = (this._cursor + 1) % this.pool.length;
-    const a = t * 180 / Math.PI;
-    s.el.setAttribute("transform", `translate(${e.x},${e.y}) rotate(${a})`), s.el.classList.remove(m.fading), s.el.style.display = "block", s.active = !0, s.remainingMs = this.config.stainDurationMs;
+    const i = t * 180 / Math.PI;
+    s.el.setAttribute("transform", `translate(${e.x},${e.y}) rotate(${i})`), s.el.classList.remove(m.fading), s.el.style.display = "block", s.active = !0, s.remainingMs = this.config.stainDurationMs;
   }
   update(e) {
     const t = e * 1e3;
@@ -624,15 +624,15 @@ class Fe {
     this._cursor = 0;
   }
 }
-const qe = "http://www.w3.org/2000/svg";
-function ze(i) {
-  const e = i.normal ?? 0, t = i.aggressive ?? 0, s = i.armored ?? 0, a = e + t + s;
-  if (a <= 0) return "normal";
-  let r = Math.random() * a;
-  return r < e ? "normal" : (r -= e, r < t ? "aggressive" : "armored");
+const ze = "http://www.w3.org/2000/svg";
+function je(r) {
+  const e = r.normal ?? 0, t = r.aggressive ?? 0, s = r.armored ?? 0, i = e + t + s;
+  if (i <= 0) return "normal";
+  let a = Math.random() * i;
+  return a < e ? "normal" : (a -= e, a < t ? "aggressive" : "armored");
 }
-class je {
-  constructor(e, t, s, a) {
+class Ye {
+  constructor(e, t, s, i) {
     n(this, "layerElement");
     n(this, "target");
     n(this, "stainManager");
@@ -641,9 +641,9 @@ class je {
     n(this, "activeCount", 0);
     n(this, "deps");
     n(this, "_spawnTimer", 0);
-    this.layerElement = e, this.target = t, this.levelConfig = s, this.deps = a, this.stainManager = new Fe(a.stainsLayerElement, a.config, a.svgAssets), this.pool = Array.from({ length: a.config.antPoolSize }, () => {
-      const r = document.createElementNS(qe, "g");
-      return r.setAttribute("class", m.ant), r.style.display = "none", e.appendChild(r), new Be(r, { config: a.config, antTypes: a.antTypes, svgAssets: a.svgAssets });
+    this.layerElement = e, this.target = t, this.levelConfig = s, this.deps = i, this.stainManager = new qe(i.stainsLayerElement, i.config, i.svgAssets), this.pool = Array.from({ length: i.config.antPoolSize }, () => {
+      const a = document.createElementNS(ze, "g");
+      return a.setAttribute("class", m.ant), a.style.display = "none", e.appendChild(a), new Ve(a, { config: i.config, antTypes: i.antTypes, svgAssets: i.svgAssets });
     }), this._scheduleNextSpawn();
   }
   setLevelConfig(e) {
@@ -654,11 +654,11 @@ class je {
     this._spawnTimer = e + Math.random() * (t - e);
   }
   spawn(e = "normal") {
-    const t = this.pool.find((r) => !r.active && !r.removing);
+    const t = this.pool.find((a) => !a.active && !a.removing);
     if (!t)
       return console.warn("[AntManager] pool vyčerpán, spawn ignorován"), null;
-    const { pos: s, heading: a } = this._randomEdgeSpawn();
-    return t.reset({ pos: s, heading: a, type: e, speedMultiplier: this.levelConfig.speedMultiplier }), this.activeCount++, t;
+    const { pos: s, heading: i } = this._randomEdgeSpawn();
+    return t.reset({ pos: s, heading: i, type: e, speedMultiplier: this.levelConfig.speedMultiplier }), this.activeCount++, t;
   }
   reset() {
     for (const e of this.pool)
@@ -672,49 +672,49 @@ class je {
   // na vlastnosti afterFirstHit typu a zůstává aktivní — despawn proběhne
   // teprve při dosažení hitsRemaining === 0 (viz Ant.applyHit).
   registerHit(e) {
-    var s, a, r, l, d, p;
+    var s, i, a, l, d, p;
     if (!e.active) return;
-    if ((a = (s = this.deps).onHit) == null || a.call(s), !e.applyHit()) {
-      (l = (r = this.deps).onArmoredFirstHit) == null || l.call(r);
+    if ((i = (s = this.deps).onHit) == null || i.call(s), !e.applyHit()) {
+      (l = (a = this.deps).onArmoredFirstHit) == null || l.call(a);
       return;
     }
     this.stainManager.spawn(e.pos, e.heading), e.active = !1, e.removing = !0, e.squishTimer = this.deps.config.squishDurationMs, e.playSquish(), (p = (d = this.deps).onKill) == null || p.call(d);
   }
   update(e) {
-    var s, a;
-    this.stainManager.update(e), this._spawnTimer -= e * 1e3, this._spawnTimer <= 0 && (this.activeCount < this.levelConfig.maxAnts ? (this.spawn(ze(this.levelConfig.ants)), this._scheduleNextSpawn()) : this._spawnTimer = 0);
+    var s, i;
+    this.stainManager.update(e), this._spawnTimer -= e * 1e3, this._spawnTimer <= 0 && (this.activeCount < this.levelConfig.maxAnts ? (this.spawn(je(this.levelConfig.ants)), this._scheduleNextSpawn()) : this._spawnTimer = 0);
     let t = !1;
-    for (const r of this.pool) {
-      if (r.removing) {
-        r.squishTimer -= e * 1e3, r.squishTimer <= 0 && this.despawn(r);
+    for (const a of this.pool) {
+      if (a.removing) {
+        a.squishTimer -= e * 1e3, a.squishTimer <= 0 && this.despawn(a);
         continue;
       }
-      r.active && (r.update(e, this.target.pos), r.eating && (this.target.applyDamage(r.damagePerSecond * e), t = !0));
+      a.active && (a.update(e, this.target.pos), a.eating && (this.target.applyDamage(a.damagePerSecond * e), t = !0));
     }
-    t && ((a = (s = this.deps).onConsumeTick) == null || a.call(s));
+    t && ((i = (s = this.deps).onConsumeTick) == null || i.call(s));
   }
   _randomEdgeSpawn() {
-    const e = this.target.pos, { sceneWidth: t, sceneHeight: s, antSpawnMargin: a } = this.deps.config, r = Math.floor(Math.random() * 4);
+    const e = this.target.pos, { sceneWidth: t, sceneHeight: s, antSpawnMargin: i } = this.deps.config, a = Math.floor(Math.random() * 4);
     let l;
-    switch (r) {
+    switch (a) {
       case 0:
-        l = { x: Math.random() * t, y: -a };
+        l = { x: Math.random() * t, y: -i };
         break;
       case 1:
-        l = { x: t + a, y: Math.random() * s };
+        l = { x: t + i, y: Math.random() * s };
         break;
       case 2:
-        l = { x: Math.random() * t, y: s + a };
+        l = { x: Math.random() * t, y: s + i };
         break;
       default:
-        l = { x: -a, y: Math.random() * s };
+        l = { x: -i, y: Math.random() * s };
         break;
     }
     const d = Math.atan2(e.y - l.y, e.x - l.x);
     return { pos: l, heading: d };
   }
 }
-const Ye = [
+const We = [
   "hit",
   "kill",
   "armoredFirstHit",
@@ -723,11 +723,11 @@ const Ye = [
   "levelComplete",
   "gameOver",
   "uiTap"
-], We = 400, Ke = {
+], Ke = 400, Ze = {
   hit: 15,
   kill: 30
 };
-class Ze {
+class Je {
   constructor(e) {
     n(this, "baseUrl");
     n(this, "overrides");
@@ -743,10 +743,23 @@ class Ze {
     } catch (t) {
       console.warn("[AudioManager] AudioContext nedostupný, hra poběží bez zvuku:", t);
     }
+    try {
+      const t = navigator.audioSession;
+      t && (t.type = "playback");
+    } catch {
+    }
     this._context && this._preloadAll();
   }
+  // Zavolá callback při každé změně stavu kontextu (iOS: running -> interrupted/suspended).
+  onStateChange(e) {
+    this._context && (this._context.onstatechange = e);
+  }
+  // Bez kontextu není co odemykat, proto true. Cast kvůli stavu 'interrupted' (iOS), který chybí v TS typech.
+  isRunning() {
+    return !this._context || this._context.state === "running";
+  }
   async _preloadAll() {
-    await Promise.all(Ye.map((e) => this._loadSound(e)));
+    await Promise.all(We.map((e) => this._loadSound(e)));
   }
   _resolveUrl(e) {
     return this.overrides[e] ?? `${this.baseUrl}${e}.mp3`;
@@ -757,15 +770,28 @@ class Ze {
         const t = await fetch(this._resolveUrl(e));
         if (!t.ok) throw new Error(`HTTP ${t.status}`);
         const s = await t.arrayBuffer();
-        this._buffers[e] = await this._context.decodeAudioData(s);
+        this._buffers[e] = await this._decode(this._context, s);
       } catch (t) {
         console.warn(`[AudioManager] nepodařilo se načíst zvuk "${e}", event zůstane tichý:`, t);
       }
   }
-  // Autoplay unlock pro iOS Safari a další prohlížeče vyžadující gesto uživatele.
-  unlock() {
-    this._context && this._context.state === "suspended" && this._context.resume().catch(() => {
+  // Callback varianta kvůli iOS < 14.5, kde decodeAudioData nevrací Promise.
+  _decode(e, t) {
+    return new Promise((s, i) => {
+      const a = e.decodeAudioData(t, s, i);
+      a && typeof a.then == "function" && a.then(s, i);
     });
+  }
+  // Autoplay unlock pro iOS Safari a další prohlížeče vyžadující gesto uživatele.
+  // Vrací true, pokud je kontext po pokusu ve stavu 'running'.
+  async unlock() {
+    const e = this._context;
+    if (!e || this.isRunning()) return !0;
+    try {
+      await e.resume();
+    } catch {
+    }
+    return this.isRunning();
   }
   setMuted(e) {
     this._muted = e, this.storage.set("soundMuted", e);
@@ -776,9 +802,9 @@ class Ze {
   play(e) {
     if (this._muted || (this._maybeVibrate(e), !this._context)) return;
     if (e === "consumeTick") {
-      const a = this._context.currentTime * 1e3;
-      if (a - this._lastConsumeTickAt < We) return;
-      this._lastConsumeTickAt = a;
+      const i = this._context.currentTime * 1e3;
+      if (i - this._lastConsumeTickAt < Ke) return;
+      this._lastConsumeTickAt = i;
     }
     const t = this._buffers[e];
     if (!t) return;
@@ -786,18 +812,18 @@ class Ze {
     s.buffer = t, s.connect(this._context.destination), s.start(0);
   }
   _maybeVibrate(e) {
-    const t = Ke[e];
+    const t = Ze[e];
     !t || !("vibrate" in navigator) || navigator.vibrate(t);
   }
   // Nutné doplnění oproti js/audio.js — v React komponentě se na rozdíl od statické
   // stránky AudioManager běžně unmountuje, viz riziko "Game.destroy()" v plánu.
   destroy() {
     var e;
-    (e = this._context) == null || e.close().catch(() => {
+    this._context && (this._context.onstatechange = null), (e = this._context) == null || e.close().catch(() => {
     });
   }
 }
-class Je {
+class Xe {
   constructor(e, t) {
     n(this, "sceneElement");
     n(this, "antManager");
@@ -805,15 +831,15 @@ class Je {
     this.sceneElement = e, this.antManager = t, this.onPointerDown = this._onPointerDown.bind(this), e.addEventListener("pointerdown", this.onPointerDown);
   }
   _onPointerDown(e) {
-    var a;
+    var i;
     const t = e.target, s = t == null ? void 0 : t.closest(`.${m.ant}`);
-    (a = s == null ? void 0 : s.ant) != null && a.active && this.antManager.registerHit(s.ant);
+    (i = s == null ? void 0 : s.ant) != null && i.active && this.antManager.registerHit(s.ant);
   }
   destroy() {
     this.sceneElement.removeEventListener("pointerdown", this.onPointerDown);
   }
 }
-class Xe {
+class Qe {
   constructor(e, t, s) {
     n(this, "currentLevel");
     n(this, "highestUnlocked");
@@ -851,8 +877,8 @@ class Xe {
     this.storage.set("currentLevel", this.currentLevel), this.storage.set("highestUnlockedLevel", this.highestUnlocked), this.storage.set("failedAttemptsTotal", this.failedAttemptsTotal);
   }
 }
-const Qe = "(orientation: landscape)", X = "cw";
-class et {
+const et = "(orientation: landscape)", X = "cw";
+class tt {
   constructor(e) {
     n(this, "container");
     n(this, "mql");
@@ -860,7 +886,7 @@ class et {
     n(this, "onScreenOrientationChange", null);
     n(this, "onWindowOrientationChange", null);
     n(this, "_lastDirection", X);
-    this.container = e, this.onMqlChange = () => this._applyDirection(), this.mql = window.matchMedia(Qe), this.mql.addEventListener("change", this.onMqlChange), screen.orientation ? (this.onScreenOrientationChange = () => this._applyDirection(), screen.orientation.addEventListener("change", this.onScreenOrientationChange)) : (this.onWindowOrientationChange = () => this._applyDirection(), window.addEventListener("orientationchange", this.onWindowOrientationChange)), this._applyDirection();
+    this.container = e, this.onMqlChange = () => this._applyDirection(), this.mql = window.matchMedia(et), this.mql.addEventListener("change", this.onMqlChange), screen.orientation ? (this.onScreenOrientationChange = () => this._applyDirection(), screen.orientation.addEventListener("change", this.onScreenOrientationChange)) : (this.onWindowOrientationChange = () => this._applyDirection(), window.addEventListener("orientationchange", this.onWindowOrientationChange)), this._applyDirection();
   }
   // Mapování landscape-primary/-secondary (resp. window.orientation 90/-90) na cw/ccw
   // je ověřené jen odhadem — směr rotace se mezi výrobci/OS historicky liší. Pokud
@@ -879,7 +905,7 @@ class et {
     this.mql.removeEventListener("change", this.onMqlChange), screen.orientation && this.onScreenOrientationChange && screen.orientation.removeEventListener("change", this.onScreenOrientationChange), this.onWindowOrientationChange && window.removeEventListener("orientationchange", this.onWindowOrientationChange);
   }
 }
-class tt {
+class st {
   constructor(e, t, s) {
     n(this, "el");
     n(this, "maxHealth");
@@ -893,8 +919,8 @@ class tt {
     n(this, "_currentStateIndex", -1);
     this.el = e, this.deps = t, this.maxHealth = s.maxHealth ?? t.config.targetMaxHealth, this.health = this.maxHealth, this.onDestroyed = s.onDestroyed, this.onCriticalHealth = s.onCriticalHealth, this.pos = this._parsePos(e.getAttribute("transform")), this.stateElements = Array.from(
       { length: 6 },
-      (a, r) => this.el.querySelector(`[data-target-state="${r}"]`)
-    ).filter((a) => a !== null), this.setType(s.typeKey), this._currentStateIndex = -1, this._applyVisualState();
+      (i, a) => this.el.querySelector(`[data-target-state="${a}"]`)
+    ).filter((i) => i !== null), this.setType(s.typeKey), this._currentStateIndex = -1, this._applyVisualState();
   }
   setType(e) {
     this.stateElements.forEach((t, s) => {
@@ -929,13 +955,13 @@ class tt {
     }), this._currentStateIndex = e);
   }
 }
-const st = 0.1, u = {
+const nt = 0.1, Q = ["pointerup", "touchend", "click"], u = {
   MENU: "MENU",
   PLAYING: "PLAYING",
   LEVEL_COMPLETE: "LEVEL_COMPLETE",
   GAME_OVER: "GAME_OVER",
   PAUSED: "PAUSED"
-}, nt = {
+}, it = {
   MENU: [u.PLAYING],
   PLAYING: [u.LEVEL_COMPLETE, u.GAME_OVER, u.PAUSED],
   LEVEL_COMPLETE: [u.PLAYING, u.MENU],
@@ -963,12 +989,12 @@ class at {
     n(this, "_onVisibilityChange");
     n(this, "_onBlur");
     n(this, "_tick");
-    n(this, "_unlockAudioOnce");
-    this.refs = e, this.deps = t, this._onVisibilityChange = this._handleVisibilityChange.bind(this), this._onBlur = this._handleBlur.bind(this), this._tick = this._handleTick.bind(this), this._unlockAudioOnce = () => this.audioManager.unlock(), this.levelManager = new Xe(t.config.levels, t.config.game.retry, t.storage), this.audioManager = new Ze({
+    n(this, "_onUnlockAudio");
+    this.refs = e, this.deps = t, this._onVisibilityChange = this._handleVisibilityChange.bind(this), this._onBlur = this._handleBlur.bind(this), this._tick = this._handleTick.bind(this), this._onUnlockAudio = this._handleUnlockAudio.bind(this), this.levelManager = new Qe(t.config.levels, t.config.game.retry, t.storage), this.audioManager = new Je({
       baseUrl: t.audioBaseUrl,
       overrides: t.audioOverrides,
       storage: t.storage
-    }), e.root.addEventListener("pointerdown", this._unlockAudioOnce, { once: !0 }), this.target = new tt(
+    }), this._addAudioUnlockListeners(), this.audioManager.onStateChange(() => this._rearmAudioUnlock()), this.target = new st(
       e.targetGroup,
       { config: t.config.game, svgAssets: t.svgAssets },
       {
@@ -976,7 +1002,7 @@ class at {
         onDestroyed: () => this.gameOver(),
         onCriticalHealth: () => this.audioManager.play("criticalHealth")
       }
-    ), this.antManager = new je(e.antsLayer, this.target, this.levelManager.config, {
+    ), this.antManager = new Ye(e.antsLayer, this.target, this.levelManager.config, {
       stainsLayerElement: e.stainsLayer,
       config: t.config.game,
       antTypes: t.config.antTypes,
@@ -987,7 +1013,7 @@ class at {
       onHit: () => this.audioManager.play("hit"),
       onArmoredFirstHit: () => this.audioManager.play("armoredFirstHit"),
       onConsumeTick: () => this.audioManager.play("consumeTick")
-    }), this.inputManager = new Je(e.scene, this.antManager), this.orientationManager = t.fullscreen ? new et(e.root) : null, this._emitStateChange(), this._emitHud();
+    }), this.inputManager = new Xe(e.scene, this.antManager), this.orientationManager = t.fullscreen ? new tt(e.root) : null, this._emitStateChange(), this._emitHud();
   }
   start() {
     this._started || (this._started = !0, document.addEventListener("visibilitychange", this._onVisibilityChange), window.addEventListener("blur", this._onBlur), this.lastTimestamp = performance.now(), this._rafId = requestAnimationFrame(this._tick));
@@ -996,7 +1022,7 @@ class at {
   // V React komponentě se AntsGameComponent běžně unmountuje, viz plán, sekce "Rizika".
   destroy() {
     var e;
-    this._rafId !== null && cancelAnimationFrame(this._rafId), this._introTimeoutId !== null && clearTimeout(this._introTimeoutId), document.removeEventListener("visibilitychange", this._onVisibilityChange), window.removeEventListener("blur", this._onBlur), this.refs.root.removeEventListener("pointerdown", this._unlockAudioOnce), this.inputManager.destroy(), (e = this.orientationManager) == null || e.destroy(), this.audioManager.destroy();
+    this._rafId !== null && cancelAnimationFrame(this._rafId), this._introTimeoutId !== null && clearTimeout(this._introTimeoutId), document.removeEventListener("visibilitychange", this._onVisibilityChange), window.removeEventListener("blur", this._onBlur), this._removeAudioUnlockListeners(), this.inputManager.destroy(), (e = this.orientationManager) == null || e.destroy(), this.audioManager.destroy();
   }
   update(e) {
     this.antManager.update(e), this._emitHud();
@@ -1007,8 +1033,8 @@ class at {
   startNewGame() {
     var e, t;
     this.levelManager.resetToLevel1(), this._introTimeoutId !== null && clearTimeout(this._introTimeoutId), (t = (e = this.deps).onShowIntro) == null || t.call(e), this._introTimeoutId = setTimeout(() => {
-      var s, a;
-      this._introTimeoutId = null, this.startGame(), (a = (s = this.deps).onHideIntro) == null || a.call(s);
+      var s, i;
+      this._introTimeoutId = null, this.startGame(), (i = (s = this.deps).onHideIntro) == null || i.call(s);
     }, this.deps.config.game.introDurationMs);
   }
   retryLevel() {
@@ -1033,12 +1059,12 @@ class at {
     this.state === u.PLAYING && this._transitionTo(u.PAUSED);
   }
   gameOver() {
-    var a, r;
+    var i, a;
     if (this.state !== u.PLAYING) return;
     const e = this.levelManager.currentLevel, t = this.levelManager.registerFailure();
     this._lastFailureAction = t.action, this._transitionTo(u.GAME_OVER), this.audioManager.play("gameOver");
     const s = this.deps.config.game.retry.maxRestarts + 1;
-    (r = (a = this.deps).onGameOver) == null || r.call(a, {
+    (a = (i = this.deps).onGameOver) == null || a.call(i, {
       level: e,
       action: t.action,
       attemptNumber: t.action === "retry" ? t.attemptNumber : s,
@@ -1046,10 +1072,10 @@ class at {
     });
   }
   levelComplete() {
-    var s, a;
+    var s, i;
     if (this.state !== u.PLAYING) return;
     const e = this.levelManager.currentLevel, t = this.levelManager.registerSuccess();
-    this._lastLevelResult = t, this._transitionTo(u.LEVEL_COMPLETE), this.audioManager.play("levelComplete"), (a = (s = this.deps).onLevelComplete) == null || a.call(s, {
+    this._lastLevelResult = t, this._transitionTo(u.LEVEL_COMPLETE), this.audioManager.play("levelComplete"), (i = (s = this.deps).onLevelComplete) == null || i.call(s, {
       level: e,
       gameComplete: t.gameComplete,
       totalLevels: this.deps.config.levels.length
@@ -1065,7 +1091,7 @@ class at {
     this.target.setType(`level${this.levelManager.config.level}`), this.refs.root.style.background = this.levelManager.config.backgroundColor, this._resetScene(), this.antManager.setLevelConfig(this.levelManager.config), this._emitHud();
   }
   _transitionTo(e) {
-    if (!(nt[this.state] ?? []).includes(e)) {
+    if (!(it[this.state] ?? []).includes(e)) {
       console.warn(`[Game] neplatný přechod ${this.state} -> ${e}, ignoruji`);
       return;
     }
@@ -1094,18 +1120,35 @@ class at {
       healthRatio: this.target.health / this.target.maxHealth
     });
   }
+  _addAudioUnlockListeners() {
+    for (const e of Q)
+      this.refs.root.addEventListener(e, this._onUnlockAudio, { passive: !0 });
+  }
+  // Po přerušení (iOS: hovor, zamčený displej, přepnutí aplikace) čeká na další gesto, které audio odemkne.
+  _rearmAudioUnlock() {
+    this.audioManager.isRunning() || this._addAudioUnlockListeners();
+  }
+  _handleUnlockAudio() {
+    this.audioManager.unlock().then((e) => {
+      e && this._removeAudioUnlockListeners();
+    });
+  }
+  _removeAudioUnlockListeners() {
+    for (const e of Q)
+      this.refs.root.removeEventListener(e, this._onUnlockAudio);
+  }
   _handleVisibilityChange() {
-    document.hidden ? this.pause() : (this.lastTimestamp = performance.now(), console.log("[Game] visible again, lastTimestamp reset"));
+    document.hidden ? this.pause() : (this._rearmAudioUnlock(), this.lastTimestamp = performance.now(), console.log("[Game] visible again, lastTimestamp reset"));
   }
   _handleBlur() {
     this.pause();
   }
   _handleTick(e) {
-    const t = Math.min((e - (this.lastTimestamp ?? e)) / 1e3, st);
+    const t = Math.min((e - (this.lastTimestamp ?? e)) / 1e3, nt);
     this.lastTimestamp = e, this.state === u.PLAYING && this.update(t), this._rafId = requestAnimationFrame(this._tick);
   }
 }
-class it {
+class rt {
   constructor(e = "mravenci:") {
     n(this, "prefix");
     this.prefix = e;
@@ -1125,16 +1168,16 @@ class it {
     }
   }
 }
-function rt(i, e) {
+function ot(r, e) {
   const t = /^st\d+$/;
-  for (const s of Array.from(i.querySelectorAll("style")))
+  for (const s of Array.from(r.querySelectorAll("style")))
     s.textContent = (s.textContent ?? "").replace(/\.(st\d+)\b/g, `.${e}-$1`);
-  for (const s of Array.from(i.querySelectorAll("[class]"))) {
-    const a = (s.getAttribute("class") ?? "").split(/\s+/).filter(Boolean).map((r) => t.test(r) ? `${e}-${r}` : r);
-    s.setAttribute("class", a.join(" "));
+  for (const s of Array.from(r.querySelectorAll("[class]"))) {
+    const i = (s.getAttribute("class") ?? "").split(/\s+/).filter(Boolean).map((a) => t.test(a) ? `${e}-${a}` : a);
+    s.setAttribute("class", i.join(" "));
   }
 }
-class ot {
+class lt {
   constructor(e) {
     n(this, "baseUrl");
     n(this, "overrides");
@@ -1151,9 +1194,9 @@ class ot {
     try {
       const t = await fetch(this._resolveUrl(e));
       if (!t.ok) throw new Error(`HTTP ${t.status}`);
-      const s = await t.text(), a = new DOMParser().parseFromString(s, "image/svg+xml");
-      if (a.querySelector("parsererror")) throw new Error("neplatný SVG obsah");
-      rt(a, e), this.templates[e] = Array.from(a.documentElement.children);
+      const s = await t.text(), i = new DOMParser().parseFromString(s, "image/svg+xml");
+      if (i.querySelector("parsererror")) throw new Error("neplatný SVG obsah");
+      ot(i, e), this.templates[e] = Array.from(i.documentElement.children);
     } catch (t) {
       throw console.error(`[svgAssets] nepodařilo se načíst SVG asset "${e}":`, t), t;
     }
@@ -1162,69 +1205,69 @@ class ot {
     const t = this.templates[e];
     if (!t) throw new Error(`[svgAssets] asset "${e}" není v cache, proběhl preloadAll?`);
     const s = document.createDocumentFragment();
-    for (const a of t)
-      s.appendChild(a.cloneNode(!0));
+    for (const i of t)
+      s.appendChild(i.cloneNode(!0));
     return s;
   }
 }
-function lt(i) {
+function ht(r) {
   return [
     "antNormal",
     "antAggressive",
     "antArmored",
     "antStain",
-    ...i.flatMap((e) => Array.from({ length: 6 }, (t, s) => `level${e.level}State${s}`))
+    ...r.flatMap((e) => Array.from({ length: 6 }, (t, s) => `level${e.level}State${s}`))
   ];
 }
-const Q = new URL(
+const ee = new URL(
   /* @vite-ignore */
   "./assets/",
   import.meta.url
 ).href;
-function ee(i) {
-  return i.endsWith("/") ? i : `${i}/`;
+function te(r) {
+  return r.endsWith("/") ? r : `${r}/`;
 }
-function ht({
-  rootRef: i,
+function ct({
+  rootRef: r,
   sceneRef: e,
   targetRef: t,
   stainsLayerRef: s,
-  antsLayerRef: a,
-  props: r
+  antsLayerRef: i,
+  props: a
 }) {
-  const l = y(null), d = y(null), p = y(/* @__PURE__ */ new Set()), v = y(r);
-  v.current = r;
-  const [x, I] = C("MENU"), [h, N] = C(null), [U, $] = C(null), [M, T] = C(!1), [f, S] = C(!1), [L] = C(() => ee(r.assetsBaseUrl ?? Q)), [E] = C(
+  const l = y(null), d = y(null), p = y(/* @__PURE__ */ new Set()), f = y(a);
+  f.current = a;
+  const [E, I] = C("MENU"), [h, U] = C(null), [N, $] = C(null), [M, T] = C(!1), [v, S] = C(!1), [L] = C(() => te(a.assetsBaseUrl ?? ee)), [x] = C(
     () => {
       var o;
-      return ((o = r.assetOverrides) == null ? void 0 : o.gameIntro) ?? `${L}svg/gameIntro.svg`;
-    }
-  ), [ne] = C(
-    () => {
-      var o;
-      return ((o = r.assetOverrides) == null ? void 0 : o.menuBackground) ?? `${L}svg/menuBackground.svg`;
-    }
-  ), [ae] = C(
-    () => {
-      var o;
-      return ((o = r.assetOverrides) == null ? void 0 : o.gameOver) ?? `${L}svg/gameOver.svg`;
+      return ((o = a.assetOverrides) == null ? void 0 : o.gameIntro) ?? `${L}svg/gameIntro.svg`;
     }
   ), [ie] = C(
     () => {
       var o;
-      return ((o = r.assetOverrides) == null ? void 0 : o.gameComplete) ?? `${L}svg/gameComplete.svg`;
+      return ((o = a.assetOverrides) == null ? void 0 : o.menuBackground) ?? `${L}svg/menuBackground.svg`;
+    }
+  ), [ae] = C(
+    () => {
+      var o;
+      return ((o = a.assetOverrides) == null ? void 0 : o.gameOver) ?? `${L}svg/gameOver.svg`;
+    }
+  ), [re] = C(
+    () => {
+      var o;
+      return ((o = a.assetOverrides) == null ? void 0 : o.gameComplete) ?? `${L}svg/gameComplete.svg`;
     }
   );
-  ce(() => {
-    const o = i.current, H = e.current, V = t.current, F = s.current, q = a.current;
+  ue(() => {
+    const o = r.current, H = e.current, V = t.current, F = s.current, q = i.current;
     if (!o || !H || !V || !F || !q) {
       console.error("[AntsGameComponent] chybí DOM refs při mountu, engine se neinicializuje");
       return;
     }
-    const G = v.current, z = se(G.config), j = ee(G.assetsBaseUrl ?? Q), Y = G.assetOverrides, W = new ot({
+    const G = f.current, z = ne(G.config), j = te(G.assetsBaseUrl ?? ee), Y = G.assetOverrides, W = new lt({
       baseUrl: `${j}svg/`,
       overrides: Y
-    }), re = new it(G.storageNamespace), oe = {
+    }), oe = new rt(G.storageNamespace), le = {
       root: o,
       scene: H,
       targetGroup: V,
@@ -1232,36 +1275,36 @@ function ht({
       antsLayer: q
     };
     let K = !1, k = null;
-    return W.preloadAll(lt(z.levels)).then(() => {
-      K || (k = new at(oe, {
+    return W.preloadAll(ht(z.levels)).then(() => {
+      K || (k = new at(le, {
         config: z,
         svgAssets: W,
-        storage: re,
+        storage: oe,
         audioBaseUrl: `${j}sounds/`,
         audioOverrides: Y,
-        fullscreen: v.current.fullscreen ?? !1,
+        fullscreen: f.current.fullscreen ?? !1,
         onStateChange: (g) => {
           var b, w;
-          I(g), (w = (b = v.current).onStateChange) == null || w.call(b, g);
+          I(g), (w = (b = f.current).onStateChange) == null || w.call(b, g);
         },
         onHudUpdate: (g) => {
           d.current = g, p.current.forEach((b) => b(g));
         },
         onLevelComplete: (g) => {
           var b, w;
-          N(g), (w = (b = v.current).onLevelComplete) == null || w.call(b, { level: g.level, gameComplete: g.gameComplete });
+          U(g), (w = (b = f.current).onLevelComplete) == null || w.call(b, { level: g.level, gameComplete: g.gameComplete });
         },
         onGameOver: (g) => {
           var b, w;
-          $(g), (w = (b = v.current).onGameOver) == null || w.call(b, { level: g.level, attempt: g.attemptNumber ?? 0 });
+          $(g), (w = (b = f.current).onGameOver) == null || w.call(b, { level: g.level, attempt: g.attemptNumber ?? 0 });
         },
         onAntKilled: (g) => {
           var b, w;
-          return (w = (b = v.current).onAntKilled) == null ? void 0 : w.call(b, g);
+          return (w = (b = f.current).onAntKilled) == null ? void 0 : w.call(b, g);
         },
         onShowIntro: () => T(!0),
         onHideIntro: () => T(!1)
-      }), typeof v.current.muted == "boolean" && k.setMuted(v.current.muted), S(k.isMuted()), l.current = k, k.start());
+      }), typeof f.current.muted == "boolean" && k.setMuted(f.current.muted), S(k.isMuted()), l.current = k, k.start());
     }).catch((g) => {
       console.error("[AntsGameComponent] preload assetů selhal, engine se nespustí:", g);
     }), () => {
@@ -1313,27 +1356,27 @@ function ht({
     }
   }), {
     ...B.current,
-    gameState: x,
+    gameState: E,
     levelCompleteInfo: h,
-    gameOverInfo: U,
+    gameOverInfo: N,
     introVisible: M,
-    introImageUrl: E,
-    menuBackgroundImageUrl: ne,
+    introImageUrl: x,
+    menuBackgroundImageUrl: ie,
     gameOverImageUrl: ae,
-    gameCompleteImageUrl: ie,
-    muted: f
+    gameCompleteImageUrl: re,
+    muted: v
   };
 }
-const ct = "_root_w84pl_11", ut = "_fullscreen_w84pl_61", dt = "_scene_w84pl_119", gt = "_targetState_w84pl_131", mt = "_antsLayer_w84pl_139", D = {
-  root: ct,
-  fullscreen: ut,
-  scene: dt,
-  targetState: gt,
-  antsLayer: mt
-}, pt = 6, yt = ue(
+const ut = "_root_w84pl_11", dt = "_fullscreen_w84pl_61", gt = "_scene_w84pl_119", mt = "_targetState_w84pl_131", pt = "_antsLayer_w84pl_139", D = {
+  root: ut,
+  fullscreen: dt,
+  scene: gt,
+  targetState: mt,
+  antsLayer: pt
+}, ft = 6, Mt = de(
   function(e, t) {
-    const { className: s, style: a, fullscreen: r = !1, config: l } = e, d = y(null), p = y(null), v = y(null), x = y(null), I = y(null), h = ht({ rootRef: d, sceneRef: p, targetRef: v, stainsLayerRef: x, antsLayerRef: I, props: e });
-    de(
+    const { className: s, style: i, fullscreen: a = !1, config: l } = e, d = y(null), p = y(null), f = y(null), E = y(null), I = y(null), h = ct({ rootRef: d, sceneRef: p, targetRef: f, stainsLayerRef: E, antsLayerRef: I, props: e });
+    ge(
       t,
       () => ({
         pause: () => h.pause(),
@@ -1345,34 +1388,34 @@ const ct = "_root_w84pl_11", ut = "_fullscreen_w84pl_61", dt = "_scene_w84pl_119
       // eslint-disable-next-line react-hooks/exhaustive-deps
       []
     );
-    const { sceneWidth: N, sceneHeight: U } = se(l).game, $ = [D.root, r ? D.fullscreen : "", s].filter(Boolean).join(" "), M = (T) => () => {
+    const { sceneWidth: U, sceneHeight: N } = ne(l).game, $ = [D.root, a ? D.fullscreen : "", s].filter(Boolean).join(" "), M = (T) => () => {
       h.playUiTap(), T();
     };
-    return /* @__PURE__ */ A("div", { ref: d, className: $, style: a, children: [
+    return /* @__PURE__ */ A("div", { ref: d, className: $, style: i, children: [
       /* @__PURE__ */ A(
         "svg",
         {
           ref: p,
           className: D.scene,
-          viewBox: `0 0 ${N} ${U}`,
+          viewBox: `0 0 ${U} ${N}`,
           preserveAspectRatio: "xMidYMid slice",
           children: [
-            /* @__PURE__ */ c("g", { ref: v, transform: `translate(${N / 2},${U / 2})`, children: Array.from({ length: pt }, (T, f) => /* @__PURE__ */ c(
+            /* @__PURE__ */ c("g", { ref: f, transform: `translate(${U / 2},${N / 2})`, children: Array.from({ length: ft }, (T, v) => /* @__PURE__ */ c(
               "g",
               {
-                "data-target-state": f,
+                "data-target-state": v,
                 className: D.targetState,
-                style: f === 0 ? void 0 : { display: "none" }
+                style: v === 0 ? void 0 : { display: "none" }
               },
-              f
+              v
             )) }),
-            /* @__PURE__ */ c("g", { ref: x }),
+            /* @__PURE__ */ c("g", { ref: E }),
             /* @__PURE__ */ c("g", { ref: I, className: D.antsLayer })
           ]
         }
       ),
       /* @__PURE__ */ c(
-        ye,
+        Me,
         {
           visible: h.gameState === "PLAYING" || h.gameState === "PAUSED",
           subscribeHud: h.subscribeHud
@@ -1403,5 +1446,5 @@ const ct = "_root_w84pl_11", ut = "_fullscreen_w84pl_61", dt = "_scene_w84pl_119
   }
 );
 export {
-  yt as AntsGameComponent
+  Mt as AntsGameComponent
 };

@@ -31,6 +31,10 @@ interface WindowWithWebkitAudio {
   webkitAudioContext?: typeof AudioContext;
 }
 
+interface NavigatorWithAudioSession {
+  audioSession?: { type: string };
+}
+
 export class AudioManager {
   private readonly baseUrl: string;
   private readonly overrides: Partial<Record<SoundName, string>>;
@@ -54,7 +58,25 @@ export class AudioManager {
       console.warn('[AudioManager] AudioContext nedostupný, hra poběží bez zvuku:', err);
     }
 
+    // iOS: bez kategorie "playback" je Web Audio němé při vypnutém zvonění (Safari 16.4+).
+    try {
+      const audioSession = (navigator as unknown as NavigatorWithAudioSession).audioSession;
+      if (audioSession) audioSession.type = 'playback';
+    } catch {
+      // API není dostupné, pokračujeme bez něj
+    }
+
     if (this._context) this._preloadAll();
+  }
+
+  // Zavolá callback při každé změně stavu kontextu (iOS: running -> interrupted/suspended).
+  onStateChange(callback: () => void): void {
+    if (this._context) this._context.onstatechange = callback;
+  }
+
+  // Bez kontextu není co odemykat, proto true. Cast kvůli stavu 'interrupted' (iOS), který chybí v TS typech.
+  isRunning(): boolean {
+    return !this._context || (this._context.state as string) === 'running';
   }
 
   private async _preloadAll(): Promise<void> {
@@ -71,17 +93,31 @@ export class AudioManager {
       const response = await fetch(this._resolveUrl(name));
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const arrayBuffer = await response.arrayBuffer();
-      this._buffers[name] = await this._context.decodeAudioData(arrayBuffer);
+      this._buffers[name] = await this._decode(this._context, arrayBuffer);
     } catch (err) {
       console.warn(`[AudioManager] nepodařilo se načíst zvuk "${name}", event zůstane tichý:`, err);
     }
   }
 
+  // Callback varianta kvůli iOS < 14.5, kde decodeAudioData nevrací Promise.
+  private _decode(context: AudioContext, data: ArrayBuffer): Promise<AudioBuffer> {
+    return new Promise((resolve, reject) => {
+      const result = context.decodeAudioData(data, resolve, reject);
+      if (result && typeof result.then === 'function') result.then(resolve, reject);
+    });
+  }
+
   // Autoplay unlock pro iOS Safari a další prohlížeče vyžadující gesto uživatele.
-  unlock(): void {
-    if (this._context && this._context.state === 'suspended') {
-      this._context.resume().catch(() => {});
+  // Vrací true, pokud je kontext po pokusu ve stavu 'running'.
+  async unlock(): Promise<boolean> {
+    const context = this._context;
+    if (!context || this.isRunning()) return true;
+    try {
+      await context.resume();
+    } catch {
+      // chybu pohlcujeme, zkusí se znovu při dalším gestu
     }
+    return this.isRunning();
   }
 
   setMuted(muted: boolean): void {
@@ -124,6 +160,8 @@ export class AudioManager {
   // Nutné doplnění oproti js/audio.js — v React komponentě se na rozdíl od statické
   // stránky AudioManager běžně unmountuje, viz riziko "Game.destroy()" v plánu.
   destroy(): void {
+    // close() vyvolá statechange -> 'closed'; bez odpojení by Game znovu přihlásil unlock listenery.
+    if (this._context) this._context.onstatechange = null;
     this._context?.close().catch(() => {});
   }
 }

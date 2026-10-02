@@ -11,6 +11,8 @@ import { Target } from './Target';
 
 const MAX_DT = 0.1;
 
+const AUDIO_UNLOCK_EVENTS = ['pointerup', 'touchend', 'click'] as const;
+
 const STATES: Record<GameState, GameState> = {
   MENU: 'MENU',
   PLAYING: 'PLAYING',
@@ -29,7 +31,7 @@ const STATE_TRANSITIONS: Record<GameState, GameState[]> = {
 };
 
 export interface GameRefs {
-  /** Kořenový element komponenty — cíl pro OrientationManager a scoped pointerdown (audio unlock). */
+  /** Kořenový element komponenty — cíl pro OrientationManager a scoped pointerup/touchend/click (audio unlock). */
   root: HTMLElement;
   scene: SVGSVGElement;
   targetGroup: SVGGElement;
@@ -107,7 +109,7 @@ export class Game {
   private readonly _onVisibilityChange: () => void;
   private readonly _onBlur: () => void;
   private readonly _tick: (timestamp: number) => void;
-  private readonly _unlockAudioOnce: () => void;
+  private readonly _onUnlockAudio: () => void;
 
   constructor(refs: GameRefs, deps: GameDeps) {
     this.refs = refs;
@@ -116,7 +118,7 @@ export class Game {
     this._onVisibilityChange = this._handleVisibilityChange.bind(this);
     this._onBlur = this._handleBlur.bind(this);
     this._tick = this._handleTick.bind(this);
-    this._unlockAudioOnce = () => this.audioManager.unlock();
+    this._onUnlockAudio = this._handleUnlockAudio.bind(this);
 
     this.levelManager = new LevelManager(deps.config.levels, deps.config.game.retry, deps.storage);
     this.audioManager = new AudioManager({
@@ -126,7 +128,9 @@ export class Game {
     });
     // Na rozdíl od js/game.js (listener na document) je scoped na root komponenty,
     // aby klik kdekoli jinde na hostitelské stránce audio neodemykal (viz plán, sekce "Rizika").
-    refs.root.addEventListener('pointerdown', this._unlockAudioOnce, { once: true });
+    // iOS neuznává pointerdown/touchstart jako gesto pro audio, proto pointerup/touchend/click.
+    this._addAudioUnlockListeners();
+    this.audioManager.onStateChange(() => this._rearmAudioUnlock());
 
     this.target = new Target(
       refs.targetGroup,
@@ -177,7 +181,7 @@ export class Game {
     if (this._introTimeoutId !== null) clearTimeout(this._introTimeoutId);
     document.removeEventListener('visibilitychange', this._onVisibilityChange);
     window.removeEventListener('blur', this._onBlur);
-    this.refs.root.removeEventListener('pointerdown', this._unlockAudioOnce);
+    this._removeAudioUnlockListeners();
     this.inputManager.destroy();
     this.orientationManager?.destroy();
     this.audioManager.destroy();
@@ -329,10 +333,34 @@ export class Game {
     });
   }
 
+  private _addAudioUnlockListeners(): void {
+    for (const type of AUDIO_UNLOCK_EVENTS) {
+      this.refs.root.addEventListener(type, this._onUnlockAudio, { passive: true });
+    }
+  }
+
+  // Po přerušení (iOS: hovor, zamčený displej, přepnutí aplikace) čeká na další gesto, které audio odemkne.
+  private _rearmAudioUnlock(): void {
+    if (!this.audioManager.isRunning()) this._addAudioUnlockListeners();
+  }
+
+  private _handleUnlockAudio(): void {
+    void this.audioManager.unlock().then((running) => {
+      if (running) this._removeAudioUnlockListeners();
+    });
+  }
+
+  private _removeAudioUnlockListeners(): void {
+    for (const type of AUDIO_UNLOCK_EVENTS) {
+      this.refs.root.removeEventListener(type, this._onUnlockAudio);
+    }
+  }
+
   private _handleVisibilityChange(): void {
     if (document.hidden) {
       this.pause();
     } else {
+      this._rearmAudioUnlock();
       this.lastTimestamp = performance.now();
       console.log('[Game] visible again, lastTimestamp reset');
     }
